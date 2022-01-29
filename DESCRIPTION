@@ -1,0 +1,43 @@
+Package: econGame
+Title: Tools for in-class game experiments for Principles of Economics
+Version: 0.0.1
+Authors@R: 
+    person(given = "James",
+           family = "Bang",
+           role = c("aut", "cre"),
+           email = "bangjamest@gmail.com",
+           comment = c(ORCID = "0000-0002-7701-8220"))
+Author: James Bang [aut, cre], 
+Maintainer: James Bang <bangecon@gmail.com>    
+Description: This package pulls activity data from Google Forms submissions to a 
+    Google Sheets file; tabulates, scores, and graphs the responses; and 
+    writes the grade data to a separate Google Sheet. Supported games include: 
+      1.  Market equilibrium game; 
+      2.  Ultimatum game; 
+      3.  Anchoring game;
+      4.  Entry and exit game; 
+      5.  Monopoly license lottery auction game; 
+      6.  Monopoly license all-pay auction game; 
+      7.  Multi-player prisoner's dilemma game; 
+      8.  Stag hunt game; 
+      9.  Rock-paper-scissors; 
+      10. Public good game; 
+      11. Pollution policy game.
+    All documentation files include links to Google Forms addresses that can be 
+    copied and saved. 
+License: use_gpl3_license()
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Depends: R(>= 4.0.0),
+  googlesheets4,
+  googledrive,
+  ggplot2, 
+  ggpubr, 
+  tidyr, 
+  dplyr, 
+  gtsummary, 
+  stringr
+Imports: 
+Suggests: 
