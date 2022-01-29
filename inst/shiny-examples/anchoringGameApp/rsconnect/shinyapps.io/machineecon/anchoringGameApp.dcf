@@ -1,0 +1,13 @@
+name: anchoringGameApp
+title: anchoringGameApp
+username:
+account: machineecon
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5379322
+bundleId: 5418163
+url: https://machineecon.shinyapps.io/anchoringGameApp/
+when: 1640813687.1424
+lastSyncTime: 1640813687.1424
+asMultiple: FALSE
+asStatic: FALSE
