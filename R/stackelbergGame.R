@@ -181,7 +181,7 @@ stackelbergGame <-
         payoffs1 = leaderPayoffs,
         payoffs2 = followerPayoffs
       )
-    colnames(grades) <- c("Last Name", "First Name", "Score")
+    colnames(grades) <- c("First Name", "Last Name", "Score")
     out <- list(
       type = "stackelbergGame",
       payoff = cbind(leaderPayoffs, followerPayoffs),

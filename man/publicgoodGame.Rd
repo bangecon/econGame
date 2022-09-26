@@ -4,7 +4,7 @@
 \alias{publicgoodGame}
 \title{Tabulate public good game results.}
 \usage{
-publicgoodGame(sheet, endowment = 5, return = 2, ...)
+publicgoodGame(sheet, endowment = 0, return = 1.2, ...)
 }
 \arguments{
 \item{sheet}{(required) is a character string url corresponding to the Google Sheets location containing the individual submissions.}
@@ -25,7 +25,4 @@ Tabulates and assigns points for the results of a simple in-class public good ga
 }
 \details{
 \code{publicgoodGame} tabulates the results of a simple public good game based on Holt and Laury (1997). Each student starts with an endowment of 5 points that they can either keep or anonymously and voluntarily contribute to a public good. For each point a student keeps, they receive only that point. For each point contributed to the public good, \emph{everyone} receives R/N points, where N is the number of participants and R > 1 is the return the group earns on public good contributions. In other words, students have the opportunity to boost their points if everyone contributes all of them. But, if only a few participants contribute, their net return could diminish.
-}
-\references{
-
 }

@@ -28,6 +28,3 @@ Tabulates and assigns points for the results of a simple in-class prisoner's dil
 \details{
 \code{multipdGame} tabulates the results of a simple prisoner's dilemma game in which students' points depend on their strategy and the strategy chosen by the majority of the rest of the class.
 }
-\references{
-
-}

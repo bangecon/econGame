@@ -140,13 +140,13 @@ equilibriumGame <-
       )
     out <- list(
       type = "equilibriumGame",
-      results = results[order(results$Round,
-                              results$Last.Name,
-                              results$First.Name),],
+      results = as.data.frame(results[order(results$Round,
+                                            results$Last.Name,
+                                            results$First.Name), ]),
       rounds = rounds,
       schedules = schedules,
       equilibria = equilibria,
-      grades = grades[order(grades$Last.Name, grades$First.Name),]
+      grades = as.data.frame(grades[order(grades$Last.Name, grades$First.Name), ])
     )
     class(out) <- c('econGame', class(out))
     out

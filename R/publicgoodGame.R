@@ -16,7 +16,7 @@
 ##'
 ##' @export
 
-publicgoodGame <- function(sheet, endowment = 5, return = 2, ...) {
+publicgoodGame <- function(sheet, endowment = 0, return = 1.2, ...) {
   # Set up the Google Sheets, read responses, and initialize output objects.
   results <- read_sheet(sheet)
   colnames(results) <- make.names(colnames(results))

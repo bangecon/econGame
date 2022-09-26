@@ -14,7 +14,7 @@ library(ggpubr)
 library(Rcpp)
 # Define UI for application
 ui <- fluidPage(
-  titlePanel("Entry Game."),
+  titlePanel("Entry Game"),
   sidebarPanel(
     textInput(
       inputId = "sheet",

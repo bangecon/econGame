@@ -107,7 +107,7 @@ cournotGame <-
       aggregate(Profit ~ First.Name + Last.Name,
                 data = results,
                 FUN = sum)
-    colnames(grades) <- c("Last Name", "First Name", "Score")
+    colnames(grades) <- c("First Name", "Last Name", "Score")
     results$Outcome <-
       paste0(results$Strategy, "-", results$Partner.Strategy)
     results$Outcome <-

@@ -63,7 +63,7 @@ bertrandGame <-
       aggregate(Profit ~ First.Name + Last.Name,
                 data = results,
                 FUN = sum)
-    colnames(grades) <- c("Last Name", "First Name", "Score")
+    colnames(grades) <- c("First Name", "Last Name", "Score")
     out <- list(
       type = "bertrandGame",
       results = results[order(results$Round,

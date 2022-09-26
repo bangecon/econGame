@@ -2,27 +2,16 @@
 title: "An Open-Source Application to Computerize Simple Market Efficiency Games"
 author: "James T. Bang"
 date: "1/28/2022"
-output:
-  word_document: default
-  pdf_document:
-    keep_tex: yes
-    fig_caption: yes
-abstract: "In-class experiments provide instructors a powerful tool for helping students
-  learn and understand market principles in economics. Despite the effectiveness of
-  experiments, economics instructors remain slow to adopt them in their pedagogy.
-  One reason for this lag could be the time-consuming process of collecting, tabulating,
-  and presenting the outcomes of the experiments. This paper introduces functions
-  and ShinyApps in R for fast, free, in-class tabulation of the results of five in-class
-  market simulation experiments for teaching economics. \n\n**Keywords:** Experiments;
-  technology; teaching\n\n**JEL Code:** A22\n"
-header-includes: \usepackage{setspace}\doublespacing
 bibliography: marketGames.bib
+abstract: |
+  In-class experiments provide instructors a powerful tool for helping students learn and understand market principles in economics. Despite the effectiveness of experiments, economics instructors remain slow to adopt them in their pedagogy. One reason for this lag could be the time-consuming process of collecting, tabulating, and presenting the outcomes of the experiments. This paper introduces functions and ShinyApps in R for fast, free, in-class tabulation of the results of five in-class market simulation experiments for teaching economics. 
+  
+  Keywords: Experiments; technology; teaching
+output: 
+  pdf_document:
+    keep_tex: true
+    fig_caption: true
 ---
-
-\pagenumbering{gobble}
-\newpage
-\pagenumbering{arabic}
-\setcounter{page}{1}
 
 # Introduction
 
@@ -179,9 +168,7 @@ Another feature of the package is the ability to plot the results. The syntax to
 
 The functions for directly summarizing the results of the games may be useful for tabulating the results for the purposes of awarding points to the students who participated, but may not be the most visually-appealing way to present the results in class. To improve the user interface for a "prettier" presentation of the results, I have built a Shiny Application UI for each of the games. In this interface, the instructor can display the raw results, plots, or schedules of the outcomes of the results by inputting the sheet ID (and other parameters) in the input boxes, and by switching the display tabs of the results.
 
-To run the Shiny App for a given package, I have written a function that executes the app from the `'~/inst/shiny-examples'` folder of the package source. Once the instructor has installed the package, all they need to do to execute the app is type one of the following commands: `'runEquilibriumGameApp()'`, `'runEntryGameApp()'`, `'runBertrandGameApp()'`, `'runCournotGameApp()'`, or `'runStackelbergGameApp()'`. When the instructor initiates the app, it will point the function to a blank Google Sheet as the default, which will result in either blank output, or an error. In order to read the submission results, the instructor will need to paste the Google Sheet ID depicted in Figure 2. 
-
-Figure 3 shows the Shiny interface for `equilibriumGame`. Within the output panel, the instructor (and students) will be able to see tabbed output for different results, plots, and possibly the grade outcomes if the instructor wishes to show it. 
+To run the Shiny App for a given package, I have written a function that executes the app from the `'~/inst/shiny-examples'` folder of the package source. To execute the app, all the instructor needs to do is type one of the following commands: `'runEquilibriumGameApp()'`, `'runEntryGameApp()'`, `'runBertrandGameApp()'`, `'runCournotGameApp()'`, or `'runStackelbergGameApp()'`. Figure 3 shows the Shiny interface for `equilibriumGame`.
 
 ![Shiny User Interface](Figure3.png)
 

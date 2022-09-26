@@ -87,7 +87,6 @@ Efficiency Games}
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-\usepackage{setspace}\doublespacing
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -105,14 +104,7 @@ ShinyApps in R for fast, free, in-class tabulation of the results of
 five in-class market simulation experiments for teaching economics.
 
 \textbf{Keywords:} Experiments; technology; teaching
-
-\textbf{JEL Code:} A22
 \end{abstract}
-
-\pagenumbering{gobble}
-\newpage
-\pagenumbering{arabic}
-\setcounter{page}{1}
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
@@ -587,23 +579,14 @@ in the input boxes, and by switching the display tabs of the results.
 To run the Shiny App for a given package, I have written a function that
 executes the app from the
 \texttt{\textquotesingle{}\textasciitilde{}/inst/shiny-examples\textquotesingle{}}
-folder of the package source. Once the instructor has installed the
-package, all they need to do to execute the app is type one of the
-following commands:
+folder of the package source. To execute the app, all the instructor
+needs to do is type one of the following commands:
 \texttt{\textquotesingle{}runEquilibriumGameApp()\textquotesingle{}},
 \texttt{\textquotesingle{}runEntryGameApp()\textquotesingle{}},
 \texttt{\textquotesingle{}runBertrandGameApp()\textquotesingle{}},
 \texttt{\textquotesingle{}runCournotGameApp()\textquotesingle{}}, or
 \texttt{\textquotesingle{}runStackelbergGameApp()\textquotesingle{}}.
-When the instructor initiates the app, it will point the function to a
-blank Google Sheet as the default, which will result in either blank
-output, or an error. In order to read the submission results, the
-instructor will need to paste the Google Sheet ID depicted in Figure 2.
-
-Figure 3 shows the Shiny interface for \texttt{equilibriumGame}. Within
-the output panel, the instructor (and students) will be able to see
-tabbed output for different results, plots, and possibly the grade
-outcomes if the instructor wishes to show it.
+Figure 3 shows the Shiny interface for \texttt{equilibriumGame}.
 
 \begin{figure}
 \centering

@@ -12,7 +12,7 @@ library(googlesheets4)
 
 # Define UI for application
 ui <- fluidPage(
-  titlePanel("Stackelberg Duopoly Game"),
+  titlePanel("Cournot Duopoly Game"),
   sidebarPanel(
     textInput(
       inputId = "sheet",

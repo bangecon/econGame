@@ -1,0 +1,97 @@
+---
+title: "Automating the Computation of Outcomes in an Externality Classroom Experiment"
+author: "James T. Bang"
+date: "1/28/2022"
+bibliography: marketGames.bib
+abstract: |
+  
+  
+  **Keywords:** Experiments; technology; teaching; externalities
+  
+  **JEL Code:** A22
+  
+header-includes:
+    - \usepackage{setspace}\doublespacing
+output: 
+  pdf_document:
+    keep_tex: true
+    fig_caption: true
+---
+
+\pagenumbering{gobble}
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+# Introduction
+
+
+
+# Description of the Experiment
+
+The experiment aims to simulate the behavior of firms to different types of incentives to produce an output that creates a pollution externality, and to curb their pollution emissions (or not). Each student plays the role of a firm choosing how much output to produce (up to a maximum of two units) and how much of the pollution from their production to abate. Firms receive a benefit equal to the price of the output and incur a cost equal to their production costs plus their pollution-abatement costs. In the simple version of the game I use, these parameters are: 
+
+* Price of output: 3 points per unit
+* Production cost: 0 points per unit
+* Externality cost: 2 points per unit
+* Abatement costs: vary randomly by student and by unit of output
+
+To determine the cost of abatement, students visit a Google sheet that displays two values: the first (and lower) value represents the cost of abating the *first* unit of pollution the firm chooses to abate; the second (and higher) value represents the cost of abating the *second* unit of pollution. In this way, pollution abatement follows the Law of Increasing Costs.^[A template can be found at: https://docs.google.com/spreadsheets/d/1R0Bpd2Ga5SajyAOkno5Noh2Pbrm-34HceoJldnMyIqQ/edit?usp=sharing.] 
+
+The template I describe in this section has four rounds corresponding to four different types policy incentives: (1) no regulation; (2) command-and-control regulation; (3) a pollution tax; and (4) a cap-and-trade market, in which firms receive the initial allocation of pollution permit without charge. I will describe each round one-by-one below, then mention some possible variations. 
+
+## Round 1: No Regulation (Practice)
+
+I typically present the first round of the experiment as practice, in part to gently introduce the decision process, and in part because this round would otherwise lead to very high numbers of points. In this setting, students realize pretty quickly that, regardless of how much their abatement costs are, they will produce the maximum output (two units) and will not abate any of the pollution from their output. Using the payoffs from the example above, the outcome leads to each student producing 2 units of output, abating none of pollution, and gaining 6 points of "profit." 
+
+## Round 2: Command-and-Control Regulation
+
+Points typically start "counting" with round two, which involves "command-and-control" regulation of each firm's emissions. In this setting, each firm may produce only one unit's worth of pollution, and must abate any pollution they emit after the first unit of production. In order to abate the pollution from a second unit of output, it will cost a firm the amount of their lower abatement cost. 
+
+Talking through this scenario with the students, it should become clear that every firm will produce the first unit of output, and ignore the pollution from it. For the second unit of output, students sometime struggle to figure out what to do. With some discussion, students should realize that a rational firm would only produce the second unit of output if the cost of cleaning up one unit of pollution (the lower abatement cost value from the spreadsheet) is less than or equal to the price. 
+
+One way to help students think about this is to get them to think on the margin: the marginal revenue of the first unit is three points, while the marginal cost is zero, so they would rationally produce that unit; the marginal revenue of the second unit is also three points, but the marginal cost is their lower abatement cost. Only produce the second unit of output if $MR > MC$. 
+
+For example, suppose that a student "draws" abatement costs of two and four. Their firm would produce two units of output (the maximum) and abate the pollution of one of the units produced. 
+
+Students sometimes ask what they should do when their lower abatement cost is exactly equal to the
+
+## Round 3: Pollution Tax
+
+Round 3 replaces the "command and control" regulatory regime with a carbon tax, typically (and by default) equal to the amount of the externality. In this round the instructor should emphasize that there is no "free" pollution and that their firm pays a tax for each and every unit of pollution it emits. Students decide how much output to produce (zero, one, or two units), and whether to pay the tax or expend the abatement costs to clean up the pollution from each unit produced. 
+
+At the default values, students should quickly realize that they would produce both feasible units of output no matter what because the worst they could do in this scenario is to pay the tax on both units of output and receive a net benefit of one point per unit. 
+
+## Round 4: Cap-and-Trade Market
+
+
+
+## Other Variations
+
+
+
+# The econGame Package
+
+The `econGame` package pulls activity data from Google the Google Sheet file generated for the form responses. It then tabulates, scores, and graphs the responses; and writes the grade data to a separate Google Sheet. Users can download the package from https://github.com/bangecon/econGame. To install the package, use the `remotes` package and the `install_github()` function:
+
+`remotes::install_github("bangecon/econGame")`
+
+
+
+## Exporting the Results
+
+
+
+## Tabulating the Results
+
+
+
+## Shiny User Interface
+
+
+
+# Discussion
+
+
+
+# References

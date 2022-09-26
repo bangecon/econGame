@@ -4,22 +4,19 @@
 #
 library(shiny)
 library(tidyr)
-library(dplyr)
 library(stringr)
-library(gargle)
-library(googledrive)
 library(googlesheets4)
 library(ggplot2)
 library(ggpubr)
 library(Rcpp)
 # Define UI for application
 ui <- fluidPage(
-  titlePanel("Market Equilibrium Game."),
+  titlePanel("Market Equilibrium Game"),
   sidebarPanel(
     textInput(
       inputId = "sheet",
       label = "Enter the ID of the Google Sheet with the output.",
-      value = '15PIWMPQHW1jrrd6HyzG7edZhmuD0wrSBavofVLr4uek'
+      value = NULL
     ),
     numericInput(
       inputId = "round",
@@ -41,7 +38,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   data <- reactive({
     sheet <- input$sheet
-    g <- equilibriumGame( sheet)
+    g <- equilibriumGame(sheet)
     g
   })
   output$schedule <- renderTable({
