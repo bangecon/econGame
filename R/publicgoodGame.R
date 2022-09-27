@@ -29,13 +29,12 @@ publicgoodGame <- function(sheet, endowment = 0, return = 1.2, ...) {
   results$Last.Name <-
     str_to_title(results$Last.Name)
   N <- nrow(results)
-  results$PrivateAllocation <- endowment - results$Contribution
   totalContributions <- sum(results$Contribution)
   totalReallocations <- totalContributions * return
   individualReallocaitons <-
     ceiling(totalReallocations / nrow(results))
   results$Reallocation <- individualReallocaitons
-  results$Score <- results$PrivateAllocation + results$Reallocation - results$Contribution
+  results$Score <- results$Reallocation - results$Contribution
   blindedResults <-
     data.frame(results[, -which(names(results) %in% c("First.Name", "Last.Name", "Timestamp"))])
   rownames(blindedResults) <-
