@@ -194,3 +194,4 @@ All of the examples can be implemented for the students using Google Forms, whic
 Another useful feature is that I have platformed the package on GitHub, which allows users to make pull requests to suggest edits and changes to improve or add features and examples to the package. I plan to also develop more functions and applications for the `econGame` package from existing classroom experiments, and even design a few original games. If you use these resources, please let me know and share them with your colleagues. 
 
 # References
+
