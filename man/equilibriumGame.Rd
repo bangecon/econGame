@@ -4,10 +4,14 @@
 \alias{equilibriumGame}
 \title{Tabulate market equilibrium game results.}
 \usage{
-equilibriumGame(sheet, ...)
+equilibriumGame(sheet, auth = FALSE, email = NULL, ...)
 }
 \arguments{
 \item{sheet}{(required) is a character string url corresponding to the Google Sheets location containing the individual submissions.}
+
+\item{auth}{is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.}
+
+\item{email}{is an email address that matches the user account containing the Sheet with the individual submissions.}
 }
 \value{
 \code{type} returns the type of activity (equlibriumGame).

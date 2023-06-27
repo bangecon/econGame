@@ -4,7 +4,7 @@
 \alias{bertrandGame}
 \title{Tabulate results for a simple in-class stag hunt game.}
 \usage{
-bertrandGame(sheet, a = 10, b = -1, c = 6, f = 0, ...)
+bertrandGame(sheet, a = 10, b = -1, c = 6, f = 0, partners = "random", ...)
 }
 \arguments{
 \item{sheet}{(required) is a character string sheet ID corresponding to the Google Sheets location containing the individual submissions.}
@@ -16,6 +16,8 @@ bertrandGame(sheet, a = 10, b = -1, c = 6, f = 0, ...)
 \item{c}{is the value of the firm's marginal cost (default is 6).}
 
 \item{f}{is the value of the firm's fixed cost (default is 0).}
+
+\item{partners}{is a character string equal to \code{'students'} or \code{'random'} indicating whether students choose their own partners or whether the function should generate them randomly after the students have decided their strategies.}
 }
 \value{
 \code{type} returns the type of activity (bertrandGame).

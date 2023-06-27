@@ -17,7 +17,7 @@ ui <- fluidPage(
     textInput(
       inputId = "sheet",
       label = "Enter the ID of the Google Sheet with the output.",
-      value = '1umW2zv2s7UaNMTe6POgEabCqXXXQxnLDY2TJrG_6TuQ'
+      value = '1YB6jpNGOT7k3ikRMjLKNlPNb4x9T7lq0uHhC-ZIK7g4'
     ),
     numericInput(
       inputId = "round",

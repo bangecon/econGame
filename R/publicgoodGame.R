@@ -24,6 +24,7 @@ publicgoodGame <- function(sheet, endowment = 0, return = 1.2, ...) {
     replace_na(results,
                list(First.Name = "John",
                     Last.Name = "Doe"))
+  results <- results[!duplicated(cbind(results$First.Name, results$Last.Name)),]
   results$First.Name <-
     str_to_title(results$First.Name)
   results$Last.Name <-
@@ -38,7 +39,7 @@ publicgoodGame <- function(sheet, endowment = 0, return = 1.2, ...) {
   blindedResults <-
     data.frame(results[, -which(names(results) %in% c("First.Name", "Last.Name", "Timestamp"))])
   rownames(blindedResults) <-
-    paste(results$Last.Name, results$First.Name, sep = ", ")
+    paste(results$Last.Name, results$First.Name, sep = ".")
   grades <-
     with(results,
          as.data.frame(

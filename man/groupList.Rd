@@ -13,10 +13,6 @@ groupList(studentList, n = 2)
 }
 \value{
 \code{studentList} returns list of names and group numbers. .
-
-\code{results} returns the original submissions (with equilibria and points per round added).
-
-\code{grades} returns the aggregated points "won" by each student for the entire activity.
 }
 \description{
 Creates a random list of partner groups

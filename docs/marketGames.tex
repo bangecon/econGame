@@ -4,22 +4,20 @@
 %
 \documentclass[
 ]{article}
-\title{An Open-Source Application to Computerize Simple Market
-Efficiency Games}
-\author{James T. Bang}
-\date{1/28/2022}
-
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -38,14 +36,6 @@ Efficiency Games}
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={An Open-Source Application to Computerize Simple Market Efficiency Games},
-  pdfauthor={James T. Bang},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
 \makeatletter
@@ -91,6 +81,19 @@ Efficiency Games}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={An Open-Source Application to Computerize Simple Market Efficiency Games},
+  pdfauthor={James T. Bang},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{An Open-Source Application to Computerize Simple Market
+Efficiency Games}
+\author{James T. Bang}
+\date{1/28/2022}
 
 \begin{document}
 \maketitle
@@ -156,7 +159,7 @@ Cheung (2008) helps to overcome this barrier by building tools for
 collecting student responses to in-class non-computerized experiments
 using mobile phones and texting. This contribution furthers this by
 automating the process of calculating and summarizing the results of the
-experiments These examples only require students to be able to access a
+experiments. These examples only require students to be able to access a
 Google Form via their browser on their computer or mobile device, which,
 given the ubiquity of mobile phones among students (sometimes as their
 only personal computing device), sets a fairly reasonable bar for
@@ -192,54 +195,106 @@ games below.
 \hypertarget{pit-market-trading}{%
 \subsection{Pit Market Trading}\label{pit-market-trading}}
 
-The instructor informs the students that they own a single unit of a
-eCoin currency that each of them values differently. Students then
-receive a random value from 1 to 10 using a link to a Google Sheet. This
-number represents their (constant) value they attach to the unit they
-presently own and for if they were to acquire one more unit of
-eCoin.\footnote{A template can be found at:
+Holt (1996) designed the pit market trading game for class sizes between
+10 and 25 and takes about 40-50 minutes to explain the game, play a few
+rounds, and tabulate the results after each round. This game is an
+excellent illustration of supply and demand, competitive market
+equilibrium, consumer and producer surplus, and efficiency. The
+functions presented in this paper speed up the response-collection
+process to allow the experiment to work for larger classes. It also
+speeds up the calculation of the equilibrium and graphs the equilibrium.
+
+Before class, the instructor prepares (1) a Google Sheet assigning a
+random integer between 1 and 10 representing each student's value that
+they place on the asset;\footnote{The first sheet consists of a single
+  formula in a single cell: ``=roundup(10*rand())``. A template can be
+  found at:
   \url{https://docs.google.com/spreadsheets/d/1lCmC692ajsQZoatWtgZh5QKaJ9y3pOMt15JwRFaHanU/edit\#gid=258904023}.}
+and (2) a Google Form through which students enter their bid and ask
+prices;\footnote{A template can be found at:
+  \url{https://docs.google.com/forms/d/1S_F9UJ6GXttxPqDLtk8Hg0ZgzDaHMxBmc1qH3W2gKZo/edit}.}
+For the best compatibility with the result-tabulating function, users
+who create their own forms should use the question prompts ``First
+Name,'' ``Last Name'', ``Round,'' ``Value,'' ``Bid,'' and ``Ask.'' Add
+text fields to insert additional context, instructions, or question
+text.
 
-Students submit their name, their value draw, a ``bid'' corresponding to
-the highest amount they would pay for a second eCoin, and an ``ask''
-corresponding to the lowest amount they would accept to part with the
-eCoin they already own.\footnote{A template can be found at:
-  \url{https://docs.google.com/forms/d/1S_F9UJ6GXttxPqDLtk8Hg0ZgzDaHMxBmc1qH3W2gKZo/edit}.
-  It is important that when users create their own copies of the
-  template that they use the same names in the question prompts. In case
-  an instructor wants to add additional instructions or framing around
-  the questions, they should add text fields.}
+In class, the instructor informs the students that they own a single
+unit of an asset that each of them values differently. This value could
+represent a profit that they can derive from using the asset as a
+resource to produce other goods, a return the students expect to receive
+from selling the asset in the future, or a subjective ``utility'' that
+the students derive from using the asset as consumption. Students
+discover this value by visiting a link to the first Google Sheet that
+the instructor prepared to assign a random value from 1 to
+10.\footnote{}
 
-Students keep their consumer and producer surpluses from each round as
-``extra credit'' points. \texttt{equilibriumGame} tabulates the supply
-and demand schedules; calculates the equilibrium; graphs the
-equilibrium; and tabulates the scores for each student.\footnote{The
-  solution the piecewise constant supply and demand equilibrium uses the
-  help of a C++ helper function provided by ``David'' on Stack Overflow,
+Students submit their name, the round number (if playing more than one),
+their randomly-assigned value draw, a ``bid'' corresponding to the
+highest amount they would pay for a second unit of the asset, and an
+``ask'' corresponding to the lowest amount they would accept to part
+with the unit of the asset they already own.
+
+If the instructor decides to incentivize the game with points, students
+keep their consumer and producer surpluses from each round as ``extra
+credit'' points. \texttt{equilibriumGame} tabulates the supply and
+demand schedules; calculates the equilibrium; graphs the equilibrium;
+and tabulates the scores for each student.\footnote{The solution the
+  piece-wise constant supply and demand equilibrium uses the help of a
+  C++ helper function provided by ``David'' on Stack Overflow,
   \url{https://stackoverflow.com/questions/23830906/intersection-of-two-step-functions}.}
 
-\hypertarget{free-entry-and-exit}{%
-\subsection{Free Entry and Exit}\label{free-entry-and-exit}}
+\hypertarget{entry-and-exit}{%
+\subsection{Entry and Exit}\label{entry-and-exit}}
 
-The instructor informs the students that they will choose to plant corn,
-soybeans, or nothing. Producing corn incurs a cost of four points, while
-producing soybeans incurs a cost of 10 points. Selling a unit of corn
-brings revenue equal to \[P_c = (N/2) + 6 - Q_c,\] where \(N\) equals
-the number of students participating and \(Q_c\) equals the number of
-students choosing to produce corn. Selling a unit of soybeans brings
-revenue equal to \[P_s = (N/2) + 10 - Q_s.\] These parameters allow for
-there to be a ``normal profit'' of about one point per student in each
-market in equilibrium, to compensate for the risk of venturing into
-self-employment and lessen the chances that students might ``win''
-negative points. Students choosing to produce nothing sell their labor
-in the labor market and break even.\footnote{A template can be found at:
+Garratt (2000) designed an entry and exit game with four discrete
+specifications of the demand functions for class sizes between 25 and
+44. Garratt's version also includes four markets (corn, wheat, rice, and
+soybeans), while the one presented here only includes two (corn and
+soybeans). The demand functions in this version of the experiment
+automatically adjust according to the number of students participating.
+Garratt's version of the game also takes about 45 minutes to complete
+the experiment (including a government ``fallow program'' intervention
+variation), usually about five rounds.
+
+Before class the instructor prepares a Form to collect responses that
+includes the fields ``First Name,'' ``Last Name,'' ``Round,'' and
+``Market.''\footnote{A template can be found at:
   \url{https://docs.google.com/forms/d/1oUsLulfD5bqT6_9VVYIzLWuuQ-L4vwmC4jI-1jabOVQ/edit}.}
+Other information that might be useful to add to the Form includes
+information about demand and costs in each sector. The default inverse
+demand functions allow for each market to reward producers with about
+one unit of ``normal profit,'' but these settings can be changed.
 
-Students may play as many rounds as the instructor decides to continue
-the game, or until the markets reach the long run equilibrium of zero
-\emph{economic} profit. Usually the markets converge to the long run
-equilibrium (or students begin to overthink the excercise) by the end of
-the fourth or fifth round.
+In class, the instructor informs the students that they will choose to
+plant corn, soybeans, or nothing. Producing corn incurs a cost of four,
+while producing soybeans incurs a cost of 10. Garratt (2000) recommends
+that the instructor \emph{not} reveal the demand functions to students,
+whereas some instructors (including me) might prefer to allow students
+to play with perfect information. Selling a unit of corn brings revenue
+equal to \(P_c = (N/2) + 6 - Q_c\), where \(N\) equals the number of
+students participating and \(Q_c\) equals the number of students
+choosing to produce corn. Selling a unit of soybeans brings revenue
+equal to \(P_s = (N/2) + 10 - Q_s\). These parameters allow for there to
+be a ``normal profit'' of about one unit per student in each market in
+equilibrium, to compensate for the risk of venturing into
+self-employment.\footnote{The long run equilibrium, with 1 unit of
+  ``normal profit'' occurs with \((N/2) + 1\) students choosing corn and
+  \((N/2) - 1\) students choosing soybeans.} If the instructor wants the
+prices to equal whole numbers (and the profits to equalize), they can
+join the game as a ``student'' to round out the numbers.
+
+If the instructor decides to play the game with points, students earn
+points equal to their profits. Students may play as many rounds as the
+instructor decides to continue the game, or until the markets reach the
+long run equilibrium of zero \emph{economic} profit. Usually the markets
+converge to the long run equilibrium by the end of about five rounds.
+Padding the demand functions to leave one point of ``normal profit''
+compared to sitting out simulates the concept of a normal profit
+business owners receive for taking risk and lessens the chances that
+students might ``win'' negative extra credit points. Students choosing
+to produce nothing sell their labor in the labor market and earn zero
+(they do not earn a normal profit).
 
 \hypertarget{oligoply-models}{%
 \subsection{Oligoply Models}\label{oligoply-models}}
@@ -251,20 +306,52 @@ market price depends on both the strategy they choose for their ``firm''
 and also the strategy their partner chooses. Each of the three examples
 uses the following linear inverse demand function (the parameters of
 which individual instructors may change in the options):
-\[P = a + b(Q_1 + Q_2),\] where the default values for the parameters
+\(P = a + b(Q_1 + Q_2),\) where the default values for the parameters
 are \(a = 10\) and \(b = -1\). Likewise, firms face the the same cost
-function: \[TC = f + cQ_i,\] where \(f\) represents the fixed cost (0 by
-default) and \(c\) represents the (constant) marginal cost of each
-additional unit (6 by default).
+function: \(TC = f + cQ_i,\) where \(f\) represents the fixed cost (0 by
+default) and \(c\) represents the (constant) marginal (and average) cost
+of each additional unit (6 by default).
+
+Before beginning any of the duopoly models, the instructor should solve
+the competitive and monopoly equilibria with students first so that
+students can see the plausible range of prices they should expect to
+declare. Skipping this step often leads to a few greedy (but
+quantitatively-challenged) students choosing prices that would result in
+negative quantities. With the default parameters, the competitive
+equilibrium price and quantity are 6 and 4, while the monopoly
+equilibrium price and quantity are 8 and 2.
 
 \hypertarget{bertrand-duoploy}{%
 \subsubsection{Bertrand Duoploy}\label{bertrand-duoploy}}
 
-In the Bertrand game, students choose their price, and the firm with the
-lowest price wins the whole market demand. If both firms choose the same
-price, they split the market. Students submit their name and price
-strategy through a Google Form.\footnote{A template can be found at:
+Before class, the instructor prepares the Form to collect the responses,
+which includes the fields ``First Name,'' ``Last Name'', ``Partner First
+Name,'' ``Partner Last Name,'' ``Round,'' and ``Price.''\footnote{A
+  template can be found at:
   \url{https://docs.google.com/forms/d/1AykOoY6mVj17D_5CW7-BLhSgOJdGEhyfYHKHROnvdcg/edit}.}
+The package also includes a function to assign partners randomly using
+the class roster (saved as a Google Sheet), and the
+\texttt{bertrandGame()} function even allows the instructor to randomize
+the partners \emph{after the fact} in case the instructor really wants
+to cut down on tacit collusion. The package default calculates the
+results using student-entered partners.
+
+In class, the instructor reviews the competitive and monopoly equilibria
+for the demand function in the example. The instructor then presents the
+``rules'' for the Bertrand model as a ``winner takes all'' market.
+
+\[
+Q_1 = \begin{cases}
+    0 & \text{if } P_1 > P_2 \\ % & is your "\tab"-like command (it's a tab alignment character)
+    (10 - P_1)/2 & \text{if } P_1 = P_2 \\
+    10 - P_1 & if P_1 < P_2 
+\end{cases}
+\]
+
+In the Bertrand game, students submit their names and their price, and
+the firm with the lowest price wins the whole market demand. If both
+firms choose the same price, they split the market. Students submit
+their name and price strategy through a Google Form.
 
 \hypertarget{cournot-duopoly}{%
 \subsubsection{Cournot Duopoly}\label{cournot-duopoly}}
@@ -316,10 +403,10 @@ Once the students have completed each round of a game, the instructor
 should pause to tabulate the results for that round. This is especially
 the case in the entry and exit game, where convergence to the long-run
 equilibrium requires students to know which sector earned economic
-profits in the previous round. To do this, all the instructor needs to
-do is click the Google Sheets icon in the responses tab of the edit page
-of the form. Figure 1 demonstrates where to find these tools in your
-Google Form.
+profits in the previous round. To do this, the instructor needs to click
+the Google Sheets icon in the responses tab of the edit page of the
+form. Figure 1 demonstrates where to find these tools in your Google
+Form.
 
 \begin{figure}
 \centering
@@ -328,9 +415,12 @@ Google Form.
 \end{figure}
 
 This creates a Google Sheet that contains all of the data for tabulating
-the results. In order to link to your results, you will need to copy to
-your clipboard the sheet ID from the URL. Figure 2 shows where you can
-find the sheet ID for your results.
+the results.\footnote{Link the Form to a Sheet to collect responses by
+  selecting the ``Responses'' tab, and clicking ``Link to Sheets.''}
+
+In order to link to your results, you will need to copy to your
+clipboard the sheet ID from the URL. Figure 2 shows where you can find
+the sheet ID for your results.
 
 \begin{figure}
 \centering

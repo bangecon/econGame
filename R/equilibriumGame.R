@@ -5,6 +5,8 @@
 ##' @details \code{equilibriumGame} tabulates the results of a simple equilibrium game based on Holt (1996). The instructor informs the students that they own a single unit of a eCoin currency that each of them values differently. Students then receive a random value from 1 to 10 using a link to a Google Sheet. This number represents their (constant) value they attach to the unit they presently own and for if they were to acquire one more unit of eCoin. Students submit their name, their value draw, a "bid" corresponding to the highest amount they would pay for a second eCoin, and an "ask" corresponding to the lowest amount they would accept to part with the eCoin they already own. Students keep their consumer and producer surpluses from each round as "extra credit" points. \code{equilibriumGame} tabulates the supply and demand schedules; calculates the equilibrium (with the help of a C++ helper function provided by "David" on Stack Overflow, \url{https://stackoverflow.com/questions/23830906/intersection-of-two-step-functions/}); graphs the equilibrium; and tabulates the scores for each student.
 ##'
 ##' @param sheet (required) is a character string url corresponding to the Google Sheets location containing the individual submissions.
+##' @param auth is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.
+##' @param email is an email address that matches the user account containing the Sheet with the individual submissions.
 ##' @return \code{type} returns the type of activity (equlibriumGame).
 ##' @return \code{results} returns the original submissions (with market price and points added).
 ##' @return \code{schedules} returns a list containing the supply and demand schedules for each round.
@@ -17,6 +19,8 @@
 
 equilibriumGame <-
   function(sheet,
+           auth = FALSE,
+           email = NULL,
            ...) {
     Rcpp::sourceCpp(
       code = '
@@ -85,6 +89,14 @@ equilibriumGame <-
                     '
     )
     # Set up the Google Sheets, read responses, and initialize output objects.
+    if(auth == TRUE) {
+      options(gargle_oauth_cache = ".secrets")
+      gs4_auth()
+      gs4_deauth()
+      gs4_auth(cache = ".secrets", email = email)
+      } else {
+      gs4_deauth()
+    }
     results <- read_sheet(sheet)
     colnames(results) <- make.names(colnames(results))
     results <-

@@ -214,12 +214,12 @@ plot.econGame <- function(econGame,
 
   }
   if (econGame$type == 'bertrandGame') {
-    out <- ggplot(econGame$results) +
-      geom_histogram(aes(x = Price),
+    out <- ggplot(subset(econGame$results, Round.1 == round)) +
+      geom_histogram(aes(x = Price.1),
                      fill = 'darkorange',
                      alpha = 0.3,
                      binwidth = binwidth, ...) +
-      geom_histogram(aes(x = Price.Market),
+      geom_histogram(aes(x = Price.M),
                      fill = 'blue',
                      alpha = 0.3,
                      binwidth = binwidth, ...)
