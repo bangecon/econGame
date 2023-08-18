@@ -11,7 +11,11 @@
 
 \item{round}{is the round of the game that you want to plot (defaults to NULL for all rounds).}
 
-\item{nrow}{is the number of columns to use for \code{ggarrange} (defaults to the number of rounds).}
+\item{nrow}{is the number of rows to use for \code{ggarrange} (defaults to 1).}
+
+\item{ncol}{is the number of columns to use for \code{ggarrange} (defaults to the number of rounds).}
+
+\item{binwidth}{is the number of bins to use for histograms.}
 
 \item{...}{other optional graphical parameters.}
 }
@@ -23,24 +27,11 @@ Plots objects of class \code{econGame} created by tabulating the results of one 
 }
 \details{
 \code{plot.econGame} currently supports the following games:
-
 \code{equilibriumGame} for simple market equilibrium.
-
-\code{ultimatumGame} for a histogram of the outcomes of the ultimatum game.
-
-\code{anchoringGame} for a box plot of the result of the anchoring game.
-
-\code{entryexitGame} for a simple entry and exit game.
-
+\code{entryGame} for a simple entry and exit game.
 \code{staghuntGame} for a bar plot of the outcomes of the stag hunt game.
-
 \code{cournotGame} for a bar plot of the outcomes of the Cournot duopoly game.
-
 \code{stackelbergGame} for a bar plot of the outcomes of the Stackelberg duopoly game.
-
 \code{bertrandGame} for a histogram of the price strategies and equlibrium prices for the Bertrand duopoly game.
-
-\code{pollutionGame} for a demonstration of the outcome of the cap & trade market.
-
-\code{publicgoodGame} for a histogram of the values of voluntary public-good contributions.
+\code{multipdGame} for a histogram of the strategies of a multi-player prisoner's dilemma game.
 }

@@ -8,21 +8,23 @@
 ##' @param c is the value of the firm's marginal cost (default is 6).
 ##' @param f is the value of the firm's fixed cost (default is 0).
 ##'
-##' @return \code{type} returns the type of activity (cournotGame).
+##' @return \code{type} returns the type of activity (stackelbergGame).
 ##' @return \code{results} returns the original submissions (with equilibria and points per round added).
 ##' @return \code{grades} returns the aggregated points "won" by each student for the entire activity.
 ##'
 ##' @export
 
 stackelbergGame <-
-  function(sheet,
+  function(resultsSheet = NULL,
+           leaderSheet = NULL,
            a = 10,
            b = -1,
            c = 6,
            f = 0,
+           partners = 'random',
+           names = NULL,
            ...) {
     # Set up the Google Sheets, read responses, and initialize output objects.
-    results <- read_sheet(sheet)
     if (a <= 0)
       stop("The intercept of the demand function needs to be positive.")
     if (b >= 0)
@@ -31,33 +33,166 @@ stackelbergGame <-
       stop("There ain't no such thing as a free lunch (TANSTAAFL)!")
     if (f <  0)
       stop("Fixed costs must be non-negative.")
-    colnames(results) <- make.names(colnames(results))
-    results <-
-      replace_na(results, list(First.Name = "John", Last.Name = "Doe"))
-    results$First.Name <- str_to_title(results$First.Name)
-    results$Last.Name <- str_to_title(results$Last.Name)
-    results$Partner.First.Name <-
-      str_to_title(results$Partner.First.Name)
-    results$Partner.Last.Name <-
-      str_to_title(results$Partner.Last.Name)
-    partnerResults <-
-      results[, which(
-        names(results) %in% c(
-          "Partner.First.Name",
-          "Partner.Last.Name",
-          "Round",
-          "Strategy"
+    if (is.null(names)) {
+      names <- list()
+      if (partners == 'students') {
+        names <- list(
+          first = "First.Name",
+          last = "Last.Name",
+          partnerFirst = "Partner.First.Name",
+          partnerLast = "Partner.Last.Name",
+          round = "Round",
+          role = "Role",
+          strategy = "Strategy"
         )
-      )]
-    colnames(partnerResults)[4] <- "Partner.Strategy"
-    results <- merge(
-      results,
-      partnerResults,
-      all = TRUE,
-      by.x = c("First.Name", "Last.Name", "Round"),
-      by.y = c("Partner.First.Name", "Partner.Last.Name", "Round"),
-      suffixes = c("", ".Partner")
-    )
+      } else {
+        names <- list(
+          first = "First.Name",
+          last = "Last.Name",
+          round = "Round",
+          role = "Role",
+          strategy = "Strategy"
+        )
+      }
+    } else {
+      names <- lapply(names, make.names)
+    }
+    if(partners == "random") {
+      roles <- randomLeaders(leaderSheet)
+      rolesLong <- roles$long
+      roles <- roles$wide
+      if(is.null(resultsSheet)) {
+        resultsWide <- roles
+        resultsWide$Strategy.1 <- "Defect"
+        resultsWide$Strategy.2 <- "Defect"
+        leaderResults <- resultsWide[, c(
+          "Round", "First.Name.1", "Last.Name.1", "Role.1", "Strategy.1")]
+        followResults <- resultsWide[, c(
+          "Round", "First.Name.2", "Last.Name.2", "Role.2", "Strategy.2")]
+        results <- data.frame(
+          Round = c(leaderResults$Round, followResults$Round),
+          First.Name.1 = c(leaderResults$First.Name.1, followResults$First.Name.2),
+          Last.Name.1 = c(leaderResults$Last.Name.1, followResults$Last.Name.2),
+          Role.1 = c(leaderResults$Role.1, followResults$Role.2),
+          First.Name.2 = c(followResults$First.Name.2, leaderResults$First.Name.1),
+          Last.Name.2 = c(followResults$Last.Name.2, leaderResults$Last.Name.1),
+          Strategy.1 = c(leaderResults$Strategy.1, followResults$Strategy.2)
+        )
+        results <- results[order(
+          results$Round, results$Role.1, results$Last.Name.1),]
+      } else {
+        results <- googlesheets4::read_sheet(resultsSheet)
+        colnames(results) <- make.names(colnames(results))
+        results <- results[,-which(names(results) %in% "Timestamp")]
+        results[[c(names$first)]] <- tidyr::replace_na(results[[c(names$first)]], "John")
+        results[[c(names$last)]] <- tidyr::replace_na(results[[c(names$last)]], "Doe")
+        results[[c(names$first)]] <- stringr::str_to_title(results[[c(names$first)]])
+        results[[c(names$last)]] <- stringr::str_to_title(results[[c(names$last)]])
+        results <- as.data.frame(results)
+        colnames(results)[which(colnames(results) == names$first)] <-
+          'First.Name'
+        colnames(results)[which(colnames(results) == names$last)] <-
+          'Last.Name'
+        colnames(results)[which(colnames(results) == names$round)] <-
+          'Round'
+        colnames(results)[which(colnames(results) == names$strategy)] <-
+          'Strategy'
+        results <- merge(rolesLong, results, by = c("First.Name", "Last.Name", "Round"))
+        results <- results[order(results$Round, results$First.Name, results$Last.Name), ]
+        resultsWide <- merge(roles, results,
+                             by.x = c("Round", "First.Name.1", "Last.Name.1", "Role.1"),
+                             by.y = c("Round", "First.Name", "Last.Name", "Role"))
+        colnames(resultsWide)[which(colnames(resultsWide) == "Strategy")] <-
+          "Strategy.1"
+        resultsWide <- merge(resultsWide, results,
+                             by.x = c("Round", "First.Name.2", "Last.Name.2", "Role.2"),
+                             by.y = c("Round", "First.Name", "Last.Name", "Role"))
+        colnames(resultsWide)[which(colnames(resultsWide) == "Strategy")] <-
+          "Strategy.2"
+        leaderResults <- resultsWide[, c(
+          "Round", "First.Name.1", "Last.Name.1", "Role.1", "Strategy.1")]
+        followResults <- resultsWide[, c(
+          "Round", "First.Name.2", "Last.Name.2", "Role.2", "Strategy.2")]
+        results <- data.frame(
+          Round = c(leaderResults$Round, followResults$Round),
+          First.Name.1 = c(leaderResults$First.Name.1, followResults$First.Name.2),
+          Last.Name.1 = c(leaderResults$Last.Name.1, followResults$Last.Name.2),
+          Role.1 = c(leaderResults$Role.1, followResults$Role.2),
+          First.Name.2 = c(followResults$First.Name.2, leaderResults$First.Name.1),
+          Last.Name.2 = c(followResults$Last.Name.2, leaderResults$Last.Name.1),
+          Strategy.1 = c(leaderResults$Strategy.1, followResults$Strategy.2)
+        )
+        results <- results[order(
+          results$Round, results$Role.1, results$Last.Name.1),]
+      }
+    } else {
+      googlesheets4::gs4_deauth()
+      results <- as.data.frame(googlesheets4::read_sheet(resultsSheet))
+      results <- results[,-which(names(results) %in% "Timestamp")]
+      colnames(results) <- make.names(colnames(results))
+      results[[c(names$first)]] <- tidyr::replace_na(results[[c(names$first)]], "John")
+      results[[c(names$last)]] <- tidyr::replace_na(results[[c(names$last)]], "Doe")
+      results[, c(names$first)] <- ifelse(!is.na(results[, c(names$first)]), results[, c(names$first)], "John")
+      results[, c(names$last)] <- ifelse(!is.na(results[, c(names$last)]), results[, c(names$last)], "Doe")
+      leaderResults <- subset(results, Role == "Leader")
+      followResults <- subset(results[, which(
+        names(results) %in% c(
+          names$first,
+          names$last,
+          names$round,
+          names$role,
+          names$strategy
+        ))],
+        Role == "Follower")
+      colnames(results)[which(colnames(results) == names$first)] <-
+        'First.Name.1'
+      colnames(results)[which(colnames(results) == names$last)] <-
+        'Last.Name.1'
+      colnames(results)[which(colnames(results) == names$partnerFirst)] <-
+        'First.Name.2'
+      colnames(results)[which(colnames(results) == names$partnerLast)] <-
+        'Last.Name.2'
+      colnames(results)[which(colnames(results) == names$role)] <-
+        'Role.1'
+      colnames(results)[which(colnames(results) == names$strategy)] <-
+        'Strategy.1'
+      colnames(leaderResults)[which(colnames(leaderResults) == names$first)] <-
+        'First.Name.1'
+      colnames(leaderResults)[which(colnames(leaderResults) == names$last)] <-
+        'Last.Name.1'
+      colnames(leaderResults)[which(colnames(leaderResults) == names$partnerFirst)] <-
+        'First.Name.2'
+      colnames(leaderResults)[which(colnames(leaderResults) == names$partnerLast)] <-
+        'Last.Name.2'
+      colnames(leaderResults)[which(colnames(leaderResults) == names$role)] <-
+        'Role.1'
+      colnames(leaderResults)[which(colnames(leaderResults) == names$strategy)] <-
+        'Strategy.1'
+      colnames(followResults)[which(colnames(followResults) == names$first)] <-
+        'First.Name.2'
+      colnames(followResults)[which(colnames(followResults) == names$last)] <-
+        'Last.Name.2'
+      colnames(followResults)[which(colnames(followResults) == names$role)] <-
+        'Role.2'
+      colnames(followResults)[which(colnames(followResults) == names$strategy)] <-
+        'Strategy.2'
+      resultsWide <- merge(
+        leaderResults,
+        followResults,
+        all = TRUE,
+        by = c("First.Name.2", "Last.Name.2", "Round")
+      )
+      leaderResults <- leaderResults[, which(
+        names(results) %in% c(
+          "First.Name.1",
+          "Last.Name.1",
+          "Round",
+          "Role.1",
+          "Strategy.1"
+        ))]
+      roles <- resultsWide[, c("Round", "First.Name.1", "Last.Name.1", "Role.1", "First.Name.2", "Last.Name.2", "Role.2")]
+      roles <- roles[order(roles$Round, roles$Last.Name.1, roles$First.Name.1),]
+    }
     q.monopoly = (a - c) / (-2 * b)
     qi.c = q.monopoly / 2
     ql.d = (a - c) / (-2 * b)
@@ -81,120 +216,116 @@ stackelbergGame <-
         profit(c(qi.c, qf.dc))[2],
         profit(c(ql.d, qi.c))[2],
         profit(c(ql.d, qf.dd))[2])
-    leaderResults <- subset(results, Role == "Leader")
-    followerResults <- subset(results, Role == "Follower")
-    leaderResults <- within(leaderResults, {
-      Q.Student <- ifelse(Strategy == "Collude", qi.c, ql.d)
-      Q.Partner <- ifelse(is.na(Partner.Strategy),
-                          0,
-                          ifelse(
-                            Partner.Strategy == "Collude",
-                            qi.c,
-                            ifelse(Strategy == "Collude", qf.dc, qf.dd)
-                          ))
-      Profit <- ifelse(
-        Strategy == "Collude",
+    resultsWide <- within(resultsWide, {
+      Q.1 <- ifelse(Strategy.1 == "Collude", qi.c, ql.d)
+      Q.2 <- ifelse(
+        is.na(Strategy.2), 0,
         ifelse(
-          is.na(Partner.Strategy),
-          profit(c(qi.c, 0)),
-          ifelse(Partner.Strategy == "Collude",
-                 profit(c(qi.c, qi.c)),
-                 profit(c(qi.c, qf.dc)))
+          Strategy.2 == "Collude",
+          qi.c,
+          ifelse(Strategy.1 == "Collude", qf.dc, qf.dd)
+          )
+        )
+      Pi.1 <- ifelse(
+        Strategy.1 == "Collude",
+        ifelse(
+          is.na(Strategy.2),
+          profit(c(qi.c, 0))[1],
+          ifelse(
+            Strategy.2 == "Collude",
+            profit(c(qi.c, qi.c))[1],
+            profit(c(qi.c, qf.dc))[1])
         ),
         ifelse(
-          is.na(Partner.Strategy),
-          profit(c(ql.d, 0)),
-          ifelse(Partner.Strategy == "Collude",
-                 profit(c(ql.d, qi.c)),
-                 profit(c(ql.d, qf.dd)))
+          is.na(Strategy.2),
+          profit(c(ql.d, 0))[1],
+          ifelse(
+            Strategy.2 == "Collude",
+            profit(c(ql.d, qi.c))[1],
+            profit(c(ql.d, qf.dd))[1])
+        )
+      )
+      Pi.2 <- ifelse(
+        Strategy.1 == "Collude",
+        ifelse(
+          is.na(Strategy.2),
+          profit(c(qi.c, 0))[2],
+          ifelse(
+            Strategy.2 == "Collude",
+            profit(c(qi.c, qi.c))[2],
+            profit(c(qi.c, qf.dc))[2])
+        ),
+        ifelse(
+          is.na(Strategy.2),
+          profit(c(ql.d, 0))[2],
+          ifelse(
+            Strategy.2 == "Collude",
+            profit(c(ql.d, qi.c))[2],
+            profit(c(ql.d, qf.dd))[2])
         )
       )
     })
-    if (nrow(followerResults) > 0) {
-      followerResults <- within(followerResults, {
-        Q.Partner <- ifelse(Partner.Strategy == "Collude", qi.c, ql.d)
-        Q.Student <- ifelse(Strategy == "Collude",
-                            qi.c,
-                            ifelse(Partner.Strategy == "Collude", qf.dc, qf.dd))
-        Profit <- ifelse(
-          Partner.Strategy == "Collude",
-          ifelse(Strategy == "Collude",
-                 profit(c(qi.c, qi.c)),
-                 profit(c(qi.c, qf.dc))),
-          ifelse(Strategy == "Collude",
-                 profit(c(ql.d, qi.c)),
-                 profit(c(ql.d, qf.dd)))
-        )
-      })
-    }
-    results <- rbind(leaderResults, followerResults)
+    results <- data.frame(
+      First.Name = c(resultsWide$First.Name.1, resultsWide$First.Name.2),
+      Last.Name = c(resultsWide$Last.Name.1, resultsWide$Last.Name.2),
+      Partner.First.Name = c(resultsWide$First.Name.2, resultsWide$First.Name.1),
+      Partner.Last.Name = c(resultsWide$First.Name.2, resultsWide$First.Name.1),
+      Round = c(resultsWide$Round, resultsWide$Round),
+      Role = c(resultsWide$Role.1, resultsWide$Role.2),
+      Strategy = c(resultsWide$Strategy.1, resultsWide$Strategy.2),
+      Partner.Strategy = c(resultsWide$Strategy.2, resultsWide$Strategy.1),
+      Quantity = c(resultsWide$Q.1, resultsWide$Q.2),
+      Partner.Quantity = c(resultsWide$Q.2, resultsWide$Q.1),
+      Profit = c(resultsWide$Pi.1, resultsWide$Pi.2)
+    )
     outcomes <- as.data.frame(cbind(
-      First.Name = leaderResults$First.Name,
-      Last.Name = leaderResults$Last.Name,
+      First.Name = results$First.Name,
+      Last.Name = results$Last.Name,
       outcomes = paste0(
-        leaderResults$Strategy,
+        results$Strategy,
         "-",
-        leaderResults$Partner.Strategy
+        results$Partner.Strategy
       )
     ))
-    payoffMatrix <- matrix(c(
-      paste0("(", leaderPayoffs[4], ", ", followerPayoffs[4], ")"),
-      paste0("(", leaderPayoffs[2], ", ", followerPayoffs[2], ")"),
-      paste0("(", leaderPayoffs[3], ", ", followerPayoffs[3], ")"),
-      paste0("(", leaderPayoffs[1], ", ", followerPayoffs[1], ")")
-    ),
-    nrow = 2,
-    ncol = 2)
-    colnames(payoffMatrix) <-
-      c("Partner = Defect", "Partner = Collude")
-    rownames(payoffMatrix) <-
-      c("Strategy = Defect", "Strategy = Collude")
-    outputMatrix <- matrix(c(
-      paste0("(", round(ql.d, 4), ", ", round(qf.dd, 4), ")"),
-      paste0("(", round(qi.c, 4), ", ", round(qf.dc, 4), ")"),
-      paste0("(", round(ql.d, 4), ", ", round(qi.c,  4), ")"),
-      paste0("(", round(qi.c, 4), ", ", round(qi.c,  4), ")")
-    ),
-    nrow = 2,
-    ncol = 2)
-    colnames(outputMatrix) <-
-      c("Partner = Defect", "Partner = Collude")
-    rownames(outputMatrix) <-
-      c("Strategy = Defect", "Strategy = Collude")
-    priceMatrix <- matrix(c(round(p.dd, 4),
-                            round(p.cd, 4),
-                            round(p.dc, 4),
-                            round(p.cc, 4)),
-                          nrow = 2,
-                          ncol = 2)
-    colnames(priceMatrix) <-
-      c("Partner = Defect", "Partner = Collude")
-    rownames(priceMatrix) <-
-      c("Strategy = Defect", "Strategy = Collude")
+    payoffMatrix <- data.frame(
+      Follower.Defect = c(
+        paste0("(", leaderPayoffs[4], ", ", followerPayoffs[4], ")"),
+        paste0("(", leaderPayoffs[2], ", ", followerPayoffs[2], ")")),
+      Follower.Collude = c(
+        paste0("(", leaderPayoffs[3], ", ", followerPayoffs[3], ")"),
+        paste0("(", leaderPayoffs[1], ", ", followerPayoffs[1], ")")),
+      row.names = c("Leader.Defect", "Leader.Collude"))
+    outputMatrix <- data.frame(
+      Follower.Defect = c(
+        paste0("(", round(ql.d, 4), ", ", round(qf.dd, 4), ")"),
+        paste0("(", round(qi.c, 4), ", ", round(qf.dc, 4), ")")),
+      Follower.Collude = c(
+        paste0("(", round(ql.d, 4), ", ", round(qi.c,  4), ")"),
+        paste0("(", round(qi.c, 4), ", ", round(qi.c,  4), ")")),
+      row.names = c("Leader.Defect", "Leader.Collude"))
+    priceMatrix <- data.frame(
+      Follower.Defect = c(round(p.dd, 4), round(p.cd, 4)),
+      Follower.Collude = c(round(p.dc, 4), round(p.cc, 4)),
+      row.names = c("Leader.Defect", "Leader.Collude"))
     grades <-
-      aggregate(Profit ~ First.Name + Last.Name,
-                data = results,
-                FUN = sum)
-    tree <-
-      gameTree(
-        players = c("Leader", "Follower"),
-        payoffs1 = leaderPayoffs,
-        payoffs2 = followerPayoffs
-      )
+      aggregate(Profit ~ First.Name + Last.Name, data = results, FUN = sum)
     colnames(grades) <- c("First Name", "Last Name", "Score")
+    tree <- gameTree(players = c("Leader", "Follower"),
+      payoffs1 = leaderPayoffs, payoffs2 = followerPayoffs)
     out <- list(
       type = "stackelbergGame",
       payoff = cbind(leaderPayoffs, followerPayoffs),
       tree = tree,
+      roles = roles,
       leaderResults = leaderResults,
-      followerResults = followerResults,
+      followResults = followResults,
       outcomes = outcomes,
       payoff = payoffMatrix,
       output = outputMatrix,
       price = priceMatrix,
       results = results[order(results$Round,
                               results$Last.Name,
-                              results$First.Name), -which(names(results) %in% 'Timestamp')],
+                              results$First.Name), ],
       grades = grades[order(grades$`Last Name`, grades$`First Name`), ]
     )
     class(out) <- c('econGame', class(out))

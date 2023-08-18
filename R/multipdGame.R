@@ -13,8 +13,6 @@
 ##' @return \code{results} returns the original submissions (with equilibria and points per round added).
 ##' @return \code{grades} returns the aggregated points "won" by each student for the entire activity.
 ##'
-##' @references
-##'
 ##' @export
 
 multipdGame <-

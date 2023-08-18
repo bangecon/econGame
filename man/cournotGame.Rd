@@ -4,7 +4,16 @@
 \alias{cournotGame}
 \title{Tabulate results for a simple in-class Cournot duopoly game.}
 \usage{
-cournotGame(sheet, a = 10, b = -1, c = 6, f = 0, partners = "random", ...)
+cournotGame(
+  sheet = NULL,
+  a = 10,
+  b = -1,
+  c = 6,
+  f = 0,
+  partners = "random",
+  names = NULL,
+  ...
+)
 }
 \arguments{
 \item{sheet}{(required) is a character string sheet ID corresponding to the Google Sheets location containing the individual submissions.}

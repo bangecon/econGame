@@ -12,7 +12,7 @@
 groupList <- function(studentList, n = 2) {
   studentList$group <- runif(nrow(studentList))
   studentList$group <- ceiling(rank(studentList$group) / n)
-  studentList <- studentList[order(studentList$group),]
+  studentList <- studentList[order(studentList$group), ]
   out <- studentList
   out
 }

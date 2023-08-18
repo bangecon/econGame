@@ -4,7 +4,7 @@
 \alias{publicgoodGame}
 \title{Tabulate public good game results.}
 \usage{
-publicgoodGame(sheet, endowment = 0, return = 1.2, ...)
+publicgoodGame(sheet, endowment = 5, return = 2, ...)
 }
 \arguments{
 \item{sheet}{(required) is a character string url corresponding to the Google Sheets location containing the individual submissions.}

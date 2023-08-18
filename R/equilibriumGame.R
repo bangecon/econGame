@@ -91,12 +91,13 @@ equilibriumGame <-
     # Set up the Google Sheets, read responses, and initialize output objects.
     if(auth == TRUE) {
       options(gargle_oauth_cache = ".secrets")
-      gs4_auth()
-      gs4_deauth()
-      gs4_auth(cache = ".secrets", email = email)
-      } else {
-      gs4_deauth()
-    }
+      googlesheets4::gs4_auth()
+      googlesheets4::gs4_deauth()
+      googlesheets4::gs4_auth(cache = ".secrets", email = email)
+      }
+    else {
+      googlesheets4::gs4_deauth()
+      }
     results <- read_sheet(sheet)
     colnames(results) <- make.names(colnames(results))
     results <-

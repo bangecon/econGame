@@ -4,11 +4,19 @@
 \alias{stackelbergGame}
 \title{Tabulate results for a simple in-class Stackelberg duopoly game.}
 \usage{
-stackelbergGame(sheet, a = 10, b = -1, c = 6, f = 0, ...)
+stackelbergGame(
+  resultsSheet = NULL,
+  leaderSheet = NULL,
+  a = 10,
+  b = -1,
+  c = 6,
+  f = 0,
+  partners = "random",
+  names = NULL,
+  ...
+)
 }
 \arguments{
-\item{sheet}{(required) is a character string sheet ID corresponding to the Google Sheets location containing the individual submissions.}
-
 \item{a}{is the value of the intercept of the linear inverse-demand function (default is 10).}
 
 \item{b}{is the value of the slope of the linear inverse-demand function (default is -1).}
@@ -16,9 +24,11 @@ stackelbergGame(sheet, a = 10, b = -1, c = 6, f = 0, ...)
 \item{c}{is the value of the firm's marginal cost (default is 6).}
 
 \item{f}{is the value of the firm's fixed cost (default is 0).}
+
+\item{sheet}{(required) is a character string sheet ID corresponding to the Google Sheets location containing the individual submissions.}
 }
 \value{
-\code{type} returns the type of activity (cournotGame).
+\code{type} returns the type of activity (stackelbergGame).
 
 \code{results} returns the original submissions (with equilibria and points per round added).
 

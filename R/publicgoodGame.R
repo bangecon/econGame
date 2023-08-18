@@ -16,7 +16,7 @@
 ##'
 ##' @export
 
-publicgoodGame <- function(sheet, endowment = 0, return = 1.2, ...) {
+publicgoodGame <- function(sheet, endowment = 5, return = 2, ...) {
   # Set up the Google Sheets, read responses, and initialize output objects.
   results <- read_sheet(sheet)
   colnames(results) <- make.names(colnames(results))
@@ -24,22 +24,22 @@ publicgoodGame <- function(sheet, endowment = 0, return = 1.2, ...) {
     replace_na(results,
                list(First.Name = "John",
                     Last.Name = "Doe"))
-  results <- results[!duplicated(cbind(results$First.Name, results$Last.Name)),]
   results$First.Name <-
     str_to_title(results$First.Name)
   results$Last.Name <-
     str_to_title(results$Last.Name)
   N <- nrow(results)
+  results$PrivateAllocation <- endowment - results$Contribution
   totalContributions <- sum(results$Contribution)
   totalReallocations <- totalContributions * return
   individualReallocaitons <-
     ceiling(totalReallocations / nrow(results))
   results$Reallocation <- individualReallocaitons
-  results$Score <- results$Reallocation - results$Contribution
+  results$Score <- results$PrivateAllocation + results$Reallocation - results$Contribution
   blindedResults <-
     data.frame(results[, -which(names(results) %in% c("First.Name", "Last.Name", "Timestamp"))])
   rownames(blindedResults) <-
-    paste(results$Last.Name, results$First.Name, sep = ".")
+    paste(results$Last.Name, results$First.Name, sep = ", ")
   grades <-
     with(results,
          as.data.frame(

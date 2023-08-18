@@ -14,11 +14,10 @@
 ##'
 ##' @export
 
-
-randomGroups <- function(sheet,
-                         size = 2,
-                         seed = 8675309,
-                         names = NULL) {
+randomLeaders <- function(sheet,
+                          size = 2,
+                          seed = 8675309,
+                          names = NULL) {
   googlesheets4::gs4_deauth()
   studentList <- googlesheets4::read_sheet(sheet)
   studentList <- as.data.frame(studentList)
@@ -29,17 +28,29 @@ randomGroups <- function(sheet,
                  round = "Round")
   }
   set.seed(seed)
-  studentList$group <- runif(nrow(studentList))
   colnames(studentList)[which(colnames(studentList) == names$round)] = "Round"
+  studentList$Rand <- runif(nrow(studentList))
+  Round_n <- studentList %>%
+    group_by(Round) %>%
+    summarise(Round_n = n()) %>%
+    as.data.frame
+  studentList <- merge(studentList, Round_n, by = "Round")
   studentList <- studentList %>%
     group_by(Round) %>%
-    mutate(group = ceiling(rank(group) / size))
-  studentList <-
-    studentList[order(studentList$Round, studentList$group),]
-  studentList$member <- with(studentList,
-                             ave(Round, Round, group, FUN = seq_along))
-  studentList <-
-    studentList[order(studentList$Round, studentList$group, studentList$member),]
-  out <- studentList
+    mutate(Role = factor(rank(Rand) / Round_n <= 0.5,
+                         labels = c("Leader", "Follower")))
+  out.long <- studentList[order(studentList$Round, studentList$Role),
+                          c(names$round, names$first, names$last, "Role")] %>%
+    as.data.frame()
+  out.lead <- subset(out.long, Role == "Leader")
+  colnames(out.lead) <- c("Round", "First.Name.1", "Last.Name.1", "Role.1")
+  out.follow <- subset(out.long, Role == "Follower")
+  colnames(out.follow) <- c("Round", "First.Name.2", "Last.Name.2", "Role.2")
+  out.wide <- cbind(out.lead, out.follow[, -1]) |>
+    as.data.frame()
+  out <- list(
+    long = out.long,
+    wide = out.wide
+  )
   out
 }

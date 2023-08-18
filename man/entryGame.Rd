@@ -8,6 +8,10 @@ entryGame(sheet, ...)
 }
 \arguments{
 \item{sheet}{(required) is a character string sheet ID corresponding to the Google Sheet containing the individual submissions.}
+
+\item{auth}{is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.}
+
+\item{email}{is an email address that matches the user account containing the Sheet with the individual submissions.}
 }
 \value{
 \code{type} returns the type of activity (entryGame).

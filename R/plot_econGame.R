@@ -1,33 +1,20 @@
 ##' Plot econGame results
 ##'
 ##' Plots objects of class \code{econGame} created by tabulating the results of one of the games in the \code{econGame} package
-##'
 ##' @details \code{plot.econGame} currently supports the following games:
-##'
 ##' \code{equilibriumGame} for simple market equilibrium.
-##'
-##' \code{ultimatumGame} for a histogram of the outcomes of the ultimatum game.
-##'
-##' \code{anchoringGame} for a box plot of the result of the anchoring game.
-##'
-##' \code{entryexitGame} for a simple entry and exit game.
-##'
+##' \code{entryGame} for a simple entry and exit game.
 ##' \code{staghuntGame} for a bar plot of the outcomes of the stag hunt game.
-##'
 ##' \code{cournotGame} for a bar plot of the outcomes of the Cournot duopoly game.
-##'
 ##' \code{stackelbergGame} for a bar plot of the outcomes of the Stackelberg duopoly game.
-##'
 ##' \code{bertrandGame} for a histogram of the price strategies and equlibrium prices for the Bertrand duopoly game.
-##'
-##' \code{pollutionGame} for a demonstration of the outcome of the cap & trade market.
-##'
-##' \code{publicgoodGame} for a histogram of the values of voluntary public-good contributions.
+##' \code{multipdGame} for a histogram of the strategies of a multi-player prisoner's dilemma game.
 ##'
 ##' @param econGame (required) is a list created by an \code{econGame} function.
 ##' @param round is the round of the game that you want to plot (defaults to NULL for all rounds).
 ##' @param nrow is the number of rows to use for \code{ggarrange} (defaults to 1).
-##' @param nrow is the number of columns to use for \code{ggarrange} (defaults to the number of rounds).
+##' @param ncol is the number of columns to use for \code{ggarrange} (defaults to the number of rounds).
+##' @param binwidth is the number of bins to use for histograms.
 ##' @param ... other optional graphical parameters.
 ##'
 ##' @return \code{plot.econGame} returns a \code{ggarrange} or \code{ggplot} object that can be plotted and exported.
@@ -203,18 +190,18 @@ plot.econGame <- function(econGame,
   }
   if (econGame$type == 'cournotGame') {
     out <- ggplot() +
-      geom_bar(aes(x = Outcome, y = ..prop.., group = 1),
+      geom_bar(aes(x = Outcome, y = after_stat(prop), group = 1),
                econGame$results, stat = 'count', color = 'blue', fill = 'darkorange')
 
   }
   if (econGame$type == 'stackelbergGame') {
     out <- ggplot() +
-      geom_bar(aes(x = outcomes, y = ..prop.., group = 1),
+      geom_bar(aes(x = outcomes, y = after_stat(prop), group = 1),
                econGame$outcomes, stat = 'count', color = 'blue', fill = 'darkorange')
 
   }
   if (econGame$type == 'bertrandGame') {
-    out <- ggplot(subset(econGame$results, Round.1 == round)) +
+    out <- ggplot(subset(econGame$results, Round == round)) +
       geom_histogram(aes(x = Price.1),
                      fill = 'darkorange',
                      alpha = 0.3,
@@ -226,7 +213,7 @@ plot.econGame <- function(econGame,
   }
   if (econGame$type == 'staghuntGame') {
     out <- ggplot() +
-      geom_bar(aes(x = Outcome, y = ..prop.., group = 1),
+      geom_bar(aes(x = Outcome, y = after_stat(prop), group = 1),
                econGame$results, stat = 'count', color = 'blue', fill = 'darkorange')
 
   }
