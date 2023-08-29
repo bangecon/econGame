@@ -1,6 +1,6 @@
-##" Tabulate results for a simple in-class stag hunt game.
+##" Tabulate results for a simple in-class bertrand duopoly game.
 ##"
-##" @details \code{bertrandGame} tabulates the results of a simple stag hunt game in which students" points depend on their strategy and the strategy chosen by their randomly-assigned partners.
+##" @details \code{bertrandGame} tabulates the results of a simple bertrand duopoly game in which students" points depend on their strategy and the strategy chosen by their randomly-assigned partners.
 ##"
 ##" @param sheet (required) is a character string sheet ID corresponding to the Google Sheets location containing the individual submissions.
 ##" @param a is the value of the intercept of the linear inverse-demand function (default is 10).
