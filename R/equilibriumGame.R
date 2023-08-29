@@ -98,6 +98,18 @@ equilibriumGame <-
     else {
       googlesheets4::gs4_deauth()
       }
+    if (is.null(names)) {
+      names <- list(
+        first = "First.Name",
+        last = "Last.Name",
+        round = "Round",
+        value = "Value",
+        bid = "Bid",
+        ask = "Ask"
+      )
+    } else {
+      names <- lapply(names, make.names)
+    }
     results <- read_sheet(sheet)
     colnames(results) <- make.names(colnames(results))
     results <-
