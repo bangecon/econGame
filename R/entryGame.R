@@ -18,7 +18,7 @@
 ##' @export
 
 entryGame <-
-  function(sheet, ...) {
+  function(sheet, names = NULL, auth = FALSE, ...) {
     # Set up the Google Sheets, read responses, and initialize output objects.
     if(auth == TRUE) {
       options(gargle_oauth_cache = ".secrets")
@@ -29,6 +29,16 @@ entryGame <-
     else {
       googlesheets4::gs4_deauth()
     }
+    if (is.null(names)) {
+      names <- list(
+        first = "First.Name",
+        last = "Last.Name",
+        round = "Round",
+        market = "Market"
+        )
+      } else {
+        names <- lapply(names, make.names)
+        }
     results <- read_sheet(sheet)
     colnames(results) <- make.names(colnames(results))
     results <-
