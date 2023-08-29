@@ -22,6 +22,7 @@ bertrandGame <-
            c = 6,
            f = 0,
            partners = "random",
+           auth = FALSE, 
            names = NULL,
            ...) {
     # Set up the Google Sheets, read responses, and initialize output objects.
@@ -33,6 +34,15 @@ bertrandGame <-
       stop("There ain't no such thing as a free lunch (TANSTAAFL)!")
     if (f <  0)
       stop("Fixed costs must be non-negative.")
+    if (auth == TRUE) {
+      options(gargle_oauth_cache = ".secrets")
+      googlesheets4::gs4_auth()
+      googlesheets4::gs4_deauth()
+      googlesheets4::gs4_auth(cache = ".secrets", email = email)
+    }
+    else {
+      googlesheets4::gs4_deauth()
+    }
     if (is.null(names)) {
       names <- list()
       if (partners == "students") {
