@@ -23,7 +23,7 @@ lobbyGame <-
            prize = 4,
            seed = NULL,
            auth = FALSE,
-           names = NULL
+           names = NULL,
            ...)
   {
     # Set up the Google Sheets, read responses, and initialize output objects.
