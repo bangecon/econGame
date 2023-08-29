@@ -3,6 +3,7 @@
 S3method(plot,econGame)
 export(allpayGame)
 export(anchoringGame)
+export(bertrandGame)
 export(cournotGame)
 export(entryGame)
 export(equilibriumGame)
