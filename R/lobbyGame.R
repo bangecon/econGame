@@ -17,42 +17,76 @@
 ##'
 ##' @export
 
-lobbyGame <- function(sheet, endowment = 5, prize = 4, seed = NULL, ...) {
-  # Set up the Google Sheets, read responses, and initialize output objects.
-  results <- read_sheet(sheet)
-  if(!is.null(seed)) set.seed(seed)
-  colnames(results) <- make.names(colnames(results))
-  results <-
-    replace_na(results, list(First.Name = "John", Last.Name = "Doe"))
-  results$First.Name <- str_to_title(results$First.Name)
-  results$Last.Name <- str_to_title(results$Last.Name)
-  winner <- results[sample(nrow(results), 1), 2:3]
-  results <- results[order(results$Last.Name, results$First.Name), -1]
-  results$Contributions <- 1
-  winner <- cbind(winner, prize)
-  colnames(winner)[3] <- "Prize"
-  grades <-
-    aggregate(
-      Contributions ~ Last.Name + First.Name,
-      data = results,
-      FUN = sum,
-      na.action = na.pass
+lobbyGame <-
+  function(sheet,
+           endowment = 5,
+           prize = 4,
+           seed = NULL,
+           ...)
+  {
+    # Set up the Google Sheets, read responses, and initialize output objects.
+    if (auth == TRUE) {
+      options(gargle_oauth_cache = ".secrets")
+      googlesheets4::gs4_auth()
+      googlesheets4::gs4_deauth()
+      googlesheets4::gs4_auth(cache = ".secrets", email = email)
+    }
+    else {
+      googlesheets4::gs4_deauth()
+    }
+    if (is.null(names)) {
+      names <- list(
+        first = "First.Name",
+        last = "Last.Name",
+        round = "Round",
+        value = "Value",
+        bid = "Bid",
+        ask = "Ask"
+      )
+    } else {
+      names <- lapply(names, make.names)
+    }
+    results <- read_sheet(sheet)
+    if (!is.null(seed))
+      set.seed(seed)
+    colnames(results) <- make.names(colnames(results))
+    results <-
+      replace_na(results, list(First.Name = "John", Last.Name = "Doe"))
+    results$First.Name <- str_to_title(results$First.Name)
+    results$Last.Name <- str_to_title(results$Last.Name)
+    winner <- results[sample(nrow(results), 1), 2:3]
+    results <-
+      results[order(results$Last.Name, results$First.Name),-1]
+    results$Contributions <- 1
+    winner <- cbind(winner, prize)
+    colnames(winner)[3] <- "Prize"
+    grades <-
+      aggregate(
+        Contributions ~ Last.Name + First.Name,
+        data = results,
+        FUN = sum,
+        na.action = na.pass
+      )
+    grades <- cbind(grades, endowment)
+    colnames(grades)[4] <- "Endowment"
+    grades <-
+      merge(grades,
+            winner,
+            by = c("Last.Name", "First.Name"),
+            all = TRUE)
+    grades <-
+      replace_na(grades, list(Prize = 0))
+    grades$Points <-
+      grades$Endowment + grades$Prize - grades$Contributions
+    revenue <- sum(grades$Contributions)
+    out <- list(
+      type = "lobbyGame",
+      results = results[order(results$Last.Name,
+                              results$First.Name), ],
+      winner = winner,
+      revenue = revenue,
+      grades = grades[order(grades$Last.Name, grades$First.Name), ]
     )
-  grades <- cbind(grades, endowment)
-  colnames(grades)[4] <- "Endowment"
-  grades <- merge(grades, winner, by = c("Last.Name", "First.Name"), all = TRUE)
-  grades <-
-    replace_na(grades, list(Prize = 0))
-  grades$Points <- grades$Endowment + grades$Prize - grades$Contributions
-  revenue <- sum(grades$Contributions)
-  out <- list(
-    type = "lobbyGame",
-    results = results[order(results$Last.Name,
-                            results$First.Name),],
-    winner = winner,
-    revenue = revenue,
-    grades = grades[order(grades$Last.Name, grades$First.Name),]
-  )
-  class(out) <- c('econGame', class(out))
-  out
-}
+    class(out) <- c('econGame', class(out))
+    out
+  }
