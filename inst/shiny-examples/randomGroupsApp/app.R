@@ -1,7 +1,5 @@
-library(shiny)
-library(tidyr)
-library(stringr)
-library(googlesheets4)
+library(econGame)
+
 ui <- fluidPage(
   titlePanel("Random Presenter"),
   sidebarPanel(

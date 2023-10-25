@@ -4,12 +4,18 @@
 \alias{multipdGame}
 \title{Tabulate results of a prisonor's dilemma game.}
 \usage{
-multipdGame(sheet, payoff = c(0, -0.5, 3, 1), ...)
+multipdGame(
+  sheet,
+  payoff = c(0, -0.5, 1, 0.5),
+  auth = FALSE,
+  names = NULL,
+  ...
+)
 }
 \arguments{
 \item{sheet}{(required) is a character string ID corresponding to the Google Sheet containing the individual submissions.}
 
-\item{payoff}{(required) is an atomic vector indicating the interdependent payoffs from the different strategy pairs {Respondent, Class}: c({Compete, Compete}, {Collude, Compete}, {Compete, Collude}, {Collude, Collude})}
+\item{payoff}{(required) is an atomic vector indicating the interdependent payoffs from the different strategy pairs {Respondent, Class}: \verb{c(\{Compete, Compete\}, \{Collude, Compete\}, \{Compete, Collude\}, \{Collude, Collude\})}. Default is \code{c(0, -0.5, 1, 0.5)}.}
 }
 \value{
 \code{type} returns the type of activity (multipdGame).

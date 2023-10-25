@@ -3,14 +3,21 @@
 ##' @details \code{cournotGame} tabulates the results of a simple Cournot duopoly game in which students' points depend on their strategy and the strategy chosen by their randomly-assigned partners.
 ##'
 ##' @param sheet (required) is a character string sheet ID corresponding to the Google Sheets location containing the individual submissions.
+##' @param partners is a character string equal to \code{'students'} or \code{'random'} indicating whether students choose their own partners (default) or whether the function should generate them randomly after the students have decided their strategies. If \code{partners = 'students'}, then the form must include fields for the student's own first and last names and fields for their partners' first and last names. If partners are random, then the columns in `sheet` should either contain columns named 'First Name' and 'Last Name', or the user needs to specify the columns in `sheet` corresponding to this information to pass to `randomGroups()`.
 ##' @param a is the value of the intercept of the linear inverse-demand function (default is 10).
 ##' @param b is the value of the slope of the linear inverse-demand function (default is -1).
 ##' @param c is the value of the firm's marginal cost (default is 6).
 ##' @param f is the value of the firm's fixed cost (default is 0).
+##' @param names character list of the column names in `sheet`.
+##' @param auth is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.
+##' @param email is an email address that matches the user account containing the Sheet with the individual submissions (if `auth == TRUE`).
 ##'
-##' @return \code{type} returns the type of activity (cournotGame).
+##' @return \code{type} returns the type of activity (`cournotGame`).
+##' @return \code{payoff} returns the payoff matrix.
+##' @return \code{output} returns the matrix of quantities corresponding to the strategies.
+##' @return \code{price} returns the matrix of prices corresponding to the total merket output for each combination of strategies.
 ##' @return \code{results} returns the original submissions (with equilibria and points per round added).
-##' @return \code{grades} returns the aggregated points "won" by each student for the entire activity.
+##' @return \code{grades} returns the aggregated points 'won' by each student for the entire activity.
 ##'
 ##' @export
 
@@ -20,6 +27,7 @@ cournotGame <-
            b = -1,
            c = 6,
            f = 0,
+           auth = FALSE,
            partners = 'random',
            names = NULL,
            ...) {
@@ -32,6 +40,15 @@ cournotGame <-
       stop("There ain't no such thing as a free lunch (TANSTAAFL)!")
     if (f <  0)
       stop("Fixed costs must be non-negative.")
+    if(auth == TRUE) {
+      options(gargle_oauth_cache = ".secrets")
+      googlesheets4::gs4_auth()
+      googlesheets4::gs4_deauth()
+      googlesheets4::gs4_auth(cache = ".secrets", email = email)
+    }
+    else {
+      googlesheets4::gs4_deauth()
+    }
     if (is.null(names)) {
       names <- list()
       if (partners == 'students') {

@@ -5,7 +5,7 @@
 ##' @details \code{multipdGame} tabulates the results of a simple prisoner's dilemma game in which students' points depend on their strategy and the strategy chosen by the majority of the rest of the class.
 ##'
 ##' @param sheet (required) is a character string ID corresponding to the Google Sheet containing the individual submissions.
-##' @param payoff (required) is an atomic vector indicating the interdependent payoffs from the different strategy pairs {Respondent, Class}: c({Compete, Compete}, {Collude, Compete}, {Compete, Collude}, {Collude, Collude})
+##' @param payoff (required) is an atomic vector indicating the interdependent payoffs from the different strategy pairs {Respondent, Class}: `c({Compete, Compete}, {Collude, Compete}, {Compete, Collude}, {Collude, Collude})`. Default is `c(0, -0.5, 1, 0.5)`.
 ##'
 ##' @return \code{type} returns the type of activity (multipdGame).
 ##' @return \code{equliibrium} returns the equilibrium strategy chosen by the majority of the class.
@@ -17,11 +17,33 @@
 
 multipdGame <-
   function(sheet,
-           payoff = c(0,-0.5, 3, 1),
+           payoff = c(0,-0.5, 1, 0.5),
+           auth = FALSE,
+           names = NULL,
            ...) {
     # Set up the Google Sheets, read responses, and initialize output objects.
     if (length(payoff) != 4)
       stop("Payoff must have length == 4")
+    # Set up the Google Sheets, read responses, and initialize output objects.
+    if(auth == TRUE) {
+      options(gargle_oauth_cache = ".secrets")
+      googlesheets4::gs4_auth()
+      googlesheets4::gs4_deauth()
+      googlesheets4::gs4_auth(cache = ".secrets", email = email)
+    }
+    else {
+      googlesheets4::gs4_deauth()
+    }
+    if (is.null(names)) {
+      names <- list(
+        first = "First.Name",
+        last = "Last.Name",
+        round = "Round",
+        strategy = "Stragegy"
+      )
+    } else {
+      names <- lapply(names, make.names)
+    }
     results <- read_sheet(sheet)
     colnames(results) <- make.names(colnames(results))
     results <-
@@ -39,7 +61,7 @@ multipdGame <-
     }
     equilibria <- results %>%
       group_by(Round) %>%
-      summarize(Equilibrium = mode(Strategy))
+      summarize(Equilibrium = str_to_title(mode(Strategy)))
     results <- merge(results, equilibria)
     results <- within(results, {
       Score <- ifelse(

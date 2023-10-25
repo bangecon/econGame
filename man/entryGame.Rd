@@ -4,10 +4,12 @@
 \alias{entryGame}
 \title{Tabulate entry and exit game results.}
 \usage{
-entryGame(sheet, ...)
+entryGame(sheet, names = NULL, auth = FALSE, ...)
 }
 \arguments{
-\item{sheet}{(required) is a character string sheet ID corresponding to the Google Sheet containing the individual submissions.}
+\item{sheet}{(required) is a character string corresponding to the Google Sheets location (url or ID key) containing the individual submissions.}
+
+\item{names}{character list of the column names in \code{sheet}.}
 
 \item{auth}{is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.}
 

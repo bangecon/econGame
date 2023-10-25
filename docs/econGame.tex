@@ -93,7 +93,7 @@
 \title{An Open-Source Application to Computerize Simple Market
 Efficiency Games}
 \author{James T. Bang}
-\date{15 Aug 2023}
+\date{28 Sep 2023}
 
 \begin{document}
 \maketitle
@@ -119,48 +119,58 @@ five in-class market simulation experiments for teaching economics.\\
 \section{Introduction}\label{introduction}}
 
 The use of experiments as demonstrations of economic theory date back at
-least as far as those conducted by Chamberlin (1948) and Smith (1962).
-These studies were designed primarily to collect evidence supporting or
-refuting economic models of rational behavior in market settings. Holt
-(1993) summarizes this literature. While experiments remain an important
-method for observing behavior to test economic hypotheses, these
-experiments have also found their way into pedagogy (DeYoung 1993).
+least as far as those conducted by Chamberlin
+(\protect\hyperlink{ref-chamberlin_experimental_1948}{1948}) and Smith
+(\protect\hyperlink{ref-smith_experimental_1962}{1962}). These studies
+were designed primarily to collect evidence supporting or refuting
+economic models of rational behavior in market settings. Holt
+(\protect\hyperlink{ref-holt_industrial_1993}{1993}) summarizes this
+literature. While experiments remain an important method for observing
+behavior to test economic hypotheses, these experiments have also found
+their way into pedagogy
+(\protect\hyperlink{ref-deyoung_market_1993}{DeYoung 1993}).
 
 Classroom experiments offer students and instructors a fun departure
 from the usual ``chalk and talk'' of explaining economic models. In
 addition to entertainment value, studies have shown experiments to
-increase student learning in post-test assessments (Emerson and Taylor
-2004; Dickie 2006). I should note, however, that not all studies
-conclude that all types of gamification improves learning by a
-significant margin: Gremmen and Potters (1997) find a positive effect of
-games on average, but the effect is not statistically significant, while
-Dickie (2006) finds that games do significantly improve learning, but
-that attaching grade incentives to the games do not contribute any
-additional benefit. Moreover, Stodder (1998) expresses concern that
-classroom games that penalize cooperation may teach and reinforce
-unethical decision making.
+increase student learning in post-test assessments
+(\protect\hyperlink{ref-emerson_comparing_2004}{Emerson and Taylor
+2004}; \protect\hyperlink{ref-dickie_classroom_2006}{Dickie 2006}). I
+should note, however, that not all studies conclude that all types of
+gamification improves learning by a significant margin: Gremmen and
+Potters (\protect\hyperlink{ref-gremmen_assessing_1997}{1997}) find a
+positive effect of games on average, but the effect is not statistically
+significant, while Dickie
+(\protect\hyperlink{ref-dickie_classroom_2006}{2006}) finds that games
+do significantly improve learning, but that attaching grade incentives
+to the games do not contribute any additional benefit. Moreover, Stodder
+(\protect\hyperlink{ref-stodder_experimental_1998}{1998}) expresses
+concern that classroom games that penalize cooperation may teach and
+reinforce unethical decision making.
 
 Despite the potential learning and entertainment value of classroom
 experiments, they remain relatively rare among the pedagogies economics
-professors adopt in their classrooms (Watts and Becker 2008). Two
+professors adopt in their classrooms
+(\protect\hyperlink{ref-watts_little_2008}{Watts and Becker 2008}). Two
 factors may drive some of the hesitancy among economics instructors to
 implement classroom experiments. On the one hand, free resources, such
 as those described in the survey of non-computerized games by Brauer and
-Delemeester (2001), require significant time investments to tabulate and
-summarize the results. On the other hand, automated resources,
-especially those distributed by textbook publishers, impose a financial
-cost on students or their institutions that instructors feel rightly
-averse to asking budget-constrained students or departments to foot the
-bill for.
+Delemeester (\protect\hyperlink{ref-brauer_games_2001}{2001}), require
+significant time investments to tabulate and summarize the results. On
+the other hand, automated resources, especially those distributed by
+textbook publishers, impose a financial cost on students or their
+institutions that instructors feel rightly averse to asking
+budget-constrained students or departments to foot the bill for.
 
-Cheung (2008) helps to overcome this barrier by building tools for
-collecting student responses to in-class non-computerized experiments
-using mobile phones and texting. This contribution furthers this by
-automating the process of calculating and summarizing the results of the
-experiments. These examples only require students to be able to access a
-Google Form via their browser on their computer or mobile device, which,
-given the ubiquity of mobile phones among students (sometimes as their
-only personal computing device), sets a fairly reasonable bar for
+Cheung (\protect\hyperlink{ref-cheung_using_2008}{2008}) helps to
+overcome this barrier by building tools for collecting student responses
+to in-class non-computerized experiments using mobile phones and
+texting. This contribution furthers this by automating the process of
+calculating and summarizing the results of the experiments. These
+examples only require students to be able to access a Google Form via
+their browser on their computer or mobile device, which, given the
+ubiquity of mobile phones among students (sometimes as their only
+personal computing device), sets a fairly reasonable bar for
 accessibility. A secondary contribution is simplifying existing versions
 of classic market equilibrium, entry, and duopoly games with the hope of
 increasing the diversity of methods used by economics instructors in the
@@ -169,10 +179,10 @@ classroom.
 On the instructor's end, I have created a free, downloadable package
 called \texttt{econGame} for the \emph{R} open-source statistical
 computing program. The tabulation programs run as either stand-alone
-functions in the \emph{R} console, or for demonstration purposes as a
-html \emph{Shiny} app that can open in a browser tab if desired. This
-allows the instructor to present the results of the experiment almost
-instantaneously after the students have submitted their responses.
+functions in the \emph{R} console, or for in-class demonstrations as
+\emph{Shiny} apps that can open in a browser tab if desired. This allows
+the instructor to present the results of the experiment almost instantly
+after the students have submitted their responses.
 
 \hypertarget{description-of-the-experiments}{%
 \section{Description of the
@@ -180,33 +190,55 @@ Experiments}\label{description-of-the-experiments}}
 
 The models I will describe in this paper encompass two well-established
 market equilibrium games known to the economics education literature
-Brauer and Delemeester (2001), namely simplified versions of the
-following experiments:\\
-1. the pit market trading game introduced by Holt (1996);\\
-2. the entry and exit game introduced by Garratt (2000); and three games
-simulating different oligopoly models (Bertrand, Cournot, and
-Stackelberg). In the examples the ``payoffs'' students receive can be
-awarded to the students at the end of the games as ``extra credit''
-points, or instructors may choose to encourage students to play the
-games strategically, but only ``for the love of the game.'' I briefly
-describe the delivery of the games below.
+(see, for example, Williams and Walker
+(\protect\hyperlink{ref-williams_economic_1993}{1993}) and Brauer and
+Delemeester (\protect\hyperlink{ref-brauer_games_2001}{2001})), namely
+the following experiments:\\
+1. the pit market trading game introduced by Holt
+(\protect\hyperlink{ref-holt_classroom_1996}{1996});\\
+2. a simplified version of the entry and exit game by Garratt
+(\protect\hyperlink{ref-garratt_free_2000}{2000});\\
+3. three games simulating different oligopoly models (Bertrand, Cournot,
+and Stackelberg);\\
+4. the public-good game ;\\
+5. a pollution policy game that compares different policy
+alternatives(\protect\hyperlink{ref-anderson2000}{Anderson and Stafford
+2000});\\
+6. a special-interest lobbying game based on a lottery auction;\\
+7. two games demonstrating behavioral economics (an anchoring game
+similar to Gelman and Glickman
+(\protect\hyperlink{ref-gelman2000}{2000}) and an ultimatum game based
+on Kahneman, Knetsch, and Thaler
+(\protect\hyperlink{ref-kahneman1986}{1986})).\\
+For games where students work in small groups (usually pairs), the
+package includes functions to create random groups if desired as well as
+options for allowing students to choose their own groups. The package
+also includes a plot function to create graphical illustrations of the
+results as well as shiny applications to calculate and present the
+results in a browser.\\
+In the examples the ``payoffs'' students receive can be awarded to the
+students at the end of the games as ``extra credit'' points, or
+instructors may choose to encourage students to play the games
+strategically, but only ``for the love of the game.'' I briefly describe
+the delivery of the games below.
 
-\hypertarget{pit-market-trading}{%
-\subsection{Pit Market Trading}\label{pit-market-trading}}
+\hypertarget{pit-trading-market}{%
+\subsection{Pit Trading Market}\label{pit-trading-market}}
 
-Holt (1996) designed the pit market trading game for class sizes between
-10 and 25 and takes about 40-50 minutes to explain the game, play a few
-rounds, and tabulate the results after each round. This game is an
-excellent illustration of supply and demand, competitive market
-equilibrium, consumer and producer surplus, and efficiency. The
-functions presented in this paper speed up the response-collection
-process to allow the experiment to work for larger classes. It also
-speeds up the calculation of the equilibrium and graphs the equilibrium.
+Holt (\protect\hyperlink{ref-holt_classroom_1996}{1996}) designed the
+pit market trading game for class sizes between 10 and 25 and takes
+about 40-50 minutes to explain the game, play a few rounds, and tabulate
+the results after each round. This game is an excellent illustration of
+supply and demand, competitive market equilibrium, consumer and producer
+surplus, and efficiency. The functions presented in this paper speed up
+the response-collection process to allow the experiment to work for
+larger classes. It also speeds up the calculation of the equilibrium and
+graphs the equilibrium.
 
 Before class, the instructor prepares (1) a Google Sheet assigning a
 random integer between 1 and 10 representing each student's value that
 they place on the asset;\footnote{The first sheet consists of a single
-  formula in a single cell: ``=roundup(10*rand())``. A template can be
+  formula in a single cell: ``=roundup(10*rand())''. A template can be
   found at:\\
   \url{https://docs.google.com/spreadsheets/d/1lCmC692ajsQZoatWtgZh5QKaJ9y3pOMt15JwRFaHanU/edit\#gid=258904023}.}
 and (2) a Google Form through which students enter their bid and ask
@@ -245,15 +277,16 @@ and tabulates the scores for each student.\footnote{The solution the
 \hypertarget{entry-and-exit}{%
 \subsection{Entry and Exit}\label{entry-and-exit}}
 
-Garratt (2000) designed an entry and exit game with four discrete
-specifications of the demand functions for class sizes between 25 and
-44. Garratt's version also includes four markets (corn, wheat, rice, and
-soybeans), while the one presented here only includes two (corn and
-soybeans). The demand functions in this version of the experiment
-automatically adjust according to the number of students participating.
-Garratt's version of the game also takes about 45 minutes to complete
-the experiment (including a government ``fallow program'' intervention
-variation), usually about five rounds.
+Garratt (\protect\hyperlink{ref-garratt_free_2000}{2000}) designed an
+entry and exit game with four discrete specifications of the demand
+functions for class sizes between 25 and 44. Garratt's version also
+includes four markets (corn, wheat, rice, and soybeans), while the one
+presented here only includes two (corn and soybeans). The demand
+functions in this version of the experiment automatically adjust
+according to the number of students participating. Garratt's version of
+the game also takes about 45 minutes to complete the experiment
+(including a government ``fallow program'' intervention variation),
+usually about five rounds.
 
 Before class the instructor prepares a Form to collect responses that
 includes the fields ``First Name,'' ``Last Name,'' ``Round,'' and
@@ -266,15 +299,16 @@ one unit of ``normal profit,'' but these settings can be changed.
 
 In class, the instructor informs the students that they will choose to
 plant corn, soybeans, or nothing. Producing corn incurs a cost of four,
-while producing soybeans incurs a cost of 10. Garratt (2000) recommends
-that the instructor \emph{not} reveal the demand functions to students,
-whereas some instructors (including me) might prefer to allow students
-to play with perfect information. Selling a unit of corn brings revenue
-equal to \(P_c = (N/2) + 6 - Q_c\), where \(N\) equals the number of
-students participating and \(Q_c\) equals the number of students
-choosing to produce corn. Selling a unit of soybeans brings revenue
-equal to \(P_s = (N/2) + 10 - Q_s\). These parameters allow for there to
-be a ``normal profit'' of about one unit per student in each market in
+while producing soybeans incurs a cost of 10. Garratt
+(\protect\hyperlink{ref-garratt_free_2000}{2000}) recommends that the
+instructor \emph{not} reveal the demand functions to students, whereas
+some instructors (including me) might prefer to allow students to play
+with perfect information. Selling a unit of corn brings revenue equal to
+\(P_c = (N/2) + 6 - Q_c\), where \(N\) equals the number of students
+participating and \(Q_c\) equals the number of students choosing to
+produce corn. Selling a unit of soybeans brings revenue equal to
+\(P_s = (N/2) + 10 - Q_s\). These parameters allow for there to be a
+``normal profit'' of about one unit per student in each market in
 equilibrium, to compensate for the risk of venturing into
 self-employment.\footnote{The long run equilibrium, with 1 unit of
   ``normal profit'' occurs with \((N/2) + 1\) students choosing corn and
@@ -294,8 +328,8 @@ students might ``win'' negative extra credit points. Students choosing
 to produce nothing sell their labor in the labor market and earn zero
 (they do not earn a normal profit).
 
-\hypertarget{oligoply-models}{%
-\subsection{Oligoply Models}\label{oligoply-models}}
+\hypertarget{oligoply}{%
+\subsection{Oligoply}\label{oligoply}}
 
 I also constructed a set of games to demonstrate and compare equilibria
 in different (two-firm) oligopoly models. In each of the examples,
@@ -363,11 +397,11 @@ low quantity) or ``defect'' (produce a high quantity). The function that
 tabulates the results assigns half of the monopolist's profit-maximizing
 quantity to students who choose ``collude,'' and automatically assigns
 the quantity corresponding to the best response function for students
-who choose ``defect'' (which depends on the output choice of their
-rival). Students only need to make the simple binary choice. Instructors
-using this example for upper-level classes may (or may not) want to edit
-the game settings to require students to submit a specific quantity
-(derive the best response functions themselves).
+who choose ``defect'' (based on the output choice of their rival).
+Students only need to make the simple binary choice. Instructors using
+this example for upper-level classes may (or may not) want to edit the
+game settings to require students to submit a specific quantity (derive
+the best response functions themselves).
 
 \hypertarget{stackelberg-duopoly}{%
 \subsubsection{Stackelberg Duopoly}\label{stackelberg-duopoly}}
@@ -377,22 +411,185 @@ Similar to the Cournot game, students in the Stackelberg game choose to
 must know their partner in advance, and followers will see the leaders'
 strategy choices before choosing their strategy. The function again
 automatically calculates the quantities corresponding to the set of
-binary strategy choices to determine the payoff outcomes.{[}\^{}A
-template can be found at:\\
-\url{https://docs.google.com/forms/d/1vERPMPt_kW96JPAY6mEtkQMu6FLCgPuqoFL8i8bulYk/edit}.{]}
+binary strategy choices to determine the payoff outcomes.\footnote{A
+  template can be found at:\\
+  \url{https://docs.google.com/forms/d/1vERPMPt_kW96JPAY6mEtkQMu6FLCgPuqoFL8i8bulYk/edit}.}
+
+\hypertarget{public-good-game}{%
+\subsection{Public Good Game}\label{public-good-game}}
+
+Holt and Laury (\protect\hyperlink{ref-holt1997}{1997}) and Leuthold
+(\protect\hyperlink{ref-leuthold1993}{1993}) conduct experiments
+involving voluntary contributions to a public good. This example
+somewhat resembles Leuthold's example more closely, but differs in that
+(1) instructors can choose to denominate contributions in terms of
+points instead of ``hypothetical'' monetary endowments; and (2) the
+portion of points (or candy or hypothetical dollars) held for private
+returns pay zero return (for simplicity).
+
+Before class, the instructor prepares a Google Form with fields for
+``First Name,'' ``Last Name'', and ``Contribution,'' and links the
+results to a Google Sheet.\footnote{Users can find a template at
+  \url{https://docs.google.com/forms/d/e/1FAIpQLSfElzd25aOTXDi8lNSdlfeWufRjhNqhE4jrPg7aHbhcQqP0PA/viewform?usp=sf_link}}
+In the game, students may contribute any value (of points, candy, or
+hypothetical dollars) between zero and ten. If an instructor chooses to
+use class points for the payoffs, they may choose to endow students with
+ten points for playing the game, or for higher stakes they may opt to
+tell students that their contributions will come from their personal
+point total they have already earned. Contributing from their earned
+points makes the game more exciting, while endowing the students with
+free points leads to less resentment both towards the professors and
+among members of the class (even though the net effect on grades might
+be the same!).
+
+Once the instructor collects the contributions using the Google Form,
+the application uses the results to calculate the returns (default =
+20\%), and distributes the contributions and the returns equally among
+all students.
+
+\hypertarget{pollution-policies}{%
+\subsection{Pollution Policies}\label{pollution-policies}}
+
+The pollution game asks students to behave as profit-maximizing firms
+that can produce up to two units of output at a price of four, but where
+each unit of production produces a unit of pollution that creates a
+negative externality of three. Students then choose how much of the
+pollution from their production to abate (installing scrubbers, using
+cleaner production methods). It then compares their choices under four
+different pollution-abatement policies: (1) no regulation; (2)
+command-and-control regulation; (3) a pollution tax equal to the extent
+of the externality; and (4) a cap-and-trade market.
+
+As with all previous activities, the instructor prepares a Google Form
+with a corresponding linked Google Sheet for students to submit their
+responses and to export the responses.\footnote{Template here:
+  \url{https://docs.google.com/forms/d/e/1FAIpQLSew1-iIvA_2cMyzNNSlrhlcxrs2hpy2f_eJYyAHjBPVjg-7lA/viewform?usp=sf_link}.}
+The template includes five sections. The setup section includes fields
+for students to enter their (1) first name; (2) last name; (3)
+randomly-assigned private cost of abating their first ``unit'' of
+pollution (the lower of two integers between 1 and 6);\footnote{Template
+  here:
+  \url{https://docs.google.com/spreadsheets/d/1shTH39y65gaaYmevt4S6vtw1i-06hWEGeE1cPXe6J8M/edit?usp=sharing}.}
+(4) cost of abating the second ``unit'' of pollution (the higher
+integer). Encourage students to write down their abatement costs.
+
+The section corresponding to no regulation asks students to choose their
+profit-maximizing quantity under no regulation
+
+\hypertarget{lobbying}{%
+\subsection{Lobbying}\label{lobbying}}
+
+When discussing monopoly, some instructors may find it useful to
+introduce the concept of special interests. For example, one way that a
+monopolist might create entry barriers would be to lobby the government
+for a license to produce as a legal monopoly, or for an exclusive
+contract to privately provide goods or services for the government. One
+way to simulate this is through a lottery auction.
+
+In this activity I typically endow students with five ``extra credit''
+points to use for the activity. Alternatively, students could play with
+candy or hypothetical dollars. They use this endowment to submit
+political contributions to a politician (me) for the chance to win a
+monopoly license worth four points (or pieces of candy or hypothetical
+dollars). Each contribution represents one entry in a lottery for the
+license and costs one point (or candy or hypothetical dollar).
+Electronically, students submit their contributions by submitting a
+Google Form\footnote{Template here:
+  \url{https://docs.google.com/forms/d/e/1FAIpQLSdzMzydVZJrB2d57ZwQCkCPJcxNXogFHZTOOtZS75DHYvb5dg/viewform?usp=sf_link}.}
+with only their first and last name \emph{the number of times
+corresponding to the number of contributions they want to submit}. The
+application randomly selects the winning row from the results
+sheet\footnote{Template here:
+  \url{https://docs.google.com/spreadsheets/d/1suPdRvwS_oM66cgZwx2nNw51XybEIbe9L7zkBB4dQOU/edit?usp=sharing}.}
+(using the random seed ``8675309'' so that the result is replicable).
+
+If instructors want to simulate ``campaign finance reform'' they can
+make the contributions transparent by auctioning off the license in an
+all-pay auction. Beware! The result of this auction can lead to students
+bidding more than the license is ultimately worth!
+
+\hypertarget{behavioral-economics}{%
+\subsection{Behavioral Economics}\label{behavioral-economics}}
+
+Numerous experiments describe different sorts of behavioral concepts in
+economics and can be adapted to a classroom setting. The package
+described here automates results for two of these, namely an anchoring
+game based on Gelman and Glickman
+(\protect\hyperlink{ref-gelman2000}{2000}) and the ultimatum game based
+on Kahneman, Knetsch, and Thaler
+(\protect\hyperlink{ref-kahneman1986}{1986}).
+
+\hypertarget{anchoring-game}{%
+\subsubsection{Anchoring Game}\label{anchoring-game}}
+
+The anchoring game we automate here is based on the activity described
+in Gelman and Glickman (\protect\hyperlink{ref-gelman2000}{2000}), which
+begins by assigning students a random number (10 or 65) and responde to
+the following:\\
+1. What number were you assigned?/ 2. Thinking about that number, do you
+think that the percentage of the world's countries that is located on
+the continent of Africa is \emph{higher} or \emph{lower} than the number
+you received?\\
+3. What is your guess for the percentage of the world's countries that
+is located in Africa?\\
+
+Students submit their responses (without looking up the answers!) using
+a Google Form,\footnote{Template here:
+  \url{https://docs.google.com/forms/d/e/1FAIpQLSdzMzydVZJrB2d57ZwQCkCPJcxNXogFHZTOOtZS75DHYvb5dg/viewform?usp=sf_link}.}
+which the instructor exports to a Google Sheet\footnote{Template here:
+  \url{https://docs.google.com/spreadsheets/d/1suPdRvwS_oM66cgZwx2nNw51XybEIbe9L7zkBB4dQOU/edit?usp=sharing}.}
+that the application uses to tabulate the results. The results include
+the list of responses, a box plot, and test statistics comparing the two
+randomly-assigned groups. ``Rational'' guessing should fail to reject
+the hypothesis of no difference since which random (uninformative)
+number a student receives should not influence rational guessers. In
+reasonably large classes, we can usually reject this null hypothesis.
+
+\hypertarget{ultimatum-game}{%
+\subsubsection{Ultimatum Game}\label{ultimatum-game}}
+
+The ultimatum game is a very popular game in experimental behavioral
+economics. Students work in pairs, and determine which partner will be
+the ``proposer'' and which will be the ``responder.'' The proposer
+receives five points (or candies or tokens, or hypothetical dollars),
+from which they offer a portion to the responder. The responder then
+takes the option to accept or reject the offer. If the responder
+accepts, then each partner receives benefits according to the agreement;
+if the responder rejects, then both parties get nothing. The instructor
+should encourage students to decide quickly and that this is not a
+back-and-forth negotiation: take it or leave it offers only!
+
+Each pair submits one version of the Google Form, which should include
+fields for ``Proposer First Name'', ``Proposer Last Name'', ``Responder
+First Name'', ``Responder Last Name'', ``Offer'', and ``Response'',
+which the instructor prepares before class.\footnote{Template here:
+  \url{https://docs.google.com/forms/d/e/1FAIpQLSeVGBjXI49-q0Tsj5iYAWe6UbsIBwzIryYh6Wz-rkQjZm7u9g/viewform?usp=sf_link}.}
+The instructor should also link the Forms responses to a Google
+Sheet\footnote{Template here:
+  \url{https://docs.google.com/spreadsheets/d/12XRuR9HzJeshRM5npRILkXvbZbIxyJsj9abihVjYRpc/edit?usp=sharing}.}
+that the package will use to tabulate the results, including a bar plot
+of the offers, the list of responses, and the final tally of benefits
+(e.g.~points) for each participant.
 
 \hypertarget{the-econgame-package}{%
-\section{The econGame Package}\label{the-econgame-package}}
+\section{\texorpdfstring{The \texttt{econGame}
+Package}{The econGame Package}}\label{the-econgame-package}}
 
-The \texttt{econGame} package pulls activity data from Google the Google
-Sheet file generated for the form responses. It then tabulates, scores,
-and graphs the responses; and writes the grade data to a separate Google
-Sheet. Users can download the package from
+The \texttt{econGame} package pulls activity data from the Google Sheet
+file generated for the form responses. It then tabulates, scores, and
+graphs the responses. Users can download the package from
 \url{https://github.com/bangecon/econGame}. To install the package, use
 the \texttt{remotes} package and the \texttt{install\_github()}
 function:
 
 \texttt{remotes::install\_github("bangecon/econGame")}
+
+Alternatively, if users have trouble using \texttt{remotes}, they try
+using the \texttt{pkg\_install()} function from the \texttt{pak} package
+(which sometimes works - albeit slightly less quickly - if
+\texttt{remotes::install\_github()} gives an error) if they experience
+difficulties installing \texttt{econgame} using
+\texttt{remotes::install\_github}.
 
 \hypertarget{exporting-the-results}{%
 \subsection{Exporting the Results}\label{exporting-the-results}}
@@ -404,7 +601,7 @@ equilibrium requires students to know which sector earned economic
 profits in the previous round. To do this, the instructor needs to click
 the Google Sheets icon in the responses tab of the edit page of the
 form. Figure 1 demonstrates where to find these tools in your Google
-Form.
+Form using the pit market trading equilibrium game as an example.
 
 \begin{figure}
 \centering
@@ -417,8 +614,9 @@ the results.\footnote{Link the Form to a Sheet to collect responses by
   selecting the ``Responses'' tab, and clicking ``Link to Sheets.''}
 
 In order to link to your results, you will need to copy to your
-clipboard the sheet ID from the URL. Figure 2 shows where you can find
-the sheet ID for your results.
+clipboard either (a) the sharing url, which you can find by selecting
+the ``Share'' link to the right of the menu bar; or (b) the sheet ID
+from the URL (see Figure 2).
 
 \begin{figure}
 \centering
@@ -438,18 +636,27 @@ Google Sheet. The syntax and outputs for the different functions are:
 
 \begin{itemize}
 \item
-  Equilibrium game: \texttt{equilibriumGame(sheet\ =\ NULL,\ ...)}
+  Each of the games shares the following arguments and outputs:
 
   \begin{itemize}
   \item
-    Arguments:
+    Arguments
 
     \begin{itemize}
     \tightlist
     \item
-      \texttt{sheet} (required) is a character string url corresponding
-      to the Google Sheets location containing the individual
-      submissions.
+      \texttt{sheet} (required): character string corresponding to the
+      Google Sheets location (url or ID key) containing the individual
+      submissions;
+    \item
+      \texttt{auth}: logical indicating whether to use an authentication
+      token to access the Sheet containing the individual submissions;
+    \item
+      \texttt{names}: character list of the column names in
+      \texttt{sheet};
+    \item
+      \texttt{email}: email address that matches the user account
+      containing the Sheet with the individual submissions;
     \end{itemize}
   \item
     Outputs:
@@ -457,23 +664,39 @@ Google Sheet. The syntax and outputs for the different functions are:
     \begin{itemize}
     \tightlist
     \item
-      \texttt{type} returns the type of activity (equlibriumGame).
+      \texttt{type}: character for the type of activity (equlibriumGame,
+      entryGame, etc.);
     \item
-      \texttt{results} returns the original submissions (with market
-      price and points added).
+      \texttt{results}: table of original submissions (with market price
+      and points added);
     \item
-      \texttt{schedules} returns a list containing the supply and demand
-      schedules for each round.
-    \item
-      \texttt{equilibria} returns a list containing the equilibria for
-      each round.
-    \item
-      \texttt{grades} returns the aggregated points ``won'' by each
-      student for the entire activity.
+      \texttt{grades}: table aggregated points ``won'' by each student
+      for all rounds of the activity;
     \end{itemize}
   \end{itemize}
 \item
-  Entry and exit game: \texttt{entryGame(sheet\ =\ NULL,\ ...)}
+  Pit trading market equilibrium game-specific outputs:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{rounds}: numeric for the number of rounds in
+    \texttt{results};
+  \item
+    \texttt{schedules}: list containing the supply and demand schedules
+    for each round;
+  \item
+    \texttt{equilibria}: list containing the equilibria for each round;
+  \end{itemize}
+\item
+  Entry-exit game-specific outputs:
+
+\begin{verbatim}
+-   `rounds`: numeric for the number of rounds in `results`;
+-   `equilibria`: list containing the equilibria for each round;
+\end{verbatim}
+\item
+  Bertrand game-specific arguments and outputs:
 
   \begin{itemize}
   \item
@@ -482,9 +705,22 @@ Google Sheet. The syntax and outputs for the different functions are:
     \begin{itemize}
     \tightlist
     \item
-      \texttt{sheet} (required) is a character string url corresponding
-      to the Google Sheets location containing the individual
-      submissions.
+      \texttt{partners}: character equal to `random' or `students'
+      indicating whether the function should use the
+      \texttt{econGame::randomGroups()} function to randomly assign
+      partners, or students will pick the partners themselves (default
+      is `random');
+    \item
+      \texttt{a}: numeric value of the intercept of the inverse-demand
+      function (default is 10);
+    \item
+      \texttt{b}: numeric value of the slope of the inverse-demand
+      function (default is -1);
+    \item
+      \texttt{c}: numeric value of the firm's marginal cost (default is
+      6);
+    \item
+      \texttt{f}: numeric value of the firm's fixed cost (default is 0);
     \end{itemize}
   \item
     Outputs:
@@ -492,23 +728,20 @@ Google Sheet. The syntax and outputs for the different functions are:
     \begin{itemize}
     \tightlist
     \item
-      \texttt{type} returns the type of activity (equlibriumGame).
+      \texttt{payoff}: table containing the matrix of payoffs for the
+      reduced strategy combinations (fully collude or fully defect for
+      each player);
     \item
-      \texttt{results} returns the original submissions (with market
-      price and points added).
+      \texttt{output}: table containing the matrix of quantities
+      corresponding to each combination of strategies;
     \item
-      \texttt{rounds} returns the number of rounds in ``results.''
-    \item
-      \texttt{equilibria} returns a list containing the equilibria for
-      each round.
-    \item
-      \texttt{grades} returns the aggregated points ``won'' by each
-      student for the entire activity.
+      \texttt{price}: table containing the matrix of prices
+      corresponding to the total market output for each combination of
+      strategies.
     \end{itemize}
   \end{itemize}
 \item
-  Bertrand game:
-  \texttt{bertrandGame(sheet\ =\ NULL,\ a\ =\ 10,\ b\ =\ -1,\ c\ =\ 6,\ f\ =\ 0,\ ...)}
+  Cournot game-specific arguments and outputs:
 
   \begin{itemize}
   \item
@@ -517,20 +750,22 @@ Google Sheet. The syntax and outputs for the different functions are:
     \begin{itemize}
     \tightlist
     \item
-      \texttt{sheet} (required) is a character string url corresponding
-      to the Google Sheets location containing the individual
-      submissions.
+      \texttt{partners}: character equal to `random' or `students'
+      indicating whether the function should use the
+      \texttt{econGame::randomGroups()} function to randomly assign
+      partners, or students will pick the partners themselves (default
+      is `random');
     \item
-      \texttt{a} is the value of the intercept of the linear
-      inverse-demand function (default is 10).
+      \texttt{a}: numeric value of the intercept of the inverse-demand
+      function (default is 10).
     \item
-      \texttt{b} is the value of the slope of the linear inverse-demand
+      \texttt{b}: numeric value of the slope of the inverse-demand
       function (default is -1).
     \item
-      \texttt{c} is the value of the firm's marginal cost (default is
+      \texttt{c}: numeric value of the firm's marginal cost (default is
       6).
     \item
-      \texttt{f} is the value of the firm's fixed cost (default is 0).
+      \texttt{f}: numeric value of the firm's fixed cost (default is 0).
     \end{itemize}
   \item
     Outputs:
@@ -538,18 +773,19 @@ Google Sheet. The syntax and outputs for the different functions are:
     \begin{itemize}
     \tightlist
     \item
-      \texttt{type} returns the type of activity (equlibriumGame).
+      \texttt{payoff}: table containing the matrix of payoffs for the
+      reduced strategy combinations (collude or defect for each player);
     \item
-      \texttt{results} returns the original submissions (with market
-      price and points added).
+      \texttt{output}: table containing the matrix of quantities
+      corresponding to each combination of strategies;
     \item
-      \texttt{grades} returns the aggregated points ``won'' by each
-      student for the entire activity.
+      \texttt{price}: table containing the matrix of prices
+      corresponding to the total market output for each combination of
+      strategies.
     \end{itemize}
   \end{itemize}
 \item
-  Cournot game:
-  \texttt{cournotGame(sheet\ =\ NULL,\ a\ =\ 10,\ b\ =\ -1,\ c\ =\ 6,\ f\ =\ 0,\ ...)}
+  Stackelberg game-specifirc arguments and outputs:
 
   \begin{itemize}
   \item
@@ -558,61 +794,22 @@ Google Sheet. The syntax and outputs for the different functions are:
     \begin{itemize}
     \tightlist
     \item
-      \texttt{sheet} (required) is a character string url corresponding
-      to the Google Sheets location containing the individual
-      submissions.
+      \texttt{partners}: character equal to `random' or `students'
+      indicating whether the function should use the
+      \texttt{econGame::randomGroups()} function to randomly assign
+      partners, or students will pick the partners themselves (default
+      is `students');
     \item
-      \texttt{a} is the value of the intercept of the linear
-      inverse-demand function (default is 10).
+      \texttt{a}: numeric value of the intercept of the inverse-demand
+      function (default is 10).
     \item
-      \texttt{b} is the value of the slope of the linear inverse-demand
+      \texttt{b}: numeric value of the slope of the inverse-demand
       function (default is -1).
     \item
-      \texttt{c} is the value of the firm's marginal cost (default is
+      \texttt{c}: numeric value of the firm's marginal cost (default is
       6).
     \item
-      \texttt{f} is the value of the firm's fixed cost (default is 0).
-    \end{itemize}
-  \item
-    Outputs:
-
-    \begin{itemize}
-    \tightlist
-    \item
-      \texttt{type} returns the type of activity (equlibriumGame).
-    \item
-      \texttt{results} returns the original submissions (with market
-      price and points added).
-    \item
-      \texttt{grades} returns the aggregated points ``won'' by each
-      student for the entire activity.
-    \end{itemize}
-  \end{itemize}
-\item
-  Stackelberg game:
-  \texttt{stackelbergGame(sheet\ =\ NULL,\ a\ =\ 10,\ b\ =\ -1,\ c\ =\ 6,\ f\ =\ 0,\ ...)}
-
-  \begin{itemize}
-  \item
-    Arguments:
-
-    \begin{itemize}
-    \tightlist
-    \item
-      \texttt{sheet} (required) is a character string url corresponding
-      to the Google Sheets location containing the individual
-      submissions.
-    \item
-      \texttt{a} is the value of the intercept of the linear
-      inverse-demand function (default is 10).
-    \item
-      \texttt{b} is the value of the slope of the linear inverse-demand
-      function (default is -1).
-    \item
-      \texttt{c} is the value of the firm's marginal cost (default is
-      6).
-    \item
-      \texttt{f} is the value of the firm's fixed cost (default is 0).
+      \texttt{f}: numeric value of the firm's fixed cost (default is 0).
     \end{itemize}
   \item
     Outputs:
@@ -642,21 +839,23 @@ the function generates depends on the type of game:
 \item
   For
   \texttt{type\ =\ \textquotesingle{}equilibriumGame\textquotesingle{}},
+  \texttt{type\ =\ \textquotesingle{}entryGame\textquotesingle{}}, or
+  \texttt{type\ =\ \textquotesingle{}pollutionGame\textquotesingle{}},
   plot the supply and demand functions with the corresponding equlibrium
   point.
 \item
-  For \texttt{type\ =\ \textquotesingle{}entryGame\textquotesingle{}},
-  plot the supply, demand, and per-unit cost lines to show profits and
-  losses.
-\item
   For
   \texttt{type\ =\ \textquotesingle{}bertrandGame\textquotesingle{}},
-  plot a histogram of the price strategies.
-\item
-  For \texttt{type\ =\ \textquotesingle{}cournotGame\textquotesingle{}}
-  or
+  \texttt{type\ =\ \textquotesingle{}cournotGame\textquotesingle{}},
   \texttt{type\ =\ \textquotesingle{}stackelbergGame\textquotesingle{}},
-  plot a bar graph of the strategy outcomes.
+  \texttt{type\ =\ \textquotesingle{}publicgoodGame\textquotesingle{}},
+  or
+  \texttt{type\ =\ \textquotesingle{}ultimatumGame\textquotesingle{}},
+  plot a histogram of the strategy outcomes.
+\item
+  For
+  \texttt{type\ =\ \textquotesingle{}anchoringGame\textquotesingle{}},
+  plot a box plot of the guesses by anchor group.
 \end{itemize}
 
 \hypertarget{shiny-user-interface}{%
@@ -710,20 +909,22 @@ financial and time costs of tabulating the results and presenting
 appealing summaries of the outcomes.
 
 All of the examples can be implemented for the students using Google
-Forms, which collects the results in Google Sheets. Instructors may then
-tabulate the results using the \texttt{econGame} package via the HTML
-Shiny App with a single-function command in R. All of these applications
-and packages come at no cost to the student. The only potential cost
-barrier is the device - which could be as little as a mobile device -
-each student would need in order to input their responses.
+Forms, which collects and exports the results in Google Sheets.
+Instructors may then tabulate the results using the \texttt{econGame}
+package via the HTML Shiny App with a single-function command in R. All
+of these applications and packages come at no cost to the student. The
+only potential cost barrier is the device - which could be as little as
+a mobile device - each student would need in order to input their
+responses.
 
-Another useful feature is that I have platformed the package on GitHub,
-which allows users to make pull requests to suggest edits and changes to
-improve or add features and examples to the package. I plan to also
-develop more functions and applications for the \texttt{econGame}
-package from existing classroom experiments, and even design a few
-original games. If you use these resources, please let me know and share
-them with your colleagues.
+I have platformed the package on GitHub
+(\url{https://github.com/bangecon/econGame}), which allows users to make
+pull requests to suggest edits and changes to improve the existing
+experiments or suggest additions to the examples in the package. I also
+plan to develop more functions and applications for the
+\texttt{econGame} package from existing classroom experiments, which may
+include a few original games. If you use these resources, please let me
+know and share them with your colleagues.
 
 \hypertarget{references}{%
 \section*{References}\label{references}}
@@ -731,6 +932,11 @@ them with your colleagues.
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-anderson2000}{}}%
+Anderson, Lisa R., and Sarah L. Stafford. 2000. {``Choosing Winners and
+Losers in a Classroom Permit Trading Game.''} \emph{Southern Economic
+Journal} 67 (1): 212--19. \url{https://doi.org/10.2307/1061622}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-brauer_games_2001}{}}%
 Brauer, Jurgen, and Greg Delemeester. 2001. {``Games Economists Play:
 {A} Survey of Non-Computerized Classroom-Games for College Economics.''}
@@ -768,6 +974,12 @@ Garratt, Rod. 2000. {``A Free Entry and Exit Experiment.''}
 \emph{Journal of Economic Education} 31 (3): 237.
 \url{https://www.proquest.com/docview/235237213/citation/8DF4FB2251DE443BPQ/1}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-gelman2000}{}}%
+Gelman, Andrew, and Mark E. Glickman. 2000. {``Some Class-Participation
+Demonstrations for Introductory Probability and Statistics.''}
+\emph{Journal of Educational and Behavioral Statistics} 25 (1): 84--100.
+\url{https://doi.org/10.3102/10769986025001084}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-gremmen_assessing_1997}{}}%
 Gremmen, Hans, and Jan Potters. 1997. {``Assessing the Efficacy of
 Gaming in Economic Education.''} \emph{The Journal of Economic
@@ -780,6 +992,22 @@ Holt, Charles A. 1993. {``Industrial {Organization}: {A} {Survey} of
 \leavevmode\vadjust pre{\hypertarget{ref-holt_classroom_1996}{}}%
 ---------. 1996. {``Classroom Games: {Trading} in a Pit Market.''}
 \emph{Journal of Economic Perspectives} 10 (1): 193--203.
+
+\leavevmode\vadjust pre{\hypertarget{ref-holt1997}{}}%
+Holt, Charles A., and Susan K. Laury. 1997. {``Classroom Games:
+Voluntary Provision of a Public Good.''} \emph{Journal of Economic
+Perspectives} 11 (4): 209--15.
+\url{https://doi.org/10.1257/jep.11.4.209}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kahneman1986}{}}%
+Kahneman, Daniel, Jack L. Knetsch, and Richard H. Thaler. 1986.
+{``Fairness and the Assumptions of Economics.''} \emph{The Journal of
+Business} 59 (4): S285--300. \url{https://www.jstor.org/stable/2352761}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-leuthold1993}{}}%
+Leuthold, Jane H. 1993. {``A Free Rider Experiment for the Large
+Class.''} \emph{The Journal of Economic Education} 24 (4): 353--63.
+\url{https://doi.org/10.1080/00220485.1993.10844805}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-smith_experimental_1962}{}}%
 Smith, Vernon L. 1962. {``An Experimental Study of Competitive Market

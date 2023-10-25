@@ -6,17 +6,24 @@
 \usage{
 stackelbergGame(
   resultsSheet = NULL,
+  partners = "random",
   leaderSheet = NULL,
   a = 10,
   b = -1,
   c = 6,
   f = 0,
-  partners = "random",
+  auth = FALSE,
   names = NULL,
   ...
 )
 }
 \arguments{
+\item{resultsSheet}{(required) is a character string sheet ID corresponding to the Google Sheets location containing the individual submissions.}
+
+\item{partners}{is a character string equal to \code{'students'} or \code{'random'} indicating whether students choose their own partners (default) or whether the function should generate them randomly after the students have decided their strategies. If \code{partners = 'students'}, then the form must include fields for the student's own first and last names and fields for their partners' first and last names. If partners are random, then the columns in \code{sheet} should either contain columns named 'First Name' and 'Last Name', or the user needs to specify the columns in \code{sheet} corresponding to this information to pass to \code{randomGroups()}.}
+
+\item{leaderSheet}{is a character string sheet ID corresponding to the Google Sheets location containing the list of leaders (if \code{partners == 'random'}).}
+
 \item{a}{is the value of the intercept of the linear inverse-demand function (default is 10).}
 
 \item{b}{is the value of the slope of the linear inverse-demand function (default is -1).}
@@ -25,14 +32,24 @@ stackelbergGame(
 
 \item{f}{is the value of the firm's fixed cost (default is 0).}
 
-\item{sheet}{(required) is a character string sheet ID corresponding to the Google Sheets location containing the individual submissions.}
+\item{auth}{is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.}
+
+\item{names}{character list of the column names in \code{sheet}.}
+
+\item{email}{is an email address that matches the user account containing the Sheet with the individual submissions (if \code{auth == TRUE}).}
 }
 \value{
-\code{type} returns the type of activity (stackelbergGame).
+\code{type} returns the type of activity (\code{bertrandGame}).
+
+\code{payoff} returns the payoff matrix.
+
+\code{output} returns the matrix of quantities corresponding to the strategies.
+
+\code{price} returns the matrix of prices corresponding to the total merket output for each combination of strategies.
 
 \code{results} returns the original submissions (with equilibria and points per round added).
 
-\code{grades} returns the aggregated points "won" by each student for the entire activity.
+\code{grades} returns the aggregated points 'won' by each student for the entire activity.
 }
 \description{
 Tabulate results for a simple in-class Stackelberg duopoly game.

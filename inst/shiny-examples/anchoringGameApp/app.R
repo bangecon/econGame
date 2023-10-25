@@ -2,15 +2,8 @@
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
 #
-library(shiny)
-library(tidyr)
-library(dplyr)
-library(stringr)
-library(gargle)
-library(googledrive)
-library(googlesheets4)
-library(gt)
-library(gtsummary)
+library(econGame)
+
 # Define UI for application
 ui <- fluidPage(
   titlePanel("Anchoring Game"),
@@ -19,7 +12,8 @@ ui <- fluidPage(
       inputId = "sheet",
       label = "Enter the ID of the Google Sheet with the output.",
       value = NULL
-    )
+    ),
+    actionButton("go", "Load New Responses")
   ),
   mainPanel(
     tabsetPanel(
@@ -32,7 +26,7 @@ ui <- fluidPage(
 
 # Define server logic
 server <- function(input, output) {
-  data <- reactive({
+  data <- eventReactive(input$go, {
     sheet <- input$sheet
     g <- anchoringGame(sheet)
     g$gtable <- as_gt(g$gtable)

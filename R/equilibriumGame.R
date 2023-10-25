@@ -4,11 +4,13 @@
 ##'
 ##' @details \code{equilibriumGame} tabulates the results of a simple equilibrium game based on Holt (1996). The instructor informs the students that they own a single unit of a eCoin currency that each of them values differently. Students then receive a random value from 1 to 10 using a link to a Google Sheet. This number represents their (constant) value they attach to the unit they presently own and for if they were to acquire one more unit of eCoin. Students submit their name, their value draw, a "bid" corresponding to the highest amount they would pay for a second eCoin, and an "ask" corresponding to the lowest amount they would accept to part with the eCoin they already own. Students keep their consumer and producer surpluses from each round as "extra credit" points. \code{equilibriumGame} tabulates the supply and demand schedules; calculates the equilibrium (with the help of a C++ helper function provided by "David" on Stack Overflow, \url{https://stackoverflow.com/questions/23830906/intersection-of-two-step-functions/}); graphs the equilibrium; and tabulates the scores for each student.
 ##'
-##' @param sheet (required) is a character string url corresponding to the Google Sheets location containing the individual submissions.
+##' @param sheet (required) is a character string corresponding to the Google Sheets location (url or ID key) containing the individual submissions.
 ##' @param auth is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.
+##' @param names is a character list of the column names in `sheet`.
 ##' @param email is an email address that matches the user account containing the Sheet with the individual submissions.
-##' @return \code{type} returns the type of activity (equlibriumGame).
-##' @return \code{results} returns the original submissions (with market price and points added).
+##' @return \code{type} the type of activity (equlibriumGame).
+##' @return \code{results} the original submissions (with market price and points added).
+##' @return \code{rounds} the number of rounds in `results`.
 ##' @return \code{schedules} returns a list containing the supply and demand schedules for each round.
 ##' @return \code{equilibria} returns a list containing the equilibria for each round.
 ##' @return \code{grades} returns the aggregated points "won" by each student for the entire activity.
@@ -20,6 +22,7 @@
 equilibriumGame <-
   function(sheet,
            auth = FALSE,
+           names = NULL,
            email = NULL,
            ...) {
     Rcpp::sourceCpp(
@@ -98,6 +101,18 @@ equilibriumGame <-
     else {
       googlesheets4::gs4_deauth()
       }
+    if (is.null(names)) {
+      names <- list(
+        first = "First.Name",
+        last = "Last.Name",
+        round = "Round",
+        value = "Value",
+        bid = "Bid",
+        ask = "Ask"
+      )
+    } else {
+      names <- lapply(names, make.names)
+    }
     results <- read_sheet(sheet)
     colnames(results) <- make.names(colnames(results))
     results <-

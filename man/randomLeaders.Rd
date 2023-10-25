@@ -2,9 +2,9 @@
 % Please edit documentation in R/randomLeaders.R
 \name{randomLeaders}
 \alias{randomLeaders}
-\title{Creates a random list of partner groups}
+\title{Randomly assigns partner roles}
 \usage{
-randomLeaders(sheet, size = 2, seed = 8675309, names = NULL)
+randomLeaders(sheet, size = 2, seed = 8675309, auth = FALSE, names = NULL)
 }
 \arguments{
 \item{sheet}{(required) is an object containing the list of student names with surnames and given names (see options for \code{last} and \code{first} below).}
@@ -25,8 +25,8 @@ randomLeaders(sheet, size = 2, seed = 8675309, names = NULL)
 \code{grades} returns the aggregated points "won" by each student for the entire activity.
 }
 \description{
-Creates a random list of partner groups
+Randomly assigns partner roles
 }
 \details{
-\code{partnerList} uses a random number to divide a \code{studentList} groups of size N.
+\code{randomRoles} uses a random number to assign partner roles (e.g. leader-follower, proposer-responder) to a list of student names a Google Sheet containing a student roster into
 }

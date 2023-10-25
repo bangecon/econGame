@@ -2,13 +2,7 @@
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
 #
-library(shiny)
-library(tidyr)
-library(dplyr)
-library(stringr)
-library(gargle)
-library(googledrive)
-library(googlesheets4)
+library(econGame)
 
 # Define UI for application
 ui <- fluidPage(
@@ -17,8 +11,9 @@ ui <- fluidPage(
     textInput(
       inputId = "sheet",
       label = "Enter the ID of the Google Sheet with the output.",
-      value = '1YB6jpNGOT7k3ikRMjLKNlPNb4x9T7lq0uHhC-ZIK7g4'
+      value = NULL
     ),
+    actionButton("go", "Load New Responses"),
     numericInput(
       inputId = "round",
       label = "Enter the round you want to calculate.",
@@ -60,7 +55,7 @@ ui <- fluidPage(
 
 # Define server logic
 server <- function(input, output) {
-  data <- reactive({
+  data <- eventReactive(input$go, {
     sheet <- input$sheet
     round <- input$round
     a <- input$a

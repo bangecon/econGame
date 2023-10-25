@@ -12,11 +12,14 @@
 ##' @param price is the price of the output each "firm" produces (default is 3).
 ##' @param externality is the external cost of pollution for each unit of output firms produce (default is 2).
 ##' @param practice is a logical indicating whether round 1 is practice (default is \code{TRUE}).
+##' @param names character list of the column names in `sheet`.
+##' @param auth is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.
+##' @param email is an email address that matches the user account containing the Sheet with the individual submissions (if `auth == TRUE`).
 ##'
 ##' @return \code{type} returns the type of activity (pollutionGame).
 ##' @return \code{results} returns the original submissions (with market price and points added).
-##' @return \code{schedules} returns a list containing the supply and demand schedules for each round.
-##' @return \code{equilibria} returns a list containing the equilibria for each round.
+##' @return \code{marketSchedule} returns a table containing the supply and demand schedules for each round.
+##' @return \code{equilibrium} returns a list containing the equilibria for each round.
 ##' @return \code{grades} returns the aggregated points "won" by each student for the entire activity.
 ##'
 ##' @references Nugent, R. A. (1997). Teaching Tools: A Pollution Rights Trading Game \emph{Economic Inquiry,} 35(3), 679-685.
@@ -25,9 +28,12 @@
 
 pollutionGame <-
   function(sheet,
-           price = 3,
-           externality = 2,
+           price = 4,
+           externality = 3,
            practice = TRUE,
+           auth = FALSE,
+           names = NULL,
+           email = NULL,
            ...) {
     Rcpp::sourceCpp(
       code = '
@@ -43,7 +49,7 @@ pollutionGame <-
           // fill the maps
           for (int i = 0; i < price_supply.size(); ++i) {
             supply[price_supply[i]] += quant_supply[i];
-          }
+            }
           for (int i = 0; i < price_demand.size(); ++i) {
             demand[price_demand[i]] += quant_demand[i];
           }
@@ -96,6 +102,32 @@ pollutionGame <-
                     '
     )
     # Set up the Google Sheets, read responses, and initialize output objects.
+    if(auth == TRUE) {
+      options(gargle_oauth_cache = ".secrets")
+      googlesheets4::gs4_auth()
+      googlesheets4::gs4_deauth()
+      googlesheets4::gs4_auth(cache = ".secrets", email = email)
+    }
+    else {
+      googlesheets4::gs4_deauth()
+    }
+    if (is.null(names)) {
+      names <- list(
+        first = "First.Name",
+        last = "Last.Name",
+        cost1 = "Cost1",
+        cost2 = "Cost2",
+        output1 = "Output1",
+        cleanup1 = "Cleanup1",
+        output2 = "Output2",
+        ouput3 = "Output3",
+        cleanup3 = "Cleanup3",
+        bid = "Bid",
+        ask = "Ask"
+      )
+    } else {
+      names <- lapply(names, make.names)
+    }
     results <- read_sheet(sheet)
     colnames(results) <- make.names(colnames(results))
     results <-
