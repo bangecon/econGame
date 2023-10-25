@@ -4,7 +4,8 @@
 ##'
 ##' @details \code{equilibriumGame} tabulates the results of a simple entry and exit game based on a simplified version of Garratt (2000) with two crops (corn and soybeans). The instructor informs the students that they will choose to plant corn, soybeans, or nothing. Producing corn incurs a cost of four points, while producing soybeans incurs a cost of 10 points. Selling a unit of corn brings revenue equal to \eqn{P_c = (N/2) + 6 - Q_c}, where N equals the number of students participating and Q_c equals the number of students choosing to produce corn. Selling a unit of soybeans brings revenue equal to \eqn{P_s = (N/2) + 10 - Q_s}. These parameters allow for there to be a "normal profit" of one point per student in each market, and lessens the chances that students might win negative points. Students choosing to produce nothing sell their labor in the labor market and break even (less the "normal profit").
 ##'
-##' @param sheet  (required) is a character string sheet ID corresponding to the Google Sheet containing the individual submissions.
+##' @param sheet (required) is a character string corresponding to the Google Sheets location (url or ID key) containing the individual submissions.
+##' @param names character list of the column names in `sheet`.
 ##' @param auth is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.
 ##' @param email is an email address that matches the user account containing the Sheet with the individual submissions.
 ##' @return \code{type} returns the type of activity (entryGame).

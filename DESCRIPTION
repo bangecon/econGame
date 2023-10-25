@@ -37,7 +37,11 @@ Depends: R(>= 4.0.0),
   ggpubr, 
   tidyr, 
   dplyr, 
+  gt,
   gtsummary, 
-  stringr
+  Rcpp,
+  stringr, 
+  shiny, 
+  gargle
 Imports: 
 Suggests: 

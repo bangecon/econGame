@@ -2,13 +2,8 @@
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
 #
-library(shiny)
-library(tidyr)
-library(stringr)
-library(googlesheets4)
-library(ggplot2)
-library(ggpubr)
-library(Rcpp)
+library(econGame)
+
 # Define UI for application
 ui <- fluidPage(
   titlePanel("Market Equilibrium Game"),
@@ -18,6 +13,7 @@ ui <- fluidPage(
       label = "Enter the ID of the Google Sheet with the output.",
       value = NULL
     ),
+    actionButton("go", "Load New Responses"),
     numericInput(
       inputId = "round",
       label = "Enter the round you want to display.",
@@ -36,7 +32,7 @@ ui <- fluidPage(
 
 # Define server logic
 server <- function(input, output) {
-  data <- reactive({
+  data <- eventReactive(input$go, {
     sheet <- input$sheet
     g <- equilibriumGame(sheet)
     g

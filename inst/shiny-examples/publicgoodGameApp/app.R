@@ -1,13 +1,8 @@
 #
 # This is a Shiny web application. You can run the application by clicking the 'Run App' button above.
 #
-library(shiny)
-library(tidyr)
-library(dplyr)
-library(stringr)
-library(gargle)
-library(googledrive)
-library(googlesheets4)
+library(econGame)
+
 # Define UI for application
 ui <- fluidPage(
   titlePanel("Public Good Game"),
@@ -17,10 +12,16 @@ ui <- fluidPage(
       label = "Enter the ID of the Google Sheet with the output.",
       value = NULL
     ),
+    actionButton("go", "Load New Responses"),
     textInput(
       inputId = "endowment",
       label = "Enter the initial endowment that students receive.",
       value = 0
+    ),
+    textInput(
+      inputId = "return",
+      label = "Enter the initial endowment that students receive.",
+      value = 1.2
     )
   ),
   mainPanel(
@@ -34,9 +35,11 @@ ui <- fluidPage(
 
 # Define server logic
 server <- function(input, output) {
-  data <- reactive({
+  data <- eventReactive(input$go, {
     sheet <- input$sheet
-    g <- publicgoodGame(sheet)
+    endowment <- input$endowment
+    return <- input$return
+    g <- publicgoodGame(sheet, endowment, return)
     g
   })
    output$grades <- renderTable({

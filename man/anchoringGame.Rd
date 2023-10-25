@@ -4,17 +4,23 @@
 \alias{anchoringGame}
 \title{Tabulate anchoring game results.}
 \usage{
-anchoringGame(sheet, ...)
+anchoringGame(sheet, names = NULL, auth = FALSE, email = NULL, ...)
 }
 \arguments{
 \item{sheet}{(required) is a character string url corresponding to the Google Sheets location containing the individual submissions.}
+
+\item{names}{character list of the column names in \code{sheet}.}
+
+\item{auth}{is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.}
+
+\item{email}{is an email address that matches the user account containing the Sheet with the individual submissions (if \code{auth == TRUE}).}
 }
 \value{
 \code{type} returns the type of activity (anchoringGame).
 
 \code{results} returns the original submissions.
 
-\code{SummaryTable} returns the summary table (with difference in means test statistics).
+\code{summaryTable} returns the summary table (with difference in means test statistics).
 }
 \description{
 Tabulates and assigns points for the results of a simple in-class anchoring game.

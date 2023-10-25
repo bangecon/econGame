@@ -4,7 +4,16 @@
 \alias{lobbyGame}
 \title{Tabulate results for an all-pay auction game.}
 \usage{
-lobbyGame(sheet, endowment = 5, prize = 4, seed = NULL, ...)
+lobbyGame(
+  sheet,
+  endowment = 5,
+  prize = 4,
+  seed = 8675309,
+  auth = FALSE,
+  names = NULL,
+  email = FALSE,
+  ...
+)
 }
 \arguments{
 \item{sheet}{(required) is a character string sheet ID corresponding to the Google Sheet containing the individual submissions.}
@@ -12,6 +21,14 @@ lobbyGame(sheet, endowment = 5, prize = 4, seed = NULL, ...)
 \item{endowment}{is the size of the initial endowment of points the instructor wishes to give each student.}
 
 \item{prize}{is the value of the license or prize each interest group (student) is bidding on.}
+
+\item{seed}{is the value for the numeric seed in the randomization for selecting the "winner" (default is 8675309).}
+
+\item{auth}{is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.}
+
+\item{names}{character list of the column names in \code{sheet}.}
+
+\item{email}{is an email address that matches the user account containing the Sheet with the individual submissions (if \code{auth == TRUE}).}
 }
 \value{
 \code{type} returns the type of activity (allpayGame).

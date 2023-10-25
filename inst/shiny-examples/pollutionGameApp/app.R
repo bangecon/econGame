@@ -2,13 +2,8 @@
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
 #
-library(shiny)
-library(tidyr)
-library(dplyr)
-library(stringr)
-library(googlesheets4)
-library(ggplot2)
-library(Rcpp)
+library(econGame)
+
 # Define UI for application
 ui <- fluidPage(
   titlePanel("Pollution Policy Game"),
@@ -18,15 +13,16 @@ ui <- fluidPage(
       label = "Enter the ID of the Google Sheet with the output.",
       value = NULL
     ),
+    actionButton("go", "Load New Responses"),
     numericInput(
       inputId = "price",
       label = "Enter the price of the output.",
-      value = 3
+      value = 4
     ),
     numericInput(
       inputId = "externality",
       label = "Enter the size of the externality.",
-      value = 2
+      value = 3
     )
   ),
   mainPanel(
@@ -71,7 +67,7 @@ ui <- fluidPage(
 
 # Define server logic
 server <- function(input, output) {
-  data <- reactive({
+  data <- eventReactive(input$go, {
     sheet <- input$sheet
     price <- input$price
     externality <- input$externality

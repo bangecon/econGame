@@ -21,12 +21,13 @@ allpayGame <- function(sheet = NULL,
                        prize = 4,
                        ...) {
   # Read responses and initialize output objects.
-  results <- read_sheet(sheet)
+  googlesheets4::gs4_deauth()
+  googlesheets4::results <- read_sheet(sheet)
   colnames(results) <- make.names(colnames(results))
   results <-
     replace_na(results, list(First.Name = "John", Last.Name = "Doe"))
-  results$First.Name <- str_to_title(results$First.Name)
-  results$Last.Name <- str_to_title(results$Last.Name)
+  results$First.Name <- stringr::str_to_title(results$First.Name6)
+  results$Last.Name <- stringr::str_to_title(results$Last.Name)
   results <- results[order(results$Bid, decreasing = TRUE), ]
   results <- results[!duplicated(results[, c(2:3)]), ]
   winner <- results[which.max(results$Bid), 2:3]

@@ -4,7 +4,16 @@
 \alias{pollutionGame}
 \title{Tabulate pollution game results.}
 \usage{
-pollutionGame(sheet, price = 3, externality = 2, practice = TRUE, ...)
+pollutionGame(
+  sheet,
+  price = 4,
+  externality = 3,
+  practice = TRUE,
+  auth = FALSE,
+  names = NULL,
+  email = NULL,
+  ...
+)
 }
 \arguments{
 \item{sheet}{(required) is a sheet ID corresponding to the Google Sheets location containing the individual submissions.}
@@ -14,15 +23,21 @@ pollutionGame(sheet, price = 3, externality = 2, practice = TRUE, ...)
 \item{externality}{is the external cost of pollution for each unit of output firms produce (default is 2).}
 
 \item{practice}{is a logical indicating whether round 1 is practice (default is \code{TRUE}).}
+
+\item{auth}{is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.}
+
+\item{names}{character list of the column names in \code{sheet}.}
+
+\item{email}{is an email address that matches the user account containing the Sheet with the individual submissions (if \code{auth == TRUE}).}
 }
 \value{
 \code{type} returns the type of activity (pollutionGame).
 
 \code{results} returns the original submissions (with market price and points added).
 
-\code{schedules} returns a list containing the supply and demand schedules for each round.
+\code{marketSchedule} returns a table containing the supply and demand schedules for each round.
 
-\code{equilibria} returns a list containing the equilibria for each round.
+\code{equilibrium} returns a list containing the equilibria for each round.
 
 \code{grades} returns the aggregated points "won" by each student for the entire activity.
 }

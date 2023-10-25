@@ -17,13 +17,15 @@ abstract: "In-class experiments provide instructors a powerful tool for helping 
   technology; teaching \n\n **JEL Code:** A22"
 header-includes: \usepackage{setspace}\doublespacing
 bibliography: econGame.bib
+link-citations: true
 ---
 
+```{=tex}
 \pagenumbering{gobble}
 \newpage
 \pagenumbering{arabic}
 \setcounter{page}{1}
-
+```
 # Introduction
 
 The use of experiments as demonstrations of economic theory date back at least as far as those conducted by @chamberlin_experimental_1948 and @smith_experimental_1962. These studies were designed primarily to collect evidence supporting or refuting economic models of rational behavior in market settings. @holt_industrial_1993 summarizes this literature. While experiments remain an important method for observing behavior to test economic hypotheses, these experiments have also found their way into pedagogy [@deyoung_market_1993].
@@ -34,88 +36,174 @@ Despite the potential learning and entertainment value of classroom experiments,
 
 @cheung_using_2008 helps to overcome this barrier by building tools for collecting student responses to in-class non-computerized experiments using mobile phones and texting. This contribution furthers this by automating the process of calculating and summarizing the results of the experiments. These examples only require students to be able to access a Google Form via their browser on their computer or mobile device, which, given the ubiquity of mobile phones among students (sometimes as their only personal computing device), sets a fairly reasonable bar for accessibility. A secondary contribution is simplifying existing versions of classic market equilibrium, entry, and duopoly games with the hope of increasing the diversity of methods used by economics instructors in the classroom.
 
-On the instructor's end, I have created a free, downloadable package called `econGame` for the *R* open-source statistical computing program. The tabulation programs run as either stand-alone functions in the *R* console, or for demonstration purposes as a html *Shiny* app that can open in a browser tab if desired. This allows the instructor to present the results of the experiment almost instantaneously after the students have submitted their responses.
+On the instructor's end, I have created a free, downloadable package called `econGame` for the *R* open-source statistical computing program. The tabulation programs run as either stand-alone functions in the *R* console, or for in-class demonstrations as *Shiny* apps that can open in a browser tab if desired. This allows the instructor to present the results of the experiment almost instantly after the students have submitted their responses.
 
 # Description of the Experiments
 
-The models I will describe in this paper encompass two well-established market equilibrium games known to the economics education literature [see, for example, @williams_economic_1993 and @brauer_games_2001], namely simplified versions of the following experiments:  
-1. the pit market trading game introduced by @holt_classroom_1996;  
-2. the entry and exit game introduced by @garratt_free_2000; and three games simulating different oligopoly models (Bertrand, Cournot, and Stackelberg). In the examples the "payoffs" students receive can be awarded to the students at the end of the games as "extra credit" points, or instructors may choose to encourage students to play the games strategically, but only "for the love of the game." I briefly describe the delivery of the games below.
+The models I will describe in this paper encompass two well-established market equilibrium games known to the economics education literature (see, for example, @williams_economic_1993 and @brauer_games_2001), namely the following experiments:\
+1. the pit market trading game introduced by @holt_classroom_1996;\
+2. a simplified version of the entry and exit game by @garratt_free_2000;\
+3. three games simulating different oligopoly models (Bertrand, Cournot, and Stackelberg);\
+4. the public-good game ;\
+5. a pollution policy game that compares different policy alternatives[@anderson2000];\
+6. a special-interest lobbying game based on a lottery auction;\
+7. two games demonstrating behavioral economics (an anchoring game similar to @gelman2000 and an ultimatum game based on @kahneman1986).\
+For games where students work in small groups (usually pairs), the package includes functions to create random groups if desired as well as options for allowing students to choose their own groups. The package also includes a plot function to create graphical illustrations of the results as well as shiny applications to calculate and present the results in a browser.\
+In the examples the "payoffs" students receive can be awarded to the students at the end of the games as "extra credit" points, or instructors may choose to encourage students to play the games strategically, but only "for the love of the game." I briefly describe the delivery of the games below.
 
-## Pit Market Trading
+## Pit Trading Market
 
-@holt_classroom_1996 designed the pit market trading game for class sizes between 10 and 25 and takes about 40-50 minutes to explain the game, play a few rounds, and tabulate the results after each round. This game is an excellent illustration of supply and demand, competitive market equilibrium, consumer and producer surplus, and efficiency. The functions presented in this paper speed up the response-collection process to allow the experiment to work for larger classes. It also speeds up the calculation of the equilibrium and graphs the equilibrium. 
+@holt_classroom_1996 designed the pit market trading game for class sizes between 10 and 25 and takes about 40-50 minutes to explain the game, play a few rounds, and tabulate the results after each round. This game is an excellent illustration of supply and demand, competitive market equilibrium, consumer and producer surplus, and efficiency. The functions presented in this paper speed up the response-collection process to allow the experiment to work for larger classes. It also speeds up the calculation of the equilibrium and graphs the equilibrium.
 
-Before class, the instructor prepares (1) a Google Sheet assigning a random integer between 1 and 10 representing each student's value that they place on the asset;^[The first sheet consists of a single formula in a single cell: "=roundup(10*rand())". A template can be found at:  
-https://docs.google.com/spreadsheets/d/1lCmC692ajsQZoatWtgZh5QKaJ9y3pOMt15JwRFaHanU/edit#gid=258904023.] and (2) a Google Form through which students enter their bid and ask prices;^[A template can be found at:  
-https://docs.google.com/forms/d/1S_F9UJ6GXttxPqDLtk8Hg0ZgzDaHMxBmc1qH3W2gKZo/edit.] For the best compatibility with the result-tabulating function, users who create their own forms should use the question prompts "First Name," "Last Name", "Round," "Value," "Bid," and "Ask." Add text fields to insert additional context, instructions, or question text.
+Before class, the instructor prepares (1) a Google Sheet assigning a random integer between 1 and 10 representing each student's value that they place on the asset;[^1] and (2) a Google Form through which students enter their bid and ask prices;[^2] For the best compatibility with the result-tabulating function, users who create their own forms should use the question prompts "First Name," "Last Name", "Round," "Value," "Bid," and "Ask." Add text fields to insert additional context, instructions, or question text.
+
+[^1]: The first sheet consists of a single formula in a single cell: "=roundup(10\*rand())". A template can be found at:\
+    <https://docs.google.com/spreadsheets/d/1lCmC692ajsQZoatWtgZh5QKaJ9y3pOMt15JwRFaHanU/edit#gid=258904023>.
+
+[^2]: A template can be found at:\
+    <https://docs.google.com/forms/d/1S_F9UJ6GXttxPqDLtk8Hg0ZgzDaHMxBmc1qH3W2gKZo/edit>.
 
 In class, the instructor informs the students that they own a single unit of an asset that each of them values differently. This value could represent a profit that they can derive from using the asset as a resource to produce other goods, a return the students expect to receive from selling the asset in the future, or a subjective "utility" that the students derive from using the asset as consumption. Students discover this value by visiting a link to the first Google Sheet that the instructor prepared to assign a random value from 1 to 10.
 
 Students submit their name, the round number (if playing more than one), their randomly-assigned value draw, a "bid" corresponding to the highest amount they would pay for a second unit of the asset, and an "ask" corresponding to the lowest amount they would accept to part with the unit of the asset they already own.
 
-If the instructor decides to incentivize the game with points, students keep their consumer and producer surpluses from each round as "extra credit" points. `equilibriumGame` tabulates the supply and demand schedules; calculates the equilibrium; graphs the equilibrium; and tabulates the scores for each student.^[The solution the piece-wise constant supply and demand equilibrium uses the help of a C++ helper function provided by "David" on Stack Overflow,  
-https://stackoverflow.com/questions/23830906/intersection-of-two-step-functions.]
+If the instructor decides to incentivize the game with points, students keep their consumer and producer surpluses from each round as "extra credit" points. `equilibriumGame` tabulates the supply and demand schedules; calculates the equilibrium; graphs the equilibrium; and tabulates the scores for each student.[^3]
+
+[^3]: The solution the piece-wise constant supply and demand equilibrium uses the help of a C++ helper function provided by "David" on Stack Overflow,\
+    <https://stackoverflow.com/questions/23830906/intersection-of-two-step-functions>.
 
 ## Entry and Exit
 
-@garratt_free_2000 designed an entry and exit game with four discrete specifications of the demand functions for class sizes between 25 and 44. Garratt's version also includes four markets (corn, wheat, rice, and soybeans), while the one presented here only includes two (corn and soybeans). The demand functions in this version of the experiment automatically adjust according to the number of students participating. Garratt's version of the game also takes about 45 minutes to complete the experiment (including a government "fallow program" intervention variation), usually about five rounds. 
+@garratt_free_2000 designed an entry and exit game with four discrete specifications of the demand functions for class sizes between 25 and 44. Garratt's version also includes four markets (corn, wheat, rice, and soybeans), while the one presented here only includes two (corn and soybeans). The demand functions in this version of the experiment automatically adjust according to the number of students participating. Garratt's version of the game also takes about 45 minutes to complete the experiment (including a government "fallow program" intervention variation), usually about five rounds.
 
-Before class the instructor prepares a Form to collect responses that includes the fields "First Name," "Last Name," "Round," and "Market."^[A template can be found at:  
-https://docs.google.com/forms/d/1oUsLulfD5bqT6_9VVYIzLWuuQ-L4vwmC4jI-1jabOVQ/edit.] Other information that might be useful to add to the Form includes information about demand and costs in each sector. The default inverse demand functions allow for each market to reward producers with about one unit of "normal profit," but these settings can be changed. 
+Before class the instructor prepares a Form to collect responses that includes the fields "First Name," "Last Name," "Round," and "Market."[^4] Other information that might be useful to add to the Form includes information about demand and costs in each sector. The default inverse demand functions allow for each market to reward producers with about one unit of "normal profit," but these settings can be changed.
 
-In class, the instructor informs the students that they will choose to plant corn, soybeans, or nothing. Producing corn incurs a cost of four, while producing soybeans incurs a cost of 10. @garratt_free_2000 recommends that the instructor *not* reveal the demand functions to students, whereas some instructors (including me) might prefer to allow students to play with perfect information. Selling a unit of corn brings revenue equal to $P_c = (N/2) + 6 - Q_c$, where $N$ equals the number of students participating and $Q_c$ equals the number of students choosing to produce corn. Selling a unit of soybeans brings revenue equal to $P_s = (N/2) + 10 - Q_s$. These parameters allow for there to be a "normal profit" of about one unit per student in each market in equilibrium, to compensate for the risk of venturing into self-employment.^[The long run equilibrium, with 1 unit of "normal profit" occurs with $(N/2) + 1$ students choosing corn and $(N/2) - 1$ students choosing soybeans.] If the instructor wants the prices to equal whole numbers (and the profits to equalize), they can join the game as a "student" to round out the numbers.
+[^4]: A template can be found at:\
+    <https://docs.google.com/forms/d/1oUsLulfD5bqT6_9VVYIzLWuuQ-L4vwmC4jI-1jabOVQ/edit>.
+
+In class, the instructor informs the students that they will choose to plant corn, soybeans, or nothing. Producing corn incurs a cost of four, while producing soybeans incurs a cost of 10. @garratt_free_2000 recommends that the instructor *not* reveal the demand functions to students, whereas some instructors (including me) might prefer to allow students to play with perfect information. Selling a unit of corn brings revenue equal to $P_c = (N/2) + 6 - Q_c$, where $N$ equals the number of students participating and $Q_c$ equals the number of students choosing to produce corn. Selling a unit of soybeans brings revenue equal to $P_s = (N/2) + 10 - Q_s$. These parameters allow for there to be a "normal profit" of about one unit per student in each market in equilibrium, to compensate for the risk of venturing into self-employment.[^5] If the instructor wants the prices to equal whole numbers (and the profits to equalize), they can join the game as a "student" to round out the numbers.
+
+[^5]: The long run equilibrium, with 1 unit of "normal profit" occurs with $(N/2) + 1$ students choosing corn and $(N/2) - 1$ students choosing soybeans.
 
 If the instructor decides to play the game with points, students earn points equal to their profits. Students may play as many rounds as the instructor decides to continue the game, or until the markets reach the long run equilibrium of zero *economic* profit. Usually the markets converge to the long run equilibrium by the end of about five rounds. Padding the demand functions to leave one point of "normal profit" compared to sitting out simulates the concept of a normal profit business owners receive for taking risk and lessens the chances that students might "win" negative extra credit points. Students choosing to produce nothing sell their labor in the labor market and earn zero (they do not earn a normal profit).
 
-## Oligoply Models
+## Oligoply
 
 I also constructed a set of games to demonstrate and compare equilibria in different (two-firm) oligopoly models. In each of the examples, students work in pairs. The instructor informs the students that the market price depends on both the strategy they choose for their "firm" and also the strategy their partner chooses. Each of the three examples uses the following linear inverse demand function (the parameters of which individual instructors may change in the options): $P = a + b(Q_1 + Q_2),$ where the default values for the parameters are $a = 10$ and $b = -1$. Likewise, firms face the the same cost function: $TC = f + cQ_i,$ where $f$ represents the fixed cost (0 by default) and $c$ represents the (constant) marginal (and average) cost of each additional unit (6 by default).
 
-Before beginning any of the duopoly models, the instructor should solve the competitive and monopoly equilibria with students first so that students can see the plausible range of prices they should expect to declare. Skipping this step often leads to a few greedy (but quantitatively-challenged) students choosing prices that would result in negative quantities. With the default parameters, the competitive equilibrium price and quantity are 6 and 4, while the monopoly equilibrium price and quantity are 8 and 2. 
+Before beginning any of the duopoly models, the instructor should solve the competitive and monopoly equilibria with students first so that students can see the plausible range of prices they should expect to declare. Skipping this step often leads to a few greedy (but quantitatively-challenged) students choosing prices that would result in negative quantities. With the default parameters, the competitive equilibrium price and quantity are 6 and 4, while the monopoly equilibrium price and quantity are 8 and 2.
 
 ### Bertrand Duoploy
 
-Before class, the instructor prepares the Form to collect the responses, which includes the fields "First Name," "Last Name", "Partner First Name," "Partner Last Name," "Round," and "Price."^[A template can be found at:  
-https://docs.google.com/forms/d/1AykOoY6mVj17D_5CW7-BLhSgOJdGEhyfYHKHROnvdcg/edit.] The package also includes a function to assign partners randomly using the class roster (saved as a Google Sheet), and the `bertrandGame()` function even allows the instructor to randomize the partners *after the fact* in case the instructor really wants to cut down on tacit collusion. The package default calculates the results using student-entered partners. 
+Before class, the instructor prepares the Form to collect the responses, which includes the fields "First Name," "Last Name", "Partner First Name," "Partner Last Name," "Round," and "Price."[^6] The package also includes a function to assign partners randomly using the class roster (saved as a Google Sheet), and the `bertrandGame()` function even allows the instructor to randomize the partners *after the fact* in case the instructor really wants to cut down on tacit collusion. The package default calculates the results using student-entered partners.
 
-In class, the instructor reviews the competitive and monopoly equilibria for the demand function in the example. The instructor then presents the "rules" for the Bertrand model as a "winner takes all" market. Students submit their own names, partner's names, and their price. 
-$$
+[^6]: A template can be found at:\
+    <https://docs.google.com/forms/d/1AykOoY6mVj17D_5CW7-BLhSgOJdGEhyfYHKHROnvdcg/edit>.
+
+In class, the instructor reviews the competitive and monopoly equilibria for the demand function in the example. The instructor then presents the "rules" for the Bertrand model as a "winner takes all" market. Students submit their own names, partner's names, and their price. $$
 Q_1 = \begin{cases}
     0 & \text{if } P_1 > P_2 \\ 
     (10 - P_1)/2 & \text{if } P_1 = P_2 \\
     10 - P_1 & \text{if } P_1 < P_2 
 \end{cases}
-$$
-If the instructor chooses to use points for the activity, students earn points equal to their profit. 
+$$ If the instructor chooses to use points for the activity, students earn points equal to their profit.
 
 ### Cournot Duopoly
 
-Before class, the instructor prepares the Form to collect the responses, which includes the fields "First Name," "Last Name", "Partner First Name," "Partner Last Name," "Round," and "Strategy"^[A template can be found at:  
-https://docs.google.com/forms/d/1dp-tUv5rNhRpm9UjFCy_pgsD4rJJnja-QJnWnMu81DI/edit.] As with the Bertrand game, instructors have discretion over allowing students to choose their own partners ("rivals") or randomizing the partners before or after the students choose a strategy.
+Before class, the instructor prepares the Form to collect the responses, which includes the fields "First Name," "Last Name", "Partner First Name," "Partner Last Name," "Round," and "Strategy"[^7] As with the Bertrand game, instructors have discretion over allowing students to choose their own partners ("rivals") or randomizing the partners before or after the students choose a strategy.
 
-In the Cournot game, students choose either to "collude" (produce a low quantity) or "defect" (produce a high quantity). The function that tabulates the results assigns half of the monopolist's profit-maximizing quantity to students who choose "collude," and automatically assigns the quantity corresponding to the best response function for students who choose "defect" (which depends on the output choice of their rival). Students only need to make the simple binary choice. Instructors using this example for upper-level classes may (or may not) want to edit the game settings to require students to submit a specific quantity (derive the best response functions themselves). 
+[^7]: A template can be found at:\
+    <https://docs.google.com/forms/d/1dp-tUv5rNhRpm9UjFCy_pgsD4rJJnja-QJnWnMu81DI/edit>.
+
+In the Cournot game, students choose either to "collude" (produce a low quantity) or "defect" (produce a high quantity). The function that tabulates the results assigns half of the monopolist's profit-maximizing quantity to students who choose "collude," and automatically assigns the quantity corresponding to the best response function for students who choose "defect" (based on the output choice of their rival). Students only need to make the simple binary choice. Instructors using this example for upper-level classes may (or may not) want to edit the game settings to require students to submit a specific quantity (derive the best response functions themselves).
 
 ### Stackelberg Duopoly
 
-Similar to the Cournot game, students in the Stackelberg game choose to "collude" or "defect." In contrast to the Cournot game, students must know their partner in advance, and followers will see the leaders' strategy choices before choosing their strategy. The function again automatically calculates the quantities corresponding to the set of binary strategy choices to determine the payoff outcomes.[^A template can be found at:  
-https://docs.google.com/forms/d/1vERPMPt_kW96JPAY6mEtkQMu6FLCgPuqoFL8i8bulYk/edit.]
+Similar to the Cournot game, students in the Stackelberg game choose to "collude" or "defect." In contrast to the Cournot game, students must know their partner in advance, and followers will see the leaders' strategy choices before choosing their strategy. The function again automatically calculates the quantities corresponding to the set of binary strategy choices to determine the payoff outcomes.[^8]
 
-# The econGame Package
+[^8]: A template can be found at:\
+    <https://docs.google.com/forms/d/1vERPMPt_kW96JPAY6mEtkQMu6FLCgPuqoFL8i8bulYk/edit>.
 
-The `econGame` package pulls activity data from Google the Google Sheet file generated for the form responses. It then tabulates, scores, and graphs the responses; and writes the grade data to a separate Google Sheet. Users can download the package from https://github.com/bangecon/econGame. To install the package, use the `remotes` package and the `install_github()` function:
+## Public Good Game
+
+@holt1997 and @leuthold1993 conduct experiments involving voluntary contributions to a public good. This example somewhat resembles Leuthold's example more closely, but differs in that (1) instructors can choose to denominate contributions in terms of points instead of "hypothetical" monetary endowments; and (2) the portion of points (or candy or hypothetical dollars) held for private returns pay zero return (for simplicity).
+
+Before class, the instructor prepares a Google Form with fields for "First Name," "Last Name", and "Contribution," and links the results to a Google Sheet.[^9] In the game, students may contribute any value (of points, candy, or hypothetical dollars) between zero and ten. If an instructor chooses to use class points for the payoffs, they may choose to endow students with ten points for playing the game, or for higher stakes they may opt to tell students that their contributions will come from their personal point total they have already earned. Contributing from their earned points makes the game more exciting, while endowing the students with free points leads to less resentment both towards the professors and among members of the class (even though the net effect on grades might be the same!).
+
+[^9]: Users can find a template at <https://docs.google.com/forms/d/e/1FAIpQLSfElzd25aOTXDi8lNSdlfeWufRjhNqhE4jrPg7aHbhcQqP0PA/viewform?usp=sf_link>
+
+Once the instructor collects the contributions using the Google Form, the application uses the results to calculate the returns (default = 20%), and distributes the contributions and the returns equally among all students.
+
+## Pollution Policies
+
+The pollution game asks students to behave as profit-maximizing firms that can produce up to two units of output at a price of four, but where each unit of production produces a unit of pollution that creates a negative externality of three. Students then choose how much of the pollution from their production to abate (installing scrubbers, using cleaner production methods). It then compares their choices under four different pollution-abatement policies: (1) no regulation; (2) command-and-control regulation; (3) a pollution tax equal to the extent of the externality; and (4) a cap-and-trade market.
+
+As with all previous activities, the instructor prepares a Google Form with a corresponding linked Google Sheet for students to submit their responses and to export the responses.[^10] The template includes five sections. The setup section includes fields for students to enter their (1) first name; (2) last name; (3) randomly-assigned private cost of abating their first "unit" of pollution (the lower of two integers between 1 and 6);[^11] (4) cost of abating the second "unit" of pollution (the higher integer). Encourage students to write down their abatement costs.
+
+[^10]: Template here: <https://docs.google.com/forms/d/e/1FAIpQLSew1-iIvA_2cMyzNNSlrhlcxrs2hpy2f_eJYyAHjBPVjg-7lA/viewform?usp=sf_link>.
+
+[^11]: Template here: <https://docs.google.com/spreadsheets/d/1shTH39y65gaaYmevt4S6vtw1i-06hWEGeE1cPXe6J8M/edit?usp=sharing>.
+
+The section corresponding to no regulation asks students to choose their profit-maximizing quantity under no regulation
+
+## Lobbying
+
+When discussing monopoly, some instructors may find it useful to introduce the concept of special interests. For example, one way that a monopolist might create entry barriers would be to lobby the government for a license to produce as a legal monopoly, or for an exclusive contract to privately provide goods or services for the government. One way to simulate this is through a lottery auction. 
+
+In this activity I typically endow students with five "extra credit" points to use for the activity. Alternatively, students could play with candy or hypothetical dollars. They use this endowment to submit political contributions to a politician (me) for the chance to win a monopoly license worth four points (or pieces of candy or hypothetical dollars). Each contribution represents one entry in a lottery for the license and costs one point (or candy or hypothetical dollar). Electronically, students submit their contributions by submitting a Google Form[^12] with only their first and last name *the number of times corresponding to the number of contributions they want to submit*. The application randomly selects the winning row from the results sheet[^13] (using the random seed "8675309" so that the result is replicable). 
+
+[^12]: Template here: <https://docs.google.com/forms/d/e/1FAIpQLSdzMzydVZJrB2d57ZwQCkCPJcxNXogFHZTOOtZS75DHYvb5dg/viewform?usp=sf_link>.
+
+[^13]: Template here: <https://docs.google.com/spreadsheets/d/1suPdRvwS_oM66cgZwx2nNw51XybEIbe9L7zkBB4dQOU/edit?usp=sharing>.
+
+If instructors want to simulate "campaign finance reform" they can make the contributions transparent by auctioning off the license in an all-pay auction. Beware! The result of this auction can lead to students bidding more than the license is ultimately worth!
+
+## Behavioral Economics
+
+Numerous experiments describe different sorts of behavioral concepts in economics and can be adapted to a classroom setting. The package described here automates results for two of these, namely an anchoring game based on @gelman2000 and the ultimatum game based on @kahneman1986. 
+
+### Anchoring Game
+
+The anchoring game we automate here is based on the activity described in @gelman2000, which begins by assigning students a random number (10 or 65) and responde to the following:\
+1. What number were you assigned?/ 
+2. Thinking about that number, do you think that the percentage of the world's countries that is located on the continent of Africa is *higher* or *lower* than the number you received?\
+3. What is your guess for the percentage of the world's countries that is located in Africa?\
+
+Students submit their responses (without looking up the answers!) using a Google Form,[^14] which the instructor exports to a Google Sheet[^15] that the application uses to tabulate the results. The results include the list of responses, a box plot, and test statistics comparing the two randomly-assigned groups. "Rational" guessing should fail to reject the hypothesis of no difference since which random (uninformative) number a student receives should not influence rational guessers. In reasonably large classes, we can usually reject this null hypothesis.
+
+[^14]: Template here: <https://docs.google.com/forms/d/e/1FAIpQLSdzMzydVZJrB2d57ZwQCkCPJcxNXogFHZTOOtZS75DHYvb5dg/viewform?usp=sf_link>. 
+
+[^15]: Template here: <https://docs.google.com/spreadsheets/d/1suPdRvwS_oM66cgZwx2nNw51XybEIbe9L7zkBB4dQOU/edit?usp=sharing>.
+
+### Ultimatum Game
+
+The ultimatum game is a very popular game in experimental behavioral economics. Students work in pairs, and determine which partner will be the "proposer" and which will be the "responder." The proposer receives five points (or candies or tokens, or hypothetical dollars), from which they offer a portion to the responder. The responder then takes the option to accept or reject the offer. If the responder accepts, then each partner receives benefits according to the agreement; if the responder rejects, then both parties get nothing. The instructor should encourage students to decide quickly and that this is not a back-and-forth negotiation: take it or leave it offers only!
+
+Each pair submits one version of the Google Form, which should include fields for "Proposer First Name", "Proposer Last Name", "Responder First Name", "Responder Last Name", "Offer", and "Response", which the instructor prepares before class.[^16] The instructor should also link the Forms responses to a Google Sheet[^17] that the package will use to tabulate the results, including a bar plot of the offers, the list of responses, and the final tally of benefits (e.g. points) for each participant. 
+
+[^16]: Template here: <https://docs.google.com/forms/d/e/1FAIpQLSeVGBjXI49-q0Tsj5iYAWe6UbsIBwzIryYh6Wz-rkQjZm7u9g/viewform?usp=sf_link>. 
+
+[^17]: Template here: <https://docs.google.com/spreadsheets/d/12XRuR9HzJeshRM5npRILkXvbZbIxyJsj9abihVjYRpc/edit?usp=sharing>.
+
+# The `econGame` Package
+
+The `econGame` package pulls activity data from the Google Sheet file generated for the form responses. It then tabulates, scores, and graphs the responses. Users can download the package from <https://github.com/bangecon/econGame>. To install the package, use the `remotes` package and the `install_github()` function:
 
 `remotes::install_github("bangecon/econGame")`
 
+Alternatively, if users have trouble using `remotes`, they try using the `pkg_install()` function from the  `pak` package (which sometimes works - albeit slightly less quickly - if `remotes::install_github()` gives an error) if they experience difficulties installing `econgame` using `remotes::install_github`. 
+
 ## Exporting the Results
 
-Once the students have completed each round of a game, the instructor should pause to tabulate the results for that round. This is especially the case in the entry and exit game, where convergence to the long-run equilibrium requires students to know which sector earned economic profits in the previous round. To do this, the instructor needs to click the Google Sheets icon in the responses tab of the edit page of the form. Figure 1 demonstrates where to find these tools in your Google Form.
+Once the students have completed each round of a game, the instructor should pause to tabulate the results for that round. This is especially the case in the entry and exit game, where convergence to the long-run equilibrium requires students to know which sector earned economic profits in the previous round. To do this, the instructor needs to click the Google Sheets icon in the responses tab of the edit page of the form. Figure 1 demonstrates where to find these tools in your Google Form using the pit market trading equilibrium game as an example. 
 
 ![Exporting Results to Google Sheets](images/Figure1.png)
 
-This creates a Google Sheet that contains all of the data for tabulating the results.^[Link the Form to a Sheet to collect responses by selecting the "Responses" tab, and clicking "Link to Sheets."] 
+This creates a Google Sheet that contains all of the data for tabulating the results.[^18]
 
-In order to link to your results, you will need to copy to your clipboard the sheet ID from the URL. Figure 2 shows where you can find the sheet ID for your results.
+[^18]: Link the Form to a Sheet to collect responses by selecting the "Responses" tab, and clicking "Link to Sheets."
+
+In order to link to your results, you will need to copy to your clipboard either (a) the sharing url, which you can find by selecting the "Share" link to the right of the menu bar; or (b) the sheet ID from the URL (see Figure 2). 
 
 ![Finding the Sheet ID](images/Figure2.png)
 
@@ -123,106 +211,152 @@ In order to link to your results, you will need to copy to your clipboard the sh
 
 Each game has its own function to tabulate its results, and for each function there are slightly different options that the instructor can adjust based on any changes they might have made to the default parameters for the exercise. The only argument the instructor needs to provide (and that does not have a preset default) is the ID of the Google Sheet. The syntax and outputs for the different functions are:
 
--   Equilibrium game: `equilibriumGame(sheet = NULL, ...)`
+-   Each of the games shares the following arguments and outputs: 
+
+    -   Arguments
+
+        -   `sheet` (required): character string corresponding to the Google Sheets location (url or ID key) containing the individual submissions;
+        -   `auth`: logical indicating whether to use an authentication token to access the Sheet containing the individual submissions;
+        -   `names`: character list of the column names in `sheet`;
+        -   `email`: email address that matches the user account containing the Sheet with the individual submissions;
+    
+    -   Outputs: 
+
+        -   `type`: character for the type of activity (equlibriumGame, entryGame, etc.);
+        -   `results`: table of original submissions (with market price and points added);
+        -   `grades`: table aggregated points "won" by each student for all rounds of the activity;
+
+-   Pit trading market equilibrium game-specific outputs:
+
+    -   `rounds`: numeric for the number of rounds in `results`;
+    -   `schedules`: list containing the supply and demand schedules for each round;
+    -   `equilibria`: list containing the equilibria for each round;
+
+-   Entry-exit game-specific outputs: 
+
+        -   `rounds`: numeric for the number of rounds in `results`;
+        -   `equilibria`: list containing the equilibria for each round;
+
+-   Bertrand game-specific arguments and outputs:
 
     -   Arguments:
 
-        -   `sheet` (required) is a character string url corresponding to the Google Sheets location containing the individual submissions.
+        -   `partners`: character equal to 'random' or 'students' indicating whether the function should use the `econGame::randomGroups()` function to randomly assign partners, or students will pick the partners themselves (default is 'random'); 
+        -   `a`: numeric value of the intercept of the inverse-demand function (default is 10);
+        -   `b`: numeric value of the slope of the inverse-demand function (default is -1);
+        -   `c`: numeric value of the firm's marginal cost (default is 6);
+        -   `f`: numeric value of the firm's fixed cost (default is 0);
 
-    -   Outputs:
+    -   Outputs: 
 
-        -   `type` returns the type of activity (equlibriumGame).
-        -   `results` returns the original submissions (with market price and points added).
-        -   `schedules` returns a list containing the supply and demand schedules for each round.
-        -   `equilibria` returns a list containing the equilibria for each round.
-        -   `grades` returns the aggregated points "won" by each student for the entire activity.
+        -   `payoff`: table containing the matrix of payoffs for the reduced strategy combinations (fully collude or fully defect for each player); 
+        -   `output`: table containing the matrix of quantities corresponding to each combination of strategies; 
+        -   `price`: table containing the matrix of prices corresponding to the total market output for each combination of strategies. 
 
--   Entry and exit game: `entryGame(sheet = NULL, ...)`
-
-    -   Arguments:
-
-        -   `sheet` (required) is a character string url corresponding to the Google Sheets location containing the individual submissions.
-
-    -   Outputs:
-
-        -   `type` returns the type of activity (equlibriumGame).
-        -   `results` returns the original submissions (with market price and points added).
-        -   `rounds` returns the number of rounds in "results."
-        -   `equilibria` returns a list containing the equilibria for each round.
-        -   `grades` returns the aggregated points "won" by each student for the entire activity.
-
--   Bertrand game: `bertrandGame(sheet = NULL, a = 10, b = -1, c = 6, f = 0, ...)`
+-   Cournot game-specific arguments and outputs: 
 
     -   Arguments:
 
-        -   `sheet` (required) is a character string url corresponding to the Google Sheets location containing the individual submissions.
-        -   `a` is the value of the intercept of the linear inverse-demand function (default is 10).
-        -   `b` is the value of the slope of the linear inverse-demand function (default is -1).
-        -   `c` is the value of the firm's marginal cost (default is 6).
-        -   `f` is the value of the firm's fixed cost (default is 0).
+        -   `partners`: character equal to 'random' or 'students' indicating whether the function should use the `econGame::randomGroups()` function to randomly assign partners, or students will pick the partners themselves (default is 'random'); 
+        -   `a`: numeric value of the intercept of the inverse-demand function (default is 10).
+        -   `b`: numeric value of the slope of the inverse-demand function (default is -1).
+        -   `c`: numeric value of the firm's marginal cost (default is 6).
+        -   `f`: numeric value of the firm's fixed cost (default is 0).
 
-    -   Outputs:
+    -   Outputs: 
 
-        -   `type` returns the type of activity (equlibriumGame).
-        -   `results` returns the original submissions (with market price and points added).
-        -   `grades` returns the aggregated points "won" by each student for the entire activity.
+        -   `payoff`: table containing the matrix of payoffs for the reduced strategy combinations (collude or defect for each player); 
+        -   `output`: table containing the matrix of quantities corresponding to each combination of strategies; 
+        -   `price`: table containing the matrix of prices corresponding to the total market output for each combination of strategies. 
 
--   Cournot game: `cournotGame(sheet = NULL, a = 10, b = -1, c = 6, f = 0, ...)`
-
-    -   Arguments:
-
-        -   `sheet` (required) is a character string url corresponding to the Google Sheets location containing the individual submissions.
-        -   `a` is the value of the intercept of the linear inverse-demand function (default is 10).
-        -   `b` is the value of the slope of the linear inverse-demand function (default is -1).
-        -   `c` is the value of the firm's marginal cost (default is 6).
-        -   `f` is the value of the firm's fixed cost (default is 0).
-
-    -   Outputs:
-
-        -   `type` returns the type of activity (equlibriumGame).
-        -   `results` returns the original submissions (with market price and points added).
-        -   `grades` returns the aggregated points "won" by each student for the entire activity.
-
--   Stackelberg game: `stackelbergGame(sheet = NULL, a = 10, b = -1, c = 6, f = 0, ...)`
+-   Stackelberg game-specific arguments and outputs: 
 
     -   Arguments:
 
-        -   `sheet` (required) is a character string url corresponding to the Google Sheets location containing the individual submissions.
-        -   `a` is the value of the intercept of the linear inverse-demand function (default is 10).
-        -   `b` is the value of the slope of the linear inverse-demand function (default is -1).
-        -   `c` is the value of the firm's marginal cost (default is 6).
-        -   `f` is the value of the firm's fixed cost (default is 0).
+        -   `partners`: character equal to 'random' or 'students' indicating whether the function should use the `econGame::randomGroups()` function to randomly assign partners, or students will pick the partners themselves (default is 'students'); 
+        -   `a`: numeric value of the intercept of the inverse-demand function (default is 10).
+        -   `b`: numeric value of the slope of the inverse-demand function (default is -1).
+        -   `c`: numeric value of the firm's marginal cost (default is 6).
+        -   `f`: numeric value of the firm's fixed cost (default is 0).
 
     -   Outputs:
 
-        -   `type` returns the type of activity (equlibriumGame).
-        -   `results` returns the original submissions (with market price and points added).
-        -   `grades` returns the aggregated points "won" by each student for the entire activity.
+        -   `roles`: table of matched leader-follower partners; 
+        -   `leaderResults`: original submissions for the leaders;
+        -   `leaderResults`: original submissions for the followers;
+        -   `tree`: plot of the game tree in extensive form; 
+        -   `payoff`: table containing the matrix of payoffs for the reduced strategy combinations (collude or defect for each player); 
+        -   `output`: table containing the matrix of quantities corresponding to each combination of strategies; 
+        -   `price`: table containing the matrix of prices corresponding to the total market output for each combination of strategies. 
 
-Another feature of the package is the ability to plot the results. The syntax to plot any of the games described in this paper is simply `plot(econGame, ...)`, where the (sole) argument is the name of an object assigned by one of the `econGame` functions. The plot the function generates depends on the type of game: 
+-   Public good game-specific arguments and outputs: 
 
-* For `type = 'equilibriumGame'`, plot the supply and demand functions with the corresponding equlibrium point. 
-* For `type = 'entryGame'`, plot the supply, demand, and per-unit cost lines to show profits and losses. 
-* For `type = 'bertrandGame'`, plot a histogram of the price strategies. 
-* For `type = 'cournotGame'` or `type = 'stackelbergGame'`, plot a bar graph of the strategy outcomes.
+    -   Arguments
+    
+        -   `endowment`: numeric points (or candies or hypothetical dollars) students begin the game with (default is 0); 
+        -   `return`: numeric scalling factor (greater than one) for the return on contributions to the public good (default is 1.2, for 20% return on contributions);
+    
+    -   Outputs
+    
+        -   `blindedResults`: table of submissions without student names; 
+        
+-   Pollution policy game-specific arguments and outputs: 
+    
+    -   Arguments:
+
+        -   `price`: numeric price of the output (default is 4);
+        -   `externality`: numeric external cost of producing each unit of output (default is 3); 
+        -   `practice`: logical indicating whether round one (no regulation) should be practice (points *not* included in `grades`);
+    
+    -   Outputs: 
+    
+        -   `marketSchedule`: table showing the supply and demand schedules for the cap-and-trade market; 
+        -   `equilibrium`: table showing the equilibrium price and quantity for the cap-and-trade market: 
+        
+-   Lobby game-specific arguments and outputs: 
+
+    -   Arguments
+    
+        -   `endowment`: numeric points (or candies or hypothetical dollars) students begin the game with (default is 5);
+        -   `prize`: numeric value of the license or prize each interest group is bidding on;
+        -   `seed`: numeric value for the numeric seed in the randomization for selecting the "winner" (default is 8675309); 
+    
+    -   Outputs
+    
+        -   `winner`: the name of the winning interest group (student); 
+
+-   Anchoring game-specific outputs:
+
+    -   `summaryTable`: table summarizing the guesses of the two randomly-assigned groups and the difference-in-means test; 
+    -   **Note** the anchoring game does *not* return `grades` output (we do not want students trying too hard to get the correct answer by looking it up);
+    
+-   Ultimatum game-specific arguments: none!
+    
+## Plotting the Results
+
+Another feature of the package is the ability to plot the results for certain games. The syntax to plot any of the games described in this paper is simply `plot(econGame, ...)`, where the (sole) argument is the name of an object assigned by one of the `econGame` functions. The plot the function generates depends on the type of game:
+
+-   For `type = 'equilibriumGame'`, `type = 'entryGame'`, or `type = 'pollutionGame'`, plot the supply and demand functions with the corresponding equlibrium point.
+-   For `type = 'bertrandGame'`, `type = 'cournotGame'`, `type = 'stackelbergGame'`, `type = 'publicgoodGame'`, or `type = 'ultimatumGame'`, plot a histogram of the strategy outcomes.
+-   For `type = 'anchoringGame'`, plot a box plot of the guesses by anchor group.
+-   There is not currently a plot associated with the lobby game. 
 
 ## Shiny User Interface
 
 The functions for directly summarizing the results of the games may be useful for tabulating the results for the purposes of awarding points to the students who participated, but may not be the most visually-appealing way to present the results in class. To improve the user interface for a "prettier" presentation of the results, I have built a Shiny Application UI for each of the games. In this interface, the instructor can display the raw results, plots, or schedules of the outcomes of the results by inputting the sheet ID (and other parameters) in the input boxes, and by switching the display tabs of the results.
 
-To run the Shiny App for a given package, I have written a function that executes the app from the `'~/inst/shiny-examples'` folder of the package source. Once the instructor has installed the package, all they need to do to execute the app is type one of the following commands: `'runEquilibriumGameApp()'`, `'runEntryGameApp()'`, `'runBertrandGameApp()'`, `'runCournotGameApp()'`, or `'runStackelbergGameApp()'`. When the instructor initiates the app, it will point the function to a blank Google Sheet as the default, which will result in either blank output, or an error. In order to read the submission results, the instructor will need to paste the Google Sheet ID depicted in Figure 2. 
+To run the Shiny App for a given package, I have written a function that executes the app from the `'~/inst/shiny-examples'` folder of the package source. Once the instructor has installed the package, all they need to do to execute the app is type one of the following commands: `'runEquilibriumGameApp()'`, `'runEntryGameApp()'`, etc. When the instructor initiates the app, it will point the function to a blank Google Sheet as the default, which will result in either blank output, or an error. In order to read the submission results, the instructor will need to paste the Google Sheet ID depicted in Figure 2.
 
-Figure 3 shows the Shiny interface for `equilibriumGame`. Within the output panel, the instructor (and students) will be able to see tabbed output for different results, plots, and possibly the grade outcomes if the instructor wishes to show it. 
+Figure 3 shows the Shiny interface for `equilibriumGame`. Within the output panel, the instructor (and students) will be able to see tabbed output for different results, plots, and possibly the grade outcomes if the instructor wishes to show it.
 
 ![Shiny User Interface](images/Figure3.png)
 
 # Discussion
 
-This work provided examples of how to implement some simple market games using R and Shiny. The objective of the functions developed for this discussion was to help instructors adopt more creative and engaging teaching methods in their principles classrooms by lowering both the financial and time costs of tabulating the results and presenting appealing summaries of the outcomes. 
+This work provided examples of how to implement some simple market games using R and Shiny. The objective of the functions developed for this discussion was to help instructors adopt more creative and engaging teaching methods in their principles classrooms by lowering both the financial and time costs of tabulating the results and presenting appealing summaries of the outcomes.
 
-All of the examples can be implemented for the students using Google Forms, which collects the results in Google Sheets. Instructors may then tabulate the results using the `econGame` package via the HTML Shiny App with a single-function command in R. All of these applications and packages come at no cost to the student. The only potential cost barrier is the device - which could be as little as a mobile device - each student would need in order to input their responses. 
+All of the examples can be implemented for the students using Google Forms, which collects and exports the results in Google Sheets. Instructors may then tabulate the results using the `econGame` package via the HTML Shiny App with a single-function command in R. All of these applications and packages come at no cost to the student. The only potential cost barrier is the device - which could be as little as a mobile device - each student would need in order to input their responses.
 
-Another useful feature is that I have platformed the package on GitHub, which allows users to make pull requests to suggest edits and changes to improve or add features and examples to the package. I plan to also develop more functions and applications for the `econGame` package from existing classroom experiments, and even design a few original games. If you use these resources, please let me know and share them with your colleagues. 
+I have platformed the package on GitHub (<https://github.com/bangecon/econGame>), which allows users to make pull requests to suggest edits and changes to improve the existing experiments or suggest additions to the examples in the package. I also plan to develop more functions and applications for the `econGame` package from existing classroom experiments, which may include a few original games. If you use these resources, please let me know and share them with your colleagues.
 
 # References
-

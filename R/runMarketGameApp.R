@@ -20,20 +20,20 @@
 
 runMarketGameApp <- function(game = NULL) {
   if(is.null(game)) {
-    game <- readline("Which game would you like to tabulate? \n
-                     1. `equlibriumGame` a simple supply-and-demand equilibrium game. \n
-                     2. `entryGame` two-sector entry-and-exit game. \n
-                     3. `bertrandGame` Bertrand duopoly game. \n
-                     4. `cournotGame` Cournot duopoly game. \n
-                     5. `stackelbergGame` sequential leader-follower game. \n
-                     6. `ultimatumGame` ultimatum game.  \n
-                     7. `anchoringGame` the effects of anchoring on guessing.  \n
-                     8. `lobbyGame` lottery-auction game. \n
-                     9. `publicgoodGame` public good game with free-rider effects. \n
-                     10. `pollutionGame` the effects of alternative pollution-abatement policies. \n
-                     11. `multipdGame` multi-player prisoner's dilemma game. \n
-                     12. `staghuntGame` two-person stag hunt gmae. \n
-                     ")
+    option <- readline("Which game would you like to tabulate? \n
+                       1. `equlibriumGame` a simple supply-and-demand equilibrium game. \n
+                       2. `entryGame` two-sector entry-and-exit game. \n
+                       3. `bertrandGame` Bertrand duopoly game. \n
+                       4. `cournotGame` Cournot duopoly game. \n
+                       5. `stackelbergGame` sequential leader-follower game. \n
+                       6. `ultimatumGame` ultimatum game.  \n
+                       7. `anchoringGame` the effects of anchoring on guessing.  \n
+                       8. `lobbyGame` lottery-auction game. \n
+                       9. `publicgoodGame` public good game with free-rider effects. \n
+                       10. `pollutionGame` the effects of alternative pollution-abatement policies. \n
+                       11. `multipdGame` multi-player prisoner's dilemma game. \n
+                       12. `staghuntGame` two-person stag hunt gmae. \n
+                       ")
   }
   appDir <- system.file("shiny-examples", game, package = "econGame")
   if (appDir == "") {

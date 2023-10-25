@@ -1,6 +1,6 @@
-##' Creates a random list of partner groups
+##' Randomly assigns partner roles
 ##'
-##' @details \code{partnerList} uses a random number to divide a \code{studentList} groups of size N.
+##' @details \code{randomRoles} uses a random number to assign partner roles (e.g. leader-follower, proposer-responder) to a list of student names a Google Sheet containing a student roster into
 ##'
 ##' @param sheet (required) is an object containing the list of student names with surnames and given names (see options for `last` and `first` below).
 ##' @param size is the size of each group (default is 2).
@@ -17,6 +17,7 @@
 randomLeaders <- function(sheet,
                           size = 2,
                           seed = 8675309,
+                          auth = FALSE,
                           names = NULL) {
   googlesheets4::gs4_deauth()
   studentList <- googlesheets4::read_sheet(sheet)

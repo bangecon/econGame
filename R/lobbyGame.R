@@ -7,6 +7,10 @@
 ##' @param sheet  (required) is a character string sheet ID corresponding to the Google Sheet containing the individual submissions.
 ##' @param endowment is the size of the initial endowment of points the instructor wishes to give each student.
 ##' @param prize is the value of the license or prize each interest group (student) is bidding on.
+##' @param seed is the value for the numeric seed in the randomization for selecting the "winner" (default is 8675309).
+##' @param names character list of the column names in `sheet`.
+##' @param auth is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.
+##' @param email is an email address that matches the user account containing the Sheet with the individual submissions (if `auth == TRUE`).
 ##'
 ##' @return \code{type} returns the type of activity (allpayGame).
 ##' @return \code{results} returns the original submissions (with market prices and points per round added).
@@ -21,9 +25,10 @@ lobbyGame <-
   function(sheet,
            endowment = 5,
            prize = 4,
-           seed = NULL,
+           seed = 8675309,
            auth = FALSE,
            names = NULL,
+           email = FALSE,
            ...)
   {
     # Set up the Google Sheets, read responses, and initialize output objects.

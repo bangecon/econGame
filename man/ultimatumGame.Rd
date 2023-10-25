@@ -4,10 +4,16 @@
 \alias{ultimatumGame}
 \title{Tabulate ultimatum game results.}
 \usage{
-ultimatumGame(sheet, ...)
+ultimatumGame(sheet, names = NULL, auth = FALSE, email = NULL, ...)
 }
 \arguments{
 \item{sheet}{(required) is a character string url corresponding to the Google Sheets location containing the individual submissions.}
+
+\item{names}{character list of the column names in \code{sheet}.}
+
+\item{auth}{is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.}
+
+\item{email}{is an email address that matches the user account containing the Sheet with the individual submissions (if \code{auth == TRUE}).}
 }
 \value{
 \code{type} returns the type of activity (ultimatumGame).
