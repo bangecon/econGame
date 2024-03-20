@@ -40,16 +40,16 @@ On the instructor's end, I have created a free, downloadable package called `eco
 
 # Description of the Experiments
 
-The models I will describe in this paper encompass two well-established market equilibrium games known to the economics education literature (see, for example, @williams_economic_1993 and @brauer_games_2001), namely the following experiments:\
+The models I will describe in this paper encompass well-established market equilibrium games known to the economics education literature (see, for example, @williams_economic_1993 and @brauer_games_2001), namely the following experiments:\
 1. the pit market trading game introduced by @holt_classroom_1996;\
 2. a simplified version of the entry and exit game by @garratt_free_2000;\
-3. three games simulating different oligopoly models (Bertrand, Cournot, and Stackelberg);\
-4. the public-good game ;\
+3. games simulating different Bertrand and Cournot oligopoly models;\
+4. the public-good game;\
 5. a pollution policy game that compares different policy alternatives[@anderson2000];\
 6. a special-interest lobbying game based on a lottery auction;\
-7. two games demonstrating behavioral economics (an anchoring game similar to @gelman2000 and an ultimatum game based on @kahneman1986).\
+7. games demonstrating behavioral concepts of anchoring [@gelman2000] and the ultimatum game [@kahneman1986].\
 For games where students work in small groups (usually pairs), the package includes functions to create random groups if desired as well as options for allowing students to choose their own groups. The package also includes a plot function to create graphical illustrations of the results as well as shiny applications to calculate and present the results in a browser.\
-In the examples the "payoffs" students receive can be awarded to the students at the end of the games as "extra credit" points, or instructors may choose to encourage students to play the games strategically, but only "for the love of the game." I briefly describe the delivery of the games below.
+In the examples, the "payoffs" students receive can be awarded to the students at the end of the games as "extra credit" points, or instructors may choose to encourage students to play the games strategically, but only "for the love of the game." I briefly describe the delivery of the games below.
 
 ## Pit Trading Market
 
@@ -67,21 +67,21 @@ In class, the instructor informs the students that they own a single unit of an 
 
 Students submit their name, the round number (if playing more than one), their randomly-assigned value draw, a "bid" corresponding to the highest amount they would pay for a second unit of the asset, and an "ask" corresponding to the lowest amount they would accept to part with the unit of the asset they already own.
 
-If the instructor decides to incentivize the game with points, students keep their consumer and producer surpluses from each round as "extra credit" points. `equilibriumGame` tabulates the supply and demand schedules; calculates the equilibrium; graphs the equilibrium; and tabulates the scores for each student.[^3]
+If the instructor decides to incentivize the game with points, students keep their individual consumer and producer surpluses from each round as "extra credit" points. `equilibriumGame` tabulates the supply and demand schedules; calculates the equilibrium; graphs the equilibrium; and tabulates the scores for each student.[^3]
 
 [^3]: The solution the piece-wise constant supply and demand equilibrium uses the help of a C++ helper function provided by "David" on Stack Overflow,\
     <https://stackoverflow.com/questions/23830906/intersection-of-two-step-functions>.
 
 ## Entry and Exit
 
-@garratt_free_2000 designed an entry and exit game with four discrete specifications of the demand functions for class sizes between 25 and 44. Garratt's version also includes four markets (corn, wheat, rice, and soybeans), while the one presented here only includes two (corn and soybeans). The demand functions in this version of the experiment automatically adjust according to the number of students participating. Garratt's version of the game also takes about 45 minutes to complete the experiment (including a government "fallow program" intervention variation), usually about five rounds.
+@garratt_free_2000 designed an entry and exit game with four discrete specifications of the demand functions for class sizes between 25 and 44. Garratt's version also includes four markets (corn, wheat, rice, and soybeans), while the one presented here only includes two (corn and soybeans). The demand functions in this version of the experiment automatically adjust according to the number of students participating. Garratt's version of the game also takes about 45 minutes to complete the experiment (including a government "fallow program" intervention variation), usually about five rounds.  
 
-Before class the instructor prepares a Form to collect responses that includes the fields "First Name," "Last Name," "Round," and "Market."[^4] Other information that might be useful to add to the Form includes information about demand and costs in each sector. The default inverse demand functions allow for each market to reward producers with about one unit of "normal profit," but these settings can be changed.
+Before class the instructor prepares a Form to collect responses that includes the fields "First Name," "Last Name," "Round," and "Market."[^4] Other information that might be useful to add to the Form includes information about demand and costs in each sector.  
 
 [^4]: A template can be found at:\
     <https://docs.google.com/forms/d/1oUsLulfD5bqT6_9VVYIzLWuuQ-L4vwmC4jI-1jabOVQ/edit>.
 
-In class, the instructor informs the students that they will choose to plant corn, soybeans, or nothing. Producing corn incurs a cost of four, while producing soybeans incurs a cost of 10. @garratt_free_2000 recommends that the instructor *not* reveal the demand functions to students, whereas some instructors (including me) might prefer to allow students to play with perfect information. Selling a unit of corn brings revenue equal to $P_c = (N/2) + 6 - Q_c$, where $N$ equals the number of students participating and $Q_c$ equals the number of students choosing to produce corn. Selling a unit of soybeans brings revenue equal to $P_s = (N/2) + 10 - Q_s$. These parameters allow for there to be a "normal profit" of about one unit per student in each market in equilibrium, to compensate for the risk of venturing into self-employment.[^5] If the instructor wants the prices to equal whole numbers (and the profits to equalize), they can join the game as a "student" to round out the numbers.
+In class, the instructor informs the students that they may choose to plant corn, soybeans, or nothing. Producing corn incurs a cost of four, while producing soybeans incurs a cost of 10. @garratt_free_2000 recommends that the instructor *not* reveal the demand functions to students, whereas some instructors (including me) might prefer to allow students to play with perfect information. Selling a unit of corn brings revenue equal to $P_c = (N/2) + 6 - Q_c$, where $N$ equals the number of students participating and $Q_c$ equals the number of students choosing to produce corn. Selling a unit of soybeans brings revenue equal to $P_s = (N/2) + 10 - Q_s$. These parameters allow for there to be a "normal profit" of about one unit per student in each market in equilibrium, to compensate for the risk of venturing into self-employment.[^5] If the instructor wants the prices to equal whole numbers (and the profits to equalize), they can join the game as a "student" to round out the numbers.
 
 [^5]: The long run equilibrium, with 1 unit of "normal profit" occurs with $(N/2) + 1$ students choosing corn and $(N/2) - 1$ students choosing soybeans.
 
@@ -89,9 +89,9 @@ If the instructor decides to play the game with points, students earn points equ
 
 ## Oligoply
 
-I also constructed a set of games to demonstrate and compare equilibria in different (two-firm) oligopoly models. In each of the examples, students work in pairs. The instructor informs the students that the market price depends on both the strategy they choose for their "firm" and also the strategy their partner chooses. Each of the three examples uses the following linear inverse demand function (the parameters of which individual instructors may change in the options): $P = a + b(Q_1 + Q_2),$ where the default values for the parameters are $a = 10$ and $b = -1$. Likewise, firms face the the same cost function: $TC = f + cQ_i,$ where $f$ represents the fixed cost (0 by default) and $c$ represents the (constant) marginal (and average) cost of each additional unit (6 by default).
+I also constructed a set of games to demonstrate and compare equilibria in different (two-firm) oligopoly models. In each of the examples, students work in pairs. The instructor informs the students that the market price depends on both the strategy they choose for their "firm" and also the strategy their partner chooses. Each of the examples uses the following linear inverse demand function (the parameters of which individual instructors may change in the options): $P = a + b(Q_1 + Q_2),$ where the default values for the parameters are $a = 10$ and $b = -1$. Likewise, firms face the the same cost function: $TC = f + cQ_i,$ where $f$ represents the fixed cost (0 by default) and $c$ represents the (constant) marginal (and average) cost of each additional unit (6 by default).
 
-Before beginning any of the duopoly models, the instructor should solve the competitive and monopoly equilibria with students first so that students can see the plausible range of prices they should expect to declare. Skipping this step often leads to a few greedy (but quantitatively-challenged) students choosing prices that would result in negative quantities. With the default parameters, the competitive equilibrium price and quantity are 6 and 4, while the monopoly equilibrium price and quantity are 8 and 2.
+Before beginning any of the duopoly models, the instructor might want to solve the competitive and monopoly equilibria with students first so that students can see the plausible range of prices they should expect to declare. Skipping this step often leads to a few greedy (but quantitatively-challenged) students choosing prices that would result in negative quantities. With the default parameters, the competitive equilibrium price and quantity are 6 and 4 (with each firm producing 2), while the monopoly equilibrium price and quantity are 8 and 2 (with each firm producing 1). Once students see this, most realize that their strategies should lie somewhere in these ranges. 
 
 ### Bertrand Duoploy
 
