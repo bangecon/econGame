@@ -202,10 +202,10 @@ pestcontrolGame <-
       Score = c(resultsWide$Score.1, resultsWide$Score.2)
     )
     payoffMatrix <- matrix(
-      c(paste0("(",payoff[1], ",", payoff[4], ")"),
-        paste0("(",payoff[2], ",", payoff[2], ")"),
-        paste0("(",payoff[3], ",", payoff[3], ")"),
-        paste0("(",payoff[4], ",", payoff[1], ")")),
+      c(paste0("(",payoff[1], ",", payoff[1], ")"),
+        paste0("(",payoff[2], ",", payoff[3], ")"),
+        paste0("(",payoff[3], ",", payoff[2], ")"),
+        paste0("(",payoff[4], ",", payoff[4], ")")),
       nrow = 2, ncol = 2)
     colnames(payoffMatrix) <-
       c("Bala = IPC", "Bala = Terminator")
