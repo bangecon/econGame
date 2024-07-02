@@ -222,13 +222,16 @@ plot.econGame <- function(econGame,
     out <- ggplot() +
       geom_bar(aes(x = Outcome, y = after_stat(prop), group = 1),
                econGame$results, stat = 'count', color = 'blue', fill = 'darkorange')
-
   }
   if (econGame$type == 'cropchoiceGame') {
     out <- ggplot() +
       geom_bar(aes(x = Outcome, y = after_stat(prop), group = 1),
                econGame$resultsWide, stat = 'count', color = 'blue', fill = 'darkorange')
-
+  }
+  if (econGame$type == 'pestcontrolGame') {
+    out <- ggplot() +
+      geom_bar(aes(x = Outcome, y = after_stat(prop), group = 1),
+               econGame$resultsWide, stat = 'count', color = 'blue', fill = 'darkorange')
   }
   if (econGame$type == 'pollutionGame') {
     out <- ggplot() +
