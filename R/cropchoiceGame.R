@@ -1,4 +1,4 @@
-##' Tabulate results for a simple in-class stag hunt game.
+##' Tabulate results for a simple in-class game for choosing crops.
 ##'
 ##' @details \code{staghuntGame} tabulates the results of a simple stag hunt game in which students' points depend on their strategy and the strategy chosen by their randomly-assigned partners.
 ##'

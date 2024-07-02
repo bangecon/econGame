@@ -2,7 +2,7 @@
 % Please edit documentation in R/cropchoiceGame.R
 \name{cropchoiceGame}
 \alias{cropchoiceGame}
-\title{Tabulate results for a simple in-class stag hunt game.}
+\title{Tabulate results for a simple in-class game for choosing crops.}
 \usage{
 cropchoiceGame(
   resultsSheet,
@@ -31,7 +31,7 @@ cropchoiceGame(
 \code{grades} returns the aggregated points "won" by each student for the entire activity.
 }
 \description{
-Tabulate results for a simple in-class stag hunt game.
+Tabulate results for a simple in-class game for choosing crops.
 }
 \details{
 \code{staghuntGame} tabulates the results of a simple stag hunt game in which students' points depend on their strategy and the strategy chosen by their randomly-assigned partners.

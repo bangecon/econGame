@@ -2,7 +2,7 @@
 % Please edit documentation in R/pestcontrolGame.R
 \name{pestcontrolGame}
 \alias{pestcontrolGame}
-\title{Tabulate results for a simple in-class stag hunt game.}
+\title{Tabulate results for a simple in-class game for choosing pest control.}
 \usage{
 pestcontrolGame(
   resultsSheet,
@@ -24,14 +24,14 @@ pestcontrolGame(
 \item{outfile}{is a character string giving a name to the new Google Sheet where the instructor wants to store the scores.}
 }
 \value{
-\code{type} returns the type of activity (cropchoiceGame).
+\code{type} returns the type of activity (pestcontrolGame).
 
 \code{results} returns the original submissions (with equilibria and points per round added).
 
 \code{grades} returns the aggregated points "won" by each student for the entire activity.
 }
 \description{
-Tabulate results for a simple in-class stag hunt game.
+Tabulate results for a simple in-class game for choosing pest control.
 }
 \details{
 \code{staghuntGame} tabulates the results of a simple stag hunt game in which students' points depend on their strategy and the strategy chosen by their randomly-assigned partners.

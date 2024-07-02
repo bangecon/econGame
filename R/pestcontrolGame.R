@@ -1,4 +1,4 @@
-##' Tabulate results for a simple in-class stag hunt game.
+##' Tabulate results for a simple in-class game for choosing pest control.
 ##'
 ##' @details \code{staghuntGame} tabulates the results of a simple stag hunt game in which students' points depend on their strategy and the strategy chosen by their randomly-assigned partners.
 ##'
@@ -6,7 +6,7 @@
 ##' @param payoff is a vector indicating the interdependent payoffs from the different pairs of {Student, Partner} strategies: \code{c({Compete, Compete}, {Collude, Compete}, {Compete, Collude}, {Collude, Collude})}
 ##' @param outfile is a character string giving a name to the new Google Sheet where the instructor wants to store the scores.
 ##'
-##' @return \code{type} returns the type of activity (cropchoiceGame).
+##' @return \code{type} returns the type of activity (pestcontrolGame).
 ##' @return \code{results} returns the original submissions (with equilibria and points per round added).
 ##' @return \code{grades} returns the aggregated points "won" by each student for the entire activity.
 ##'
@@ -59,14 +59,18 @@ pestcontrolGame <-
     }
     if(is.null(resultsSheet)) {
       resultsWide <- data.frame(
-        First.Name.1 = c("Ahmed", "Al", "Amanda", "Anita", "Bea", "Heywood U.", "Hugh", "IP"),
-        Last.Name.1 = c("Adoudi", "Coholic", "Huggenkiss", "Bath", "O'Problem", "Kuddelmee", "Jass", "Freely"),
+        First.Name.1 = c(
+          "Ahmed", "Al", "Amanda", "Anita", "Bea", "Heywood U.", "Hugh", "IP"),
+        Last.Name.1 = c(
+          "Adoudi", "Coholic", "Huggenkiss", "Bath", "O'Problem", "Kuddelmee", "Jass", "Freely"),
         Role.1 = c(rep("Anil", 8)),
-        Strategy.1 = c(rep("Cassava", 8)),
-        First.Name.2 = c("Ivana", "Jacques", "Jim", "Mary", "Maya", "Oliver", "Ollie", "Seymour"),
-        Last.Name.2 = c("Tinkle", "Strap", "Bang", "Jane", "Normusbut", "Klozoff", "Tabooger", "Butz"),
+        Strategy.1 = c(rep("Terminator", 8)),
+        First.Name.2 = c(
+          "Ivana", "Jacques", "Jim", "Mary", "Maya", "Oliver", "Ollie", "Seymour"),
+        Last.Name.2 = c(
+          "Tinkle", "Strap", "Bang", "Jane", "Normusbut", "Klozoff", "Tabooger", "Butz"),
         Role.2 = c(rep("Bala", 8)),
-        Strategy.2 = c(rep("Rice", 8)),
+        Strategy.2 = c(rep("Terminator", 8)),
         Round = rep(1, 8)
       )
       AnilResults <- resultsWide[, c(
@@ -181,8 +185,8 @@ pestcontrolGame <-
       )
     resultsWide$Score.2 <- ifelse(
       resultsWide$Strategy.1 == "IPC",
-        ifelse(resultsWide$Strategy.2 == "IPC", payoff[4], payoff[3]),
-        ifelse(resultsWide$Strategy.2 == "Terminator", payoff[1], payoff[2])
+        ifelse(resultsWide$Strategy.2 == "IPC", payoff[1], payoff[2]),
+        ifelse(resultsWide$Strategy.2 == "Terminator", payoff[4], payoff[3])
       )
     resultsWide$Outcome <-
       paste0(resultsWide$Strategy.1, "-", resultsWide$Strategy.2)
