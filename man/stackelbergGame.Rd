@@ -7,13 +7,14 @@
 stackelbergGame(
   resultsSheet = NULL,
   partners = "random",
-  leaderSheet = NULL,
+  roleSheet = NULL,
   a = 10,
   b = -1,
   c = 6,
   f = 0,
-  auth = FALSE,
   names = NULL,
+  auth = FALSE,
+  email = NULL,
   ...
 )
 }
@@ -22,7 +23,7 @@ stackelbergGame(
 
 \item{partners}{is a character string equal to \code{'students'} or \code{'random'} indicating whether students choose their own partners (default) or whether the function should generate them randomly after the students have decided their strategies. If \code{partners = 'students'}, then the form must include fields for the student's own first and last names and fields for their partners' first and last names. If partners are random, then the columns in \code{sheet} should either contain columns named 'First Name' and 'Last Name', or the user needs to specify the columns in \code{sheet} corresponding to this information to pass to \code{randomGroups()}.}
 
-\item{leaderSheet}{is a character string sheet ID corresponding to the Google Sheets location containing the list of leaders (if \code{partners == 'random'}).}
+\item{roleSheet}{is a character string sheet ID corresponding to the Google Sheets location containing the list of leaders (if \code{partners == 'random'}).}
 
 \item{a}{is the value of the intercept of the linear inverse-demand function (default is 10).}
 
@@ -32,9 +33,9 @@ stackelbergGame(
 
 \item{f}{is the value of the firm's fixed cost (default is 0).}
 
-\item{auth}{is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.}
-
 \item{names}{character list of the column names in \code{sheet}.}
+
+\item{auth}{is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.}
 
 \item{email}{is an email address that matches the user account containing the Sheet with the individual submissions (if \code{auth == TRUE}).}
 }
