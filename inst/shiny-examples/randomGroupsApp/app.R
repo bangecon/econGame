@@ -1,12 +1,12 @@
 library(econGame)
 
 ui <- fluidPage(
-  titlePanel("Random Presenter"),
+  titlePanel("Random Groups"),
   sidebarPanel(
     numericInput(
       inputId = "seed",
       label = "Random Seed",
-      value = as.integer(gsub("-", "", Sys.Date()))
+      value = 8675309
     ),
     numericInput(
       inputId = "size",
@@ -16,7 +16,7 @@ ui <- fluidPage(
     textInput(
       inputId = "sheet",
       label = "Enter the sheet ID of the roster",
-      value = '1i_hJiSk-TOfqtNOtm7ZUUcJe1gEZSPwowEd5VZlHFNo'
+      value = NULL
     ),
     hr(),
     a("Created by Jim Bang", href='https://github.com/bangecon'),
@@ -27,7 +27,7 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   output$groups <- renderTable( {
-    marketGames::randomGroups(
+    econGames::randomGroups(
       sheet = input$sheet, size = input$size, seed = input$seed)
   })
 }

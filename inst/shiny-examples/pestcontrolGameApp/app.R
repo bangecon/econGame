@@ -5,7 +5,7 @@
 library(econGame)
 # Define UI for application
 ui <- fluidPage(
-  titlePanel("Crop Choice Game"),
+  titlePanel("Pest Control Game"),
   sidebarPanel(
     textInput(
       inputId = "sheet",
@@ -20,7 +20,7 @@ ui <- fluidPage(
     numericInput(
       inputId = "round",
       label = "Enter the round you want to calculate.",
-      value = 3
+      value = 1
     ),
     actionButton("go", "Load New Responses"),
     numericInput(
