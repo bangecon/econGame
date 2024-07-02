@@ -17,36 +17,33 @@
 randomLeaders <- function(sheet,
                           size = 2,
                           seed = 8675309,
+                          round = 1,
                           auth = FALSE,
                           names = NULL) {
   googlesheets4::gs4_deauth()
   studentList <- googlesheets4::read_sheet(sheet)
-  studentList <- as.data.frame(studentList)
+  studentList <- as.data.frame(studentList[, -1])
   colnames(studentList) <- make.names(colnames(studentList))
   if (is.null(names)) {
     names = list(first = "First.Name",
-                 last = "Last.Name",
-                 round = "Round")
+                 last = "Last.Name")
   }
-  set.seed(seed)
-  colnames(studentList)[which(colnames(studentList) == names$round)] = "Round"
+  set.seed(seed + round - 1)
   studentList$Rand <- runif(nrow(studentList))
-  Round_n <- studentList %>%
-    group_by(Round) %>%
-    summarise(Round_n = n()) %>%
+  nStudents <- studentList %>%
+    summarise(nStudents = n()) %>%
     as.data.frame
-  studentList <- merge(studentList, Round_n, by = "Round")
+  studentList <- merge(studentList, nStudents)
   studentList <- studentList %>%
-    group_by(Round) %>%
-    mutate(Role = factor(rank(Rand) / Round_n <= 0.5,
+    mutate(Role = factor(rank(Rand) / nStudents <= 0.5,
                          labels = c("Leader", "Follower")))
-  out.long <- studentList[order(studentList$Round, studentList$Role),
-                          c(names$round, names$first, names$last, "Role")] %>%
+  out.long <- studentList[order(studentList$Last.Name, studentList$First.Name, studentList$Role),
+                          c(names$first, names$last, "Role")] %>%
     as.data.frame()
   out.lead <- subset(out.long, Role == "Leader")
-  colnames(out.lead) <- c("Round", "First.Name.1", "Last.Name.1", "Role.1")
+  colnames(out.lead) <- c("Leader.First.Name", "Leader.Last.Name", "Role.1")
   out.follow <- subset(out.long, Role == "Follower")
-  colnames(out.follow) <- c("Round", "First.Name.2", "Last.Name.2", "Role.2")
+  colnames(out.follow) <- c("Follower.First.Name", "Follower.Last.Name", "Role.2")
   out.wide <- cbind(out.lead, out.follow[, -1]) |>
     as.data.frame()
   out <- list(

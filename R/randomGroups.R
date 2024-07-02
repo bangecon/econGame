@@ -14,7 +14,6 @@
 ##'
 ##' @export
 
-
 randomGroups <- function(sheet,
                          size = 2,
                          seed = 8675309,

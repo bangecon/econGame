@@ -37,7 +37,7 @@ plot.econGame <- function(econGame,
         out[[i]] <- ggplot() +
           geom_step(
             aes(Demand, Price),
-            econGame$schedules[[i]],
+            econGame$schedules[[i]][-which(duplicated(econGame$schedules[[i]]$Demand, fromLast = TRUE)), ],
             direction = 'vh',
             color = 'blue',
             na.rm = TRUE
@@ -50,7 +50,8 @@ plot.econGame <- function(econGame,
             na.rm = TRUE
           ) +
           geom_point(aes(quantity, price), econGame$equilibria[[i]]) +
-          xlim(0, max(econGame$schedules[[i]]$Demand)) + ylim(0, 10)
+          lims(x = c(0, max(econGame$schedules[[i]]$Demand)),
+               y = c(0, max(econGame$schedules[[i]]$Price)))
       }
       out <- ggarrange(plotlist = out,
                        nrow = nrow,
@@ -60,7 +61,7 @@ plot.econGame <- function(econGame,
       out <- ggplot() +
         geom_step(
           aes(Demand, Price),
-          econGame$schedules[[round]],
+          econGame$schedules[[round]][-which(duplicated(eocnGame$schedules[[round]]$Demand, fromLast = TRUE)), ],
           direction = 'vh',
           color = 'blue',
           na.rm = TRUE
@@ -73,17 +74,21 @@ plot.econGame <- function(econGame,
           na.rm = TRUE
         ) +
         geom_point(aes(quantity, price), econGame$equilibria[[round]]) +
-        xlim(0, max(econGame$schedules[[round]]$Demand)) + ylim(0, 10)
+        lims(x = c(0, max(econGame$schedules[[i]]$Demand)),
+             y = c(0, max(econGame$schedules[[i]]$Price)))
     }
   }
   if (econGame$type == 'ultimatumGame') {
     out <- ggplot() +
-      geom_histogram(aes(Offer),
-                     econGame$results,
+      geom_histogram(aes(Offer, fill = Response, color = Response),
+                     data = econGame$results,
+                     position = 'stack',
                      na.rm = TRUE,
                      binwidth = 0.5,
-                     color = 'blue',
-                     fill = 'darkorange')
+                     alpha = 0.5) +
+      scale_fill_manual(values = c('blue', 'darkorange')) +
+      scale_colour_manual(values = c('darkorange', 'blue')) +
+      lims(x = c(0, max(econGame$results$Offer) + 1))
   }
   if (econGame$type == 'publicgoodGame') {
     out <- ggplot() +
@@ -92,7 +97,9 @@ plot.econGame <- function(econGame,
                      na.rm = TRUE,
                      binwidth = 1,
                      color = 'blue',
-                     fill = 'darkorange')
+                     fill = 'darkorange',
+                     alpha = 0.5) +
+      lims(x = c(0, max(econGame$results$Contribution) + 1))
   }
   if (econGame$type == 'anchoringGame') {
     out <- ggplot(aes(x = as.factor(Value), y = Percent),
@@ -217,11 +224,17 @@ plot.econGame <- function(econGame,
                econGame$results, stat = 'count', color = 'blue', fill = 'darkorange')
 
   }
+  if (econGame$type == 'cropchoiceGame') {
+    out <- ggplot() +
+      geom_bar(aes(x = Outcome, y = after_stat(prop), group = 1),
+               econGame$resultsWide, stat = 'count', color = 'blue', fill = 'darkorange')
+
+  }
   if (econGame$type == 'pollutionGame') {
     out <- ggplot() +
       geom_step(
         aes(Demand, Price),
-        econGame$marketSchedule,
+        econGame$marketSchedule[-which(duplicated(econGame$marketSchedule$Demand, fromLast = TRUE)), ],
         direction = 'vh',
         color = 'blue',
         na.rm = TRUE

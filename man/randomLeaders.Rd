@@ -4,7 +4,14 @@
 \alias{randomLeaders}
 \title{Randomly assigns partner roles}
 \usage{
-randomLeaders(sheet, size = 2, seed = 8675309, auth = FALSE, names = NULL)
+randomLeaders(
+  sheet,
+  size = 2,
+  seed = 8675309,
+  round = 1,
+  auth = FALSE,
+  names = NULL
+)
 }
 \arguments{
 \item{sheet}{(required) is an object containing the list of student names with surnames and given names (see options for \code{last} and \code{first} below).}
