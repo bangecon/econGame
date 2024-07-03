@@ -20,28 +20,28 @@ ui <- fluidPage(
     numericInput(
       inputId = "round",
       label = "Enter the round you want to calculate.",
-      value = 3
+      value = 1
     ),
     actionButton("go", "Load New Responses"),
     numericInput(
       inputId = "payoffA1",
       label = "Enter Astrid's payoff for the (Java, Java) outcome.",
-      value = 3
+      value = 4
     ),
     numericInput(
       inputId = "payoffA2",
       label = "Enter Astrid's payoff for the (C++, Java) outcome.",
-      value = 4
+      value = 0
     ),
     numericInput(
       inputId = "payoffA3",
       label = "Enter Astrid's payoff for the (Java, C++) outcome.",
-      value = 1
+      value = 2
     ),
     numericInput(
       inputId = "payoffA4",
       label = "Enter Astrid's payoff for the (C++, C++) outcome.",
-      value = 2
+      value = 3
     ),
     numericInput(
       inputId = "payoffB1",
@@ -51,17 +51,17 @@ ui <- fluidPage(
     numericInput(
       inputId = "payoffB2",
       label = "Enter Bettina's payoff for the (C++, Java) outcome.",
-      value = 4
+      value = 0
     ),
     numericInput(
       inputId = "payoffB3",
       label = "Enter Bettina's payoff for the (Java, C++) outcome.",
-      value = 1
+      value = 2
     ),
     numericInput(
       inputId = "payoffB4",
       label = "Enter Bettina's payoff for the (C++, C++) outcome.",
-      value = 2
+      value = 6
     )
   ),
   mainPanel(tabsetPanel(
