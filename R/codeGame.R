@@ -215,7 +215,7 @@ codeGame <-
     grades  <- grades[order(grades$Last.Name, grades$First.Name),]
     colnames(grades) <- c("First Name", "Last Name", "Score")
     out <- list(
-      type = "pestcontrolGame",
+      type = "codeGame",
       roles = roles,
       AstridResults = AstridResults,
       BettinaResults = BettinaResults,

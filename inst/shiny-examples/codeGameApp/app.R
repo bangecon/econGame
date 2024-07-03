@@ -89,7 +89,7 @@ server <- function(input, output) {
         input$payoffB3,
         input$payoffB4)
     g <-
-      pestcontrolGame(
+      codeGame(
         resultsSheet = sheet,
         roleSheet = roleSheet,
         round = round,
