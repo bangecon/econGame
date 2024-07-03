@@ -24,8 +24,8 @@ codeGame <-
            names = NULL,
            ...) {
     # Set up the Google Sheets, read responses, and initialize output objects.
-    if (length(payoff) != 4)
-      stop("Payoff must have length == 4")
+    if (length(payoff.A) != 4 | length(payoff.B) != 4)
+      stop("Payoffs must have length == 4")
     if(auth == TRUE) {
       options(gargle_oauth_cache = ".secrets")
       googlesheets4::gs4_auth()
@@ -177,13 +177,13 @@ codeGame <-
 
     resultsWide$Score.1 <- ifelse(
       resultsWide$Strategy.1 == "Java",
-        ifelse(resultsWide$Strategy.2 == "Java", payoff[1], payoff[3]),
-        ifelse(resultsWide$Strategy.2 == "C++", payoff[4], payoff[2])
+        ifelse(resultsWide$Strategy.2 == "Java", payoff.A[1], payoff.A[3]),
+        ifelse(resultsWide$Strategy.2 == "C++", payoff.A[4], payoff.A[2])
       )
     resultsWide$Score.2 <- ifelse(
       resultsWide$Strategy.1 == "Java",
-        ifelse(resultsWide$Strategy.2 == "Java", payoff[4], payoff[3]),
-        ifelse(resultsWide$Strategy.2 == "C++", payoff[1], payoff[2])
+        ifelse(resultsWide$Strategy.2 == "Java", payoff.B[1], payoff.B[3]),
+        ifelse(resultsWide$Strategy.2 == "C++", payoff.B[4], payoff.B[2])
       )
     resultsWide$Outcome <-
       paste0(resultsWide$Strategy.1, "-", resultsWide$Strategy.2)
