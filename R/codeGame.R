@@ -6,18 +6,19 @@
 ##' @param payoff is a vector indicating the interdependent payoffs from the different pairs of {Student, Partner} strategies: \code{c({Compete, Compete}, {Collude, Compete}, {Compete, Collude}, {Collude, Collude})}
 ##' @param outfile is a character string giving a name to the new Google Sheet where the instructor wants to store the scores.
 ##'
-##' @return \code{type} returns the type of activity (pestcontrolGame).
+##' @return \code{type} returns the type of activity (codeGame).
 ##' @return \code{results} returns the original submissions (with equilibria and points per round added).
 ##' @return \code{grades} returns the aggregated points "won" by each student for the entire activity.
 ##'
 ##' @export
 
-pestcontrolGame <-
+codeGame <-
   function(resultsSheet,
            partners = 'random',
            roleSheet = NULL,
-           roleLabs = c("Anil", "Bala"),
-           payoff = c(3, 4, 1, 2),
+           roleLabs = c("Astrid", "Bettina"),
+           payoff.A = c(4, 0, 2, 3),
+           payoff.B = c(3, 0, 2, 6),
            seed = 8675309,
            auth = FALSE,
            names = NULL,
@@ -61,26 +62,26 @@ pestcontrolGame <-
       resultsWide <- data.frame(
         First.Name.1 = c("Ahmed", "Al", "Amanda", "Anita", "Bea", "Heywood U.", "Hugh", "IP"),
         Last.Name.1 = c("Adoudi", "Coholic", "Huggenkiss", "Bath", "O'Problem", "Kuddelmee", "Jass", "Freely"),
-        Role.1 = c(rep("Anil", 8)),
-        Strategy.1 = c(rep("Terminator", 8)),
+        Role.1 = c(rep("Astrid", 8)),
+        Strategy.1 = c(rep("C++", 8)),
         First.Name.2 = c("Ivana", "Jacques", "Jim", "Mary", "Maya", "Oliver", "Ollie", "Seymour"),
         Last.Name.2 = c("Tinkle", "Strap", "Bang", "Jane", "Normusbut", "Klozoff", "Tabooger", "Butz"),
-        Role.2 = c(rep("Bala", 8)),
-        Strategy.2 = c(rep("Terminator", 8)),
+        Role.2 = c(rep("Bettina", 8)),
+        Strategy.2 = c(rep("C++", 8)),
         Round = rep(1, 8)
       )
-      AnilResults <- resultsWide[, c(
+      AstridResults <- resultsWide[, c(
         "Round", "First.Name.1", "Last.Name.1", "Role.1", "Strategy.1")]
-      BalaResults <- resultsWide[, c(
+      BettinaResults <- resultsWide[, c(
         "Round", "First.Name.2", "Last.Name.2", "Role.2", "Strategy.2")]
       results <- data.frame(
-        Round = c(AnilResults$Round, BalaResults$Round),
-        First.Name.1 = c(AnilResults$First.Name.1, BalaResults$First.Name.2),
-        Last.Name.1 = c(AnilResults$Last.Name.1, BalaResults$Last.Name.2),
-        Role.1 = c(AnilResults$Role.1, BalaResults$Role.2),
-        First.Name.2 = c(BalaResults$First.Name.2, AnilResults$First.Name.1),
-        Last.Name.2 = c(BalaResults$Last.Name.2, AnilResults$Last.Name.1),
-        Strategy.1 = c(AnilResults$Strategy.1, BalaResults$Strategy.2)
+        Round = c(AstridResults$Round, BettinaResults$Round),
+        First.Name.1 = c(AstridResults$First.Name.1, BettinaResults$First.Name.2),
+        Last.Name.1 = c(AstridResults$Last.Name.1, BettinaResults$Last.Name.2),
+        Role.1 = c(AstridResults$Role.1, BettinaResults$Role.2),
+        First.Name.2 = c(BettinaResults$First.Name.2, AstridResults$First.Name.1),
+        Last.Name.2 = c(BettinaResults$Last.Name.2, AstridResults$Last.Name.1),
+        Strategy.1 = c(AstridResults$Strategy.1, BettinaResults$Strategy.2)
       )
       results <- results[order(
         results$Round, results$Role.1, results$Last.Name.1),]
@@ -103,13 +104,13 @@ pestcontrolGame <-
         colnames(results)[which(colnames(results) == names$role)] <- 'Role'
         colnames(results)[which(colnames(results) == names$strategy)] <- 'Strategy'
         results <- results[order(results$Round, results$First.Name, results$Last.Name), ]
-        AnilResults <- subset(results, Role == "Anil")[, c(
+        AstridResults <- subset(results, Role == "Astrid")[, c(
           "Round", "First.Name", "Last.Name", "Role", "Strategy")]
-        colnames(AnilResults) <- c(
+        colnames(AstridResults) <- c(
           "Round", "First.Name.1", "Last.Name.1", "Role.1", "Strategy.1")
-        BalaResults <- subset(results, Role == "Bala")[, c(
+        BettinaResults <- subset(results, Role == "Bettina")[, c(
           "Round", "First.Name", "Last.Name", "Role", "Strategy")]
-        colnames(BalaResults) <- c(
+        colnames(BettinaResults) <- c(
           "Round", "First.Name.2", "Last.Name.2", "Role.2", "Strategy.2")
         resultsWide <- merge(roles, results,
                              by.x = c("Round", "First.Name.1", "Last.Name.1", "Role.1"),
@@ -122,13 +123,13 @@ pestcontrolGame <-
         colnames(resultsWide)[which(colnames(resultsWide) == "Strategy")] <-
           "Strategy.2"
         results <- data.frame(
-          Round = c(AnilResults$Round, BalaResults$Round),
-          First.Name.1 = c(AnilResults$First.Name.1, BalaResults$First.Name.2),
-          Last.Name.1 = c(AnilResults$Last.Name.1, BalaResults$Last.Name.2),
-          Role.1 = c(AnilResults$Role.1, BalaResults$Role.2),
-          First.Name.2 = c(BalaResults$First.Name.2, AnilResults$First.Name.1),
-          Last.Name.2 = c(BalaResults$Last.Name.2, AnilResults$Last.Name.1),
-          Strategy.1 = c(AnilResults$Strategy.1, BalaResults$Strategy.2)
+          Round = c(AstridResults$Round, BettinaResults$Round),
+          First.Name.1 = c(AstridResults$First.Name.1, BettinaResults$First.Name.2),
+          Last.Name.1 = c(AstridResults$Last.Name.1, BettinaResults$Last.Name.2),
+          Role.1 = c(AstridResults$Role.1, BettinaResults$Role.2),
+          First.Name.2 = c(BettinaResults$First.Name.2, AstridResults$First.Name.1),
+          Last.Name.2 = c(BettinaResults$Last.Name.2, AstridResults$Last.Name.1),
+          Strategy.1 = c(AstridResults$Strategy.1, BettinaResults$Strategy.2)
         )
         results <- results[order(
           results$Round, results$Role.1, results$Last.Name.1),]
@@ -141,32 +142,32 @@ pestcontrolGame <-
           results[[c(names$last)]] <- tidyr::replace_na(results[[c(names$last)]], "Doe")
           results[, c(names$first)] <- ifelse(!is.na(results[, c(names$first)]), results[, c(names$first)], "John")
           results[, c(names$last)] <- ifelse(!is.na(results[, c(names$last)]), results[, c(names$last)], "Doe")
-          AnilResults <- subset(results, Role == "Anil")
-          BalaResults <- subset(results[, which(
+          AstridResults <- subset(results, Role == "Astrid")
+          BettinaResults <- subset(results[, which(
             names(results) %in% c(
               names$first, names$last, names$round, names$role, names$strategy))],
-            Role == "Bala")
+            Role == "Bettina")
           colnames(results)[which(colnames(results) == names$first)] <- 'First.Name.1'
           colnames(results)[which(colnames(results) == names$last)] <- 'Last.Name.1'
           colnames(results)[which(colnames(results) == names$partnerFirst)] <- 'First.Name.2'
           colnames(results)[which(colnames(results) == names$partnerLast)] <- 'Last.Name.2'
           colnames(results)[which(colnames(results) == names$role)] <- 'Role.1'
           colnames(results)[which(colnames(results) == names$strategy)] <- 'Strategy.1'
-          colnames(AnilResults)[which(colnames(AnilResults) == names$first)] <- 'First.Name.1'
-          colnames(AnilResults)[which(colnames(AnilResults) == names$last)] <- 'Last.Name.1'
-          colnames(AnilResults)[which(colnames(AnilResults) == names$partnerFirst)] <- 'First.Name.2'
-          colnames(AnilResults)[which(colnames(AnilResults) == names$partnerLast)] <- 'Last.Name.2'
-          colnames(AnilResults)[which(colnames(AnilResults) == names$role)] <- 'Role.1'
-          colnames(AnilResults)[which(colnames(AnilResults) == names$strategy)] <- 'Strategy.1'
-          colnames(BalaResults)[which(colnames(BalaResults) == names$first)] <- 'First.Name.2'
-          colnames(BalaResults)[which(colnames(BalaResults) == names$last)] <- 'Last.Name.2'
-          colnames(BalaResults)[which(colnames(BalaResults) == names$role)] <- 'Role.2'
-          colnames(BalaResults)[which(colnames(BalaResults) == names$strategy)] <- 'Strategy.2'
-          resultsWide <- merge(AnilResults, BalaResults, all = TRUE,
+          colnames(AstridResults)[which(colnames(AstridResults) == names$first)] <- 'First.Name.1'
+          colnames(AstridResults)[which(colnames(AstridResults) == names$last)] <- 'Last.Name.1'
+          colnames(AstridResults)[which(colnames(AstridResults) == names$partnerFirst)] <- 'First.Name.2'
+          colnames(AstridResults)[which(colnames(AstridResults) == names$partnerLast)] <- 'Last.Name.2'
+          colnames(AstridResults)[which(colnames(AstridResults) == names$role)] <- 'Role.1'
+          colnames(AstridResults)[which(colnames(AstridResults) == names$strategy)] <- 'Strategy.1'
+          colnames(BettinaResults)[which(colnames(BettinaResults) == names$first)] <- 'First.Name.2'
+          colnames(BettinaResults)[which(colnames(BettinaResults) == names$last)] <- 'Last.Name.2'
+          colnames(BettinaResults)[which(colnames(BettinaResults) == names$role)] <- 'Role.2'
+          colnames(BettinaResults)[which(colnames(BettinaResults) == names$strategy)] <- 'Strategy.2'
+          resultsWide <- merge(AstridResults, BettinaResults, all = TRUE,
                                by = c("First.Name.2", "Last.Name.2", "Round"))
-          AnilResults <- resultsWide[, c(
+          AstridResults <- resultsWide[, c(
             "Round", "First.Name.1", "Last.Name.1", "Role.1", "Strategy.1")]
-          BalaResults <- resultsWide[, c(
+          BettinaResults <- resultsWide[, c(
             "Round", "First.Name.2", "Last.Name.2", "Role.2", "Strategy.2")]
           roles <- resultsWide[, c(
             "Round", "First.Name.1", "Last.Name.1", "Role.1", "First.Name.2", "Last.Name.2", "Role.2")]
@@ -175,14 +176,14 @@ pestcontrolGame <-
     }
 
     resultsWide$Score.1 <- ifelse(
-      resultsWide$Strategy.1 == "IPC",
-        ifelse(resultsWide$Strategy.2 == "IPC", payoff[1], payoff[3]),
-        ifelse(resultsWide$Strategy.2 == "Terminator", payoff[4], payoff[2])
+      resultsWide$Strategy.1 == "Java",
+        ifelse(resultsWide$Strategy.2 == "Java", payoff[1], payoff[3]),
+        ifelse(resultsWide$Strategy.2 == "C++", payoff[4], payoff[2])
       )
     resultsWide$Score.2 <- ifelse(
-      resultsWide$Strategy.1 == "IPC",
-        ifelse(resultsWide$Strategy.2 == "IPC", payoff[4], payoff[3]),
-        ifelse(resultsWide$Strategy.2 == "Terminator", payoff[1], payoff[2])
+      resultsWide$Strategy.1 == "Java",
+        ifelse(resultsWide$Strategy.2 == "Java", payoff[4], payoff[3]),
+        ifelse(resultsWide$Strategy.2 == "C++", payoff[1], payoff[2])
       )
     resultsWide$Outcome <-
       paste0(resultsWide$Strategy.1, "-", resultsWide$Strategy.2)
@@ -198,15 +199,15 @@ pestcontrolGame <-
       Score = c(resultsWide$Score.1, resultsWide$Score.2)
     )
     payoffMatrix <- matrix(
-      c(paste0("(",payoff[1], ",", payoff[4], ")"),
-        paste0("(",payoff[2], ",", payoff[2], ")"),
-        paste0("(",payoff[3], ",", payoff[3], ")"),
-        paste0("(",payoff[4], ",", payoff[1], ")")),
+      c(paste0("(",payoff.A[1], ",", payoff.B[1], ")"),
+        paste0("(",payoff.A[2], ",", payoff.B[2], ")"),
+        paste0("(",payoff.A[3], ",", payoff.B[3], ")"),
+        paste0("(",payoff.A[4], ",", payoff.B[4], ")")),
       nrow = 2, ncol = 2)
     colnames(payoffMatrix) <-
-      c("Bala = IPC", "Bala = Terminator")
+      c("Bettina = Java", "Bettina = C++")
     rownames(payoffMatrix) <-
-      c("Anil = IPC", "Anil = Terminator")
+      c("Astrid = Java", "Astrid = C++")
     grades <-
       aggregate(Score ~ First.Name + Last.Name,
                 data = results,
@@ -216,8 +217,8 @@ pestcontrolGame <-
     out <- list(
       type = "pestcontrolGame",
       roles = roles,
-      AnilResults = AnilResults,
-      BalaResults = BalaResults,
+      AstridResults = AstridResults,
+      BettinaResults = BettinaResults,
       payoff = payoffMatrix,
       results = results[order(results$Round,
                               results$Last.Name,

@@ -5,7 +5,7 @@
 library(econGame)
 # Define UI for application
 ui <- fluidPage(
-  titlePanel("Pest Control Game"),
+  titlePanel("Code Coordination Game"),
   sidebarPanel(
     textInput(
       inputId = "sheet",
@@ -24,23 +24,43 @@ ui <- fluidPage(
     ),
     actionButton("go", "Load New Responses"),
     numericInput(
-      inputId = "payoff1",
-      label = "Enter Anil's payoff for the IPC-IPC outcome.",
+      inputId = "payoffA1",
+      label = "Enter Astrid's payoff for the (Java, Java) outcome.",
       value = 3
     ),
     numericInput(
-      inputId = "payoff2",
-      label = "Enter Anil's payoff for the Terminator-IPC outcome.",
+      inputId = "payoffA2",
+      label = "Enter Astrid's payoff for the (C++, Java) outcome.",
       value = 4
     ),
     numericInput(
-      inputId = "payoff3",
-      label = "Enter Anil's payoff for the IPC-Terminator outcome.",
+      inputId = "payoffA3",
+      label = "Enter Astrid's payoff for the (Java, C++) outcome.",
       value = 1
     ),
     numericInput(
-      inputId = "payoff4",
-      label = "Enter Anil's payoff for the Terminator-Terminator outcome.",
+      inputId = "payoffA4",
+      label = "Enter Astrid's payoff for the (C++, C++) outcome.",
+      value = 2
+    ),
+    numericInput(
+      inputId = "payoffB1",
+      label = "Enter Bettina's payoff for the (Java, Java) outcome.",
+      value = 3
+    ),
+    numericInput(
+      inputId = "payoffB2",
+      label = "Enter Bettina's payoff for the (C++, Java) outcome.",
+      value = 4
+    ),
+    numericInput(
+      inputId = "payoffB3",
+      label = "Enter Bettina's payoff for the (Java, C++) outcome.",
+      value = 1
+    ),
+    numericInput(
+      inputId = "payoffB4",
+      label = "Enter Bettina's payoff for the (C++, C++) outcome.",
       value = 2
     )
   ),
@@ -58,17 +78,23 @@ server <- function(input, output) {
     sheet <- input$sheet
     roleSheet <- input$roleSheet
     round <- input$round
-    payoff <-
-      c(input$payoff1,
-        input$payoff2,
-        input$payoff3,
-        input$payoff4)
+    payoff.A <-
+      c(input$payoffA1,
+        input$payoffA2,
+        input$payoffA3,
+        input$payoffA4)
+    payoff.B <-
+      c(input$payoffB1,
+        input$payoffB2,
+        input$payoffB3,
+        input$payoffB4)
     g <-
       pestcontrolGame(
         resultsSheet = sheet,
         roleSheet = roleSheet,
         round = round,
-        payoff = payoff
+        payoff.A = payoff.A,
+        payoff.B = payoff.B
       )
     g
   })
