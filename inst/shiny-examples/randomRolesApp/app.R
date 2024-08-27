@@ -37,10 +37,23 @@ ui <- fluidPage(
 )
 
 server <- function(input, output) {
-  output$groups <- renderTable( {
-    econGame::randomRoles(
-      sheet = input$sheet, size = input$size, seed = input$seed, roleLabs = c(input$role1, input$role2))
+  data <- eventReactive(input$go, {
+    sheet <- input$sheet
+    size <- input$size
+    seed <- input$seed
+    roleLabs = c(input$role1, input$role2)
+    g <- randomRoles(
+      sheet = sheet,
+      size = size,
+      seed = seed,
+      roleLabs = roleLabs
+    )
   })
+  output$groups <- renderTable( {
+    g <- data()
+    g$long
+  }, rownames = FALSE, align = 'lcc',
+  caption = "Student Roles", caption.placement = "top")
 }
 
 shinyApp(ui = ui, server = server)
