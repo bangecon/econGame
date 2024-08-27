@@ -87,7 +87,7 @@ pestcontrolGame <-
     } else  {
       if(partners == "random") {
         if(is.null(roleSheet)) {
-          roleSheet <- resultsSheet
+          roleSheet <- results
         }
         roles <- randomRoles(roleSheet, roleLabs = roleLabs, seed = 8675309)
         rolesLong <- roles$long
@@ -184,8 +184,8 @@ pestcontrolGame <-
       )
     resultsWide$Score.2 <- ifelse(
       resultsWide$Strategy.1 == "IPC",
-        ifelse(resultsWide$Strategy.2 == "IPC", payoff[4], payoff[3]),
-        ifelse(resultsWide$Strategy.2 == "Terminator", payoff[1], payoff[2])
+        ifelse(resultsWide$Strategy.2 == "IPC", payoff[1], payoff[2]),
+        ifelse(resultsWide$Strategy.2 == "Terminator", payoff[4], payoff[3])
       )
     resultsWide$Outcome <-
       paste0(resultsWide$Strategy.1, "-", resultsWide$Strategy.2)
