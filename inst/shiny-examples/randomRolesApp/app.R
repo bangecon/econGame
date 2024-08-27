@@ -52,7 +52,7 @@ server <- function(input, output) {
   output$groups <- renderTable( {
     g <- data()
     g$long
-  }, rownames = FALSE, align = 'lcc',
+  }, rownames = FALSE, align = 'c',
   caption = "Student Roles", caption.placement = "top")
 }
 
