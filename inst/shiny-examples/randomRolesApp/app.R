@@ -33,7 +33,7 @@ ui <- fluidPage(
     a("Created by Jim Bang", href='https://github.com/bangecon'),
     a("St. Ambrose University", href='https://www.sau.edu/')
   ),
-  mainPanel(textOutput("groups"), style = "font-size:20px; ")
+  mainPanel(tableOutput("groups"), style = "font-size:20px; ")
 )
 
 server <- function(input, output) {
@@ -48,10 +48,12 @@ server <- function(input, output) {
       seed = seed,
       roleLabs = roleLabs
     )
+    colnames(g$long) <- c("Round", "First Name", "Last Name", "Role")
+    g
   })
   output$groups <- renderTable( {
     g <- data()
-    g$long
+    g$long[, -1]
   }, rownames = FALSE, align = 'c',
   caption = "Student Roles", caption.placement = "top")
 }
