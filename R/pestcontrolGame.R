@@ -87,7 +87,7 @@ pestcontrolGame <-
     } else  {
       if(partners == "random") {
         if(is.null(roleSheet)) {
-          roleSheet <- results
+          roleSheet <- resultsSheet
         }
         roles <- randomRoles(roleSheet, roleLabs = roleLabs, seed = 8675309)
         rolesLong <- roles$long
