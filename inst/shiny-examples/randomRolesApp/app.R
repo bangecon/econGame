@@ -38,7 +38,7 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   output$groups <- renderTable( {
-    econGames::randomRoles(
+    econGame::randomRoles(
       sheet = input$sheet, size = input$size, seed = input$seed, roleLabs = c(input$role1, input$role2))
   })
 }
