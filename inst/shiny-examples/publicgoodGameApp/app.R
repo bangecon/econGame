@@ -12,7 +12,6 @@ ui <- fluidPage(
       label = "Enter the ID of the Google Sheet with the output.",
       value = NULL
     ),
-    actionButton("go", "Load New Responses"),
     textInput(
       inputId = "endowment",
       label = "Enter the initial endowment that students receive.",
@@ -22,7 +21,8 @@ ui <- fluidPage(
       inputId = "return",
       label = "Enter the group return on contributions.",
       value = 1.2
-    )
+    ),
+    actionButton("go", "Load New Responses")
   ),
   mainPanel(
     tabsetPanel(

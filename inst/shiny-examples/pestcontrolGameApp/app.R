@@ -72,10 +72,6 @@ server <- function(input, output) {
       )
     g
   })
-  output$treePlot <- renderPlot({
-    g <- data()
-    g$tree
-  }, width = 600)
   output$outcomePlot <- renderPlot({
     g <- data()
     plot(g,
