@@ -20,7 +20,7 @@ ui <- fluidPage(
     ),
     textInput(
       inputId = "return",
-      label = "Enter the initial endowment that students receive.",
+      label = "Enter the group return on contributions.",
       value = 1.2
     )
   ),
