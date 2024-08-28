@@ -52,7 +52,8 @@ server <- function(input, output) {
   })
   output$plot <- renderPlot({
     g <- data()
-    plot(g)
+    p <- plot(g)
+    p
   })
 }
 
