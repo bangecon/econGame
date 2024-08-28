@@ -35,8 +35,7 @@ publicgoodGame <- function(sheet,
     googlesheets4::gs4_auth()
     googlesheets4::gs4_deauth()
     googlesheets4::gs4_auth(cache = ".secrets", email = email)
-  }
-  else {
+  } else {
     googlesheets4::gs4_deauth()
   }
   if (is.null(names)) {
@@ -59,14 +58,13 @@ publicgoodGame <- function(sheet,
   results$Last.Name <-
     str_to_title(results$Last.Name)
   N <- nrow(results)
-  results$PrivateAllocation <- endowment - results$Contribution
   totalContributions <- sum(results$Contribution)
   totalReallocations <- totalContributions * return
   individualReallocaitons <-
     ceiling(totalReallocations / nrow(results))
   results$Reallocation <- individualReallocaitons
   results$Score <-
-    results$PrivateAllocation + results$Reallocation - results$Contribution
+    endowment + results$Reallocation - results$Contribution
   blindedResults <-
     data.frame(results[,-which(names(results) %in% c("First.Name", "Last.Name", "Timestamp"))])
   rownames(blindedResults) <-
