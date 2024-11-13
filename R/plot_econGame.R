@@ -61,7 +61,7 @@ plot.econGame <- function(econGame,
       out <- ggplot() +
         geom_step(
           aes(Demand, Price),
-          econGame$schedules[[round]][-which(duplicated(eocnGame$schedules[[round]]$Demand, fromLast = TRUE)), ],
+          econGame$schedules[[round]][-which(duplicated(econGame$schedules[[round]]$Demand, fromLast = TRUE)), ],
           direction = 'vh',
           color = 'blue',
           na.rm = TRUE
@@ -88,7 +88,7 @@ plot.econGame <- function(econGame,
                      alpha = 0.5) +
       scale_fill_manual(values = c('blue', 'darkorange')) +
       scale_colour_manual(values = c('darkorange', 'blue')) +
-      lims(x = c(0, max(econGame$results$Offer) + 1))
+      lims(x = c(-1, max(econGame$results$Offer) + 1))
   }
   if (econGame$type == 'publicgoodGame') {
     out <- ggplot() +
@@ -99,7 +99,7 @@ plot.econGame <- function(econGame,
                      color = 'blue',
                      fill = 'darkorange',
                      alpha = 0.5) +
-      lims(x = c(0, max(econGame$results$Contribution) + 1))
+      lims(x = c(-1, max(econGame$results$Contribution) + 1))
   }
   if (econGame$type == 'anchoringGame') {
     out <- ggplot(aes(x = as.factor(Value), y = Percent),
