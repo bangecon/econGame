@@ -164,7 +164,7 @@ pestcontrolGame <-
       Score = c(results$Score.1, results$Score.2)
     )
     results$Outcome <-
-      paste0(results$Strategy.1, "-", results$Strategy.2)
+      paste0(results$Strategy, "-", results$Partner.Strategy)
     payoffMatrix <- matrix(
       c(paste0("(",payoff[1], ",", payoff[1], ")"),
         paste0("(",payoff[2], ",", payoff[3], ")"),
