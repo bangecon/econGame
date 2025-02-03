@@ -12,11 +12,6 @@ ui <- fluidPage(
       label = "Enter the ID of the Google Sheet with the output.",
       value = NULL
     ),
-    textInput(
-      inputId = "roleSheet",
-      label = "Enter the ID of the Google Sheet with the list of participants.",
-      value = NULL
-    ),
     numericInput(
       inputId = "round",
       label = "Enter the round you want to calculate.",
@@ -56,7 +51,6 @@ ui <- fluidPage(
 server <- function(input, output) {
   data <- eventReactive(input$go, {
     sheet <- input$sheet
-    roleSheet <- input$roleSheet
     round <- input$round
     payoff <-
       c(input$payoff1,
@@ -65,8 +59,7 @@ server <- function(input, output) {
         input$payoff4)
     g <-
       pestcontrolGame(
-        resultsSheet = sheet,
-        roleSheet = roleSheet,
+        sheet = sheet,
         round = round,
         payoff = payoff
       )

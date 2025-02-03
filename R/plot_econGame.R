@@ -195,7 +195,7 @@ plot.econGame <- function(econGame,
                      ncol = ncol,
                      ...)
   }
-  if (econGame$type == 'cournotGame') {
+  if (econGame$type %in% c('cournotGame', 'pestcontrolGame', 'cattleGame')) {
     out <- ggplot() +
       geom_bar(aes(x = Outcome, y = after_stat(prop), group = 1),
                econGame$results, stat = 'count', color = 'blue', fill = 'darkorange')
@@ -218,7 +218,7 @@ plot.econGame <- function(econGame,
                      alpha = 0.3,
                      binwidth = binwidth, ...)
   }
-  if (econGame$type %in% c('cropchoiceGame', 'pestcontrolGame', 'staghuntGame', 'codeGame', 'cattleGame')) {
+  if (econGame$type %in% c('cropchoiceGame', 'staghuntGame', 'codeGame')) {
     out <- ggplot() +
       geom_bar(aes(x = Outcome, y = after_stat(prop), group = 1),
                econGame$resultsWide, stat = 'count', color = 'blue', fill = 'darkorange')
