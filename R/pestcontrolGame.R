@@ -152,8 +152,6 @@ pestcontrolGame <-
         ifelse(results$Strategy.2 == "IPC", payoff[1], payoff[2]),
         ifelse(results$Strategy.2 == "Terminator", payoff[4], payoff[3])
       )
-    results$Outcome <-
-      paste0(results$Strategy.1, "-", results$Strategy.2)
     results <- data.frame(
       First.Name = c(results$First.Name.1, results$First.Name.2),
       Last.Name = c(results$Last.Name.1, results$Last.Name.2),
@@ -161,10 +159,12 @@ pestcontrolGame <-
       Partner.Last.Name = c(results$Last.Name.2, results$Last.Name.1),
       Round = c(results$Round, results$Round),
       Role = c(results$Role.1, results$Role.2),
-      Outcome = c(results$Strategy.1, results$Strategy.2),
+      Strategy = c(results$Strategy.1, results$Strategy.2),
       Partner.Strategy = c(results$Strategy.2, results$Strategy.1),
       Score = c(results$Score.1, results$Score.2)
     )
+    results$Outcome <-
+      paste0(results$Strategy.1, "-", results$Strategy.2)
     payoffMatrix <- matrix(
       c(paste0("(",payoff[1], ",", payoff[1], ")"),
         paste0("(",payoff[2], ",", payoff[3], ")"),
