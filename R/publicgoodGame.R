@@ -59,8 +59,8 @@ publicgoodGame <- function(sheet,
     str_to_title(results$Last.Name)
   N <- nrow(results)
   totalContributions <- sum(results$Contribution)
-  individualReallocaitons <- totalContributions * value
-  results$Reallocation <- individualReallocaitons
+  individualReallocations <- value * totalContributions
+  results$Reallocation <- individualReallocations
   results$Score <-
     endowment + results$Reallocation - results$Contribution
   blindedResults <-
