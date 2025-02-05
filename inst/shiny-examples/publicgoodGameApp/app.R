@@ -26,7 +26,7 @@ ui <- fluidPage(
   ),
   mainPanel(
     tabsetPanel(
-      tabPanel("Plot", plotOutput("plot")),
+      tabPanel("Plot", plotOutput("outcomePlot", width = '600px', height = '600px')),
       tabPanel("Results", tableOutput("blindedResults")),
       tabPanel("Grades", tableOutput("grades"))
     )
@@ -50,7 +50,7 @@ server <- function(input, output) {
     g <- data()
     g$blindedResults
   })
-  output$plot <- renderPlot({
+  output$outcomePlot <- renderPlot({
     g <- data()
     plot(g)
   })
