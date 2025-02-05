@@ -38,7 +38,7 @@ server <- function(input, output) {
   data <- eventReactive(input$go, {
     sheet <- input$sheet
     endowment <- input$endowment
-    return <- input$return
+    value <- input$value
     g <- publicgoodGame(sheet = sheet, endowment = endowment, value = value)
     g
   })
