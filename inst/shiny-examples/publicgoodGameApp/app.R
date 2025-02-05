@@ -18,7 +18,7 @@ ui <- fluidPage(
       value = 0
     ),
     textInput(
-      inputId = "return",
+      inputId = "value",
       label = "Enter the group return on contributions.",
       value = 0.1
     ),
@@ -39,7 +39,7 @@ server <- function(input, output) {
     sheet <- input$sheet
     endowment <- input$endowment
     return <- input$return
-    g <- publicgoodGame(sheet = sheet, endowment = endowment, return = return)
+    g <- publicgoodGame(sheet = sheet, endowment = endowment, value = value)
     g
   })
    output$grades <- renderTable({
@@ -52,7 +52,7 @@ server <- function(input, output) {
   })
   output$plot <- renderPlot({
     g <- data()
-    plot(g, round = input$round)
+    plot(g)
   })
 }
 

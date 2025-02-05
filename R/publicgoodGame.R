@@ -7,7 +7,7 @@
 ##'
 ##' @param sheet (required) is a character string url corresponding to the Google Sheets location containing the individual submissions.
 ##' @param endowment is the number of gifted points students start the game with (default is 5).
-##' @param return is the amount that each point contributed to the public good returns to *each member of the class* (default is 0.1).
+##' @param value is the amount that each point contributed to the public good returns to *each member of the class* (default is 0.1).
 ##' @param names character list of the column names in `sheet`.
 ##' @param auth is a logical indicating whether to use an authentication token to access the Sheet containing the individual submissions.
 ##' @param email is an email address that matches the user account containing the Sheet with the individual submissions (if `auth == TRUE`).
@@ -24,7 +24,7 @@
 
 publicgoodGame <- function(sheet,
                            endowment = 0,
-                           return = 0.1,
+                           value = 0.1,
                            auth = FALSE,
                            names = NULL,
                            email = NULL,
@@ -59,7 +59,7 @@ publicgoodGame <- function(sheet,
     str_to_title(results$Last.Name)
   N <- nrow(results)
   totalContributions <- sum(results$Contribution)
-  individualReallocaitons <- totalContributions * return
+  individualReallocaitons <- totalContributions * value
   results$Reallocation <- individualReallocaitons
   results$Score <-
     endowment + results$Reallocation - results$Contribution
