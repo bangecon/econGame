@@ -26,7 +26,7 @@ ui <- fluidPage(
   ),
   mainPanel(tabsetPanel(
     tabPanel("Plot",
-             plotOutput("outcomePlot", width = '600px', height = '600px')),
+             plotOutput("outcomePlot")),
     tabPanel("Results", tableOutput("blindedResults")),
     tabPanel("Grades", tableOutput("grades"))
   ))
