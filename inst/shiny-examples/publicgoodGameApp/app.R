@@ -52,8 +52,7 @@ server <- function(input, output) {
   })
   output$plot <- renderPlot({
     g <- data()
-    p <- plot(g)
-    p
+    plot(g, round = input$round)
   })
 }
 
