@@ -39,7 +39,7 @@ server <- function(input, output) {
     sheet <- input$sheet
     endowment <- input$endowment
     return <- input$return
-    g <- publicgoodGame(sheet, endowment, return)
+    g <- publicgoodGame(sheet = sheet, endowment = endowment, return = return)
     g
   })
    output$grades <- renderTable({

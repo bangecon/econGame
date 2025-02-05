@@ -65,8 +65,6 @@ publicgoodGame <- function(sheet,
     endowment + results$Reallocation - results$Contribution
   blindedResults <-
     data.frame(results[,-which(names(results) %in% c("First.Name", "Last.Name", "Timestamp"))])
-  rownames(blindedResults) <-
-    paste(results$Last.Name, results$First.Name, sep = ", ")
   grades <-
     with(results,
          as.data.frame(
