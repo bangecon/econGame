@@ -24,13 +24,12 @@ ui <- fluidPage(
     ),
     actionButton("go", "Load New Responses")
   ),
-  mainPanel(
-    tabsetPanel(
-      tabPanel("Plot", plotOutput("outcomePlot", width = '600px', height = '600px')),
-      tabPanel("Results", tableOutput("blindedResults")),
-      tabPanel("Grades", tableOutput("grades"))
-    )
-  )
+  mainPanel(tabsetPanel(
+    # tabPanel("Plot",
+    #          plotOutput("outcomePlot", width = '600px', height = '600px')),
+    tabPanel("Results", tableOutput("blindedResults")),
+    tabPanel("Grades", tableOutput("grades"))
+  ))
 )
 
 # Define server logic
@@ -39,10 +38,12 @@ server <- function(input, output) {
     sheet <- input$sheet
     endowment <- input$endowment
     value <- input$value
-    g <- publicgoodGame(sheet = sheet, endowment = endowment, value = value)
+    g <- publicgoodGame(sheet = sheet,
+                        endowment = endowment,
+                        value = value)
     g
   })
-   output$grades <- renderTable({
+  output$grades <- renderTable({
     g <- data()
     g$grades
   })
