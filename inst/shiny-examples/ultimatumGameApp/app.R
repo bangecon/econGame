@@ -31,8 +31,8 @@ server <- function(input, output) {
     g
   })
    output$grades <- renderTable({
-    g <- data()
-    g$grades
+     g <- data()
+     g$grades
   })
   output$results <- renderTable({
     g <- data()

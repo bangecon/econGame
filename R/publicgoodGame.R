@@ -24,7 +24,7 @@
 
 publicgoodGame <- function(sheet,
                            endowment = 0,
-                           value = 0.1,
+                           benefit = 0.1,
                            auth = FALSE,
                            names = NULL,
                            email = NULL,
@@ -59,7 +59,7 @@ publicgoodGame <- function(sheet,
     str_to_title(results$Last.Name)
   N <- nrow(results)
   totalContributions <- sum(results$Contribution)
-  individualReallocations <- value * totalContributions
+  individualReallocations <- benefit * totalContributions
   results$Reallocation <- individualReallocations
   results$Score <-
     endowment + results$Reallocation - results$Contribution

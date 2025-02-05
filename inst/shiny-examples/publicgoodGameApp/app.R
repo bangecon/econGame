@@ -18,15 +18,15 @@ ui <- fluidPage(
       value = 0
     ),
     textInput(
-      inputId = "value",
+      inputId = "benefit",
       label = "Enter the group return on contributions.",
       value = 0.1
     ),
     actionButton("go", "Load New Responses")
   ),
   mainPanel(tabsetPanel(
-    # tabPanel("Plot",
-    #          plotOutput("outcomePlot", width = '600px', height = '600px')),
+    tabPanel("Plot",
+             plotOutput("outcomePlot", width = '600px', height = '600px')),
     tabPanel("Results", tableOutput("blindedResults")),
     tabPanel("Grades", tableOutput("grades"))
   ))
@@ -37,10 +37,10 @@ server <- function(input, output) {
   data <- eventReactive(input$go, {
     sheet <- input$sheet
     endowment <- input$endowment
-    value <- input$value
+    benefit <- input$benefit
     g <- publicgoodGame(sheet = sheet,
                         endowment = endowment,
-                        value = value)
+                        benefit = benefit)
     g
   })
   output$grades <- renderTable({
