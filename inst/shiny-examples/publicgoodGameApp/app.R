@@ -20,7 +20,7 @@ ui <- fluidPage(
     textInput(
       inputId = "return",
       label = "Enter the group return on contributions.",
-      value = 1.2
+      value = 0.1
     ),
     actionButton("go", "Load New Responses")
   ),
